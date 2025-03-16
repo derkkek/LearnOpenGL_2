@@ -894,6 +894,12 @@
     <ClInclude Include="vendor\include\glm\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />
@@ -908,10 +914,16 @@
     <ClCompile Include="vendor\include\glm\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\shader.vs" />
-    <None Include="resource\shader.fs" />
+    <None Include="resource\shaders\vertex.shader" />
+    <None Include="resource\shaders\fragment.shader" />
     <None Include="vendor\include\glm\detail\func_common.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -1326,5 +1338,10 @@
     <None Include="vendor\include\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\textures\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
