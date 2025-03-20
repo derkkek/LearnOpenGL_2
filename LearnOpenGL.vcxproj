@@ -444,8 +444,8 @@
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\shaders\fragment.shader" />
-    <None Include="resource\shaders\vertex.shader" />
+    <None Include="resource\shaders\shader.f" />
+    <None Include="resource\shaders\shader.v" />
     <None Include="vendor\include\glm\detail\func_common.inl" />
     <None Include="vendor\include\glm\detail\func_common_simd.inl" />
     <None Include="vendor\include\glm\detail\func_exponential.inl" />
@@ -586,6 +586,7 @@
     <None Include="vendor\include\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\textures\awesomeface.png" />
     <Image Include="resource\textures\container.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

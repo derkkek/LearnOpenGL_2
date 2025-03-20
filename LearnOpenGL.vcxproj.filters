@@ -922,8 +922,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resource\shaders\vertex.shader" />
-    <None Include="resource\shaders\fragment.shader" />
+    <None Include="resource\shaders\shader.v" />
+    <None Include="resource\shaders\shader.f" />
     <None Include="vendor\include\glm\detail\func_common.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -1341,6 +1341,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\awesomeface.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

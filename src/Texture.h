@@ -8,8 +8,9 @@
 class Texture
 {
 public:
-	Texture(const char* texturePath);
+	Texture(const char* texturePath, GLenum target, GLint mipMapLevel, GLint internalFormat, GLenum format);
 	void Bind();
+	void ActivateTexture(GLenum textureUnit);
 	void Unbind();
 	~Texture();
 	unsigned int ID;

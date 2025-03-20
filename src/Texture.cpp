@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(const char* texturePath)
+Texture::Texture(const char* texturePath, GLenum target, GLint mipMapLevel, GLint internalFormat, GLenum format)
 {
 	unsigned int texture;
 	glGenTextures(1, &texture);
@@ -16,7 +16,7 @@ Texture::Texture(const char* texturePath)
 		&nrChannels, 0);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+		glTexImage2D(target, mipMapLevel, internalFormat, width, height, 0, format,
 			GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
@@ -25,6 +25,8 @@ Texture::Texture(const char* texturePath)
 		std::cout << "Failed to load texture" << std::endl;
 	}
 	ID = texture;
+	stbi_set_flip_vertically_on_load(true);
+	stbi_image_free(data);
 }
 
 void Texture::Bind()
@@ -35,6 +37,12 @@ void Texture::Bind()
 void Texture::Unbind()
 {
 	glBindTexture(ID, 0);
+}
+
+void Texture::ActivateTexture(GLenum textureUnit)
+{
+	glActiveTexture(textureUnit);
+	Bind();//we need to bind the texture after the glActiveTexture call. Otherwise it activates the latest bound texture.
 }
 
 Texture::~Texture()
