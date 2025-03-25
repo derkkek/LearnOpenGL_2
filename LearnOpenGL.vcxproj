@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Texture.h" />
@@ -444,6 +445,8 @@
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resource\shaders\light_shader.v" />
+    <None Include="resource\shaders\light_shader.f" />
     <None Include="resource\shaders\shader.f" />
     <None Include="resource\shaders\shader.v" />
     <None Include="vendor\include\glm\detail\func_common.inl" />
@@ -588,6 +591,10 @@
   <ItemGroup>
     <Image Include="resource\textures\awesomeface.png" />
     <Image Include="resource\textures\container.jpg" />
+    <Image Include="resource\textures\container2.png" />
+    <Image Include="resource\textures\container2_specular.png" />
+    <Image Include="resource\textures\container2_specular_colored.png" />
+    <Image Include="resource\textures\matrix.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

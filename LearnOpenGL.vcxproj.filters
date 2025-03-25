@@ -900,6 +900,9 @@
     <ClInclude Include="src\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />
@@ -1338,12 +1341,26 @@
     <None Include="vendor\include\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="resource\shaders\light_shader.v" />
+    <None Include="resource\shaders\light_shader.f" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\textures\awesomeface.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\container2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\container2_specular.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\container2_specular_colored.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\matrix.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
