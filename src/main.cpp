@@ -32,7 +32,7 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 int main()
 {
     // glfw: initialize and configure
@@ -78,7 +78,6 @@ int main()
     Shader lightShader("resource/shaders/light_shader.v", "resource/shaders/light_shader.f");
     Texture texture("resource/textures/container2.png",GL_TEXTURE_2D, 0, GL_RGBA, GL_RGBA);
     Texture specularMap("resource/textures/container2_specular.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_RGBA);
-    Texture emissionMap("resource/textures/matrix.jpg", GL_TEXTURE_2D, 0, GL_RGB, GL_RGB);
     
     //Texture smileyFace("resource/textures/awesomeface.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_RGBA);
     //smileyFace.Bind();
@@ -208,12 +207,21 @@ int main()
         // draw our first triangle
         ourShader.use();
 
+        glBindVertexArray(cubeVAO);
+        for (unsigned int i = 0; i < 10; i++)
+        {
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 20.0f * i;
+            model = glm::rotate(model, glm::radians(angle),
+                glm::vec3(1.0f, 0.3f, 0.5f));
+            ourShader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
 
-
-
-        ourShader.setVec3("lightPos", lightPos);
         ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        ourShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
 
         ourShader.setVec3("viewPos", camera.Position);
         ourShader.setVec3("material.ambient", 0.0f, 0.1f, 0.06f);
@@ -226,6 +234,11 @@ int main()
         ourShader.setVec3("light.diffuse", 1.0, 1.0, 1.0);
         ourShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
         ourShader.setVec3("lightColor", lightColor);
+        ourShader.setFloat("light.constant", 1.0f);
+        ourShader.setFloat("light.linear", 0.09f);
+        ourShader.setFloat("light.quadratic", 0.032f);
+        ourShader.setVec3("light.position", lightPos);
+
 
 
 
@@ -244,7 +257,6 @@ int main()
 
         texture.ActivateTexture(GL_TEXTURE0);
         specularMap.ActivateTexture(GL_TEXTURE1);
-        emissionMap.ActivateTexture(GL_TEXTURE2);
         
         glBindVertexArray(cubeVAO);
 

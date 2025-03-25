@@ -1,5 +1,5 @@
 ﻿  main.cpp
-C:\dev\OpenGL\LearnOpenGL\src\main.cpp(225,54): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\dev\OpenGL\LearnOpenGL\src\main.cpp(225,49): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\dev\OpenGL\LearnOpenGL\src\main.cpp(225,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\dev\OpenGL\LearnOpenGL\src\main.cpp(233,54): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\dev\OpenGL\LearnOpenGL\src\main.cpp(233,49): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\dev\OpenGL\LearnOpenGL\src\main.cpp(233,44): warning C4305: 'argument': truncation from 'double' to 'float'
   LearnOpenGL.vcxproj -> C:\dev\OpenGL\LearnOpenGL\x64\Debug\LearnOpenGL.exe
