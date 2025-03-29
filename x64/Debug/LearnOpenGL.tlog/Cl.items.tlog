@@ -4,5 +4,4 @@ C:\dev\OpenGL\LearnOpenGL\src\main.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\main.
 C:\dev\OpenGL\LearnOpenGL\src\PointLight.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\PointLight.obj
 C:\dev\OpenGL\LearnOpenGL\src\Spotlight.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Spotlight.obj
 C:\dev\OpenGL\LearnOpenGL\src\stb_image.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\stb_image.obj
-C:\dev\OpenGL\LearnOpenGL\src\Texture.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Texture.obj
 C:\dev\OpenGL\LearnOpenGL\vendor\include\glm\detail\glm.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\glm.obj

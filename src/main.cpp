@@ -9,6 +9,8 @@
 #include "Camera.h"
 #include "Model.h"
 
+#include "Spotlight.h"
+
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -83,6 +85,7 @@ int main()
     // -----------
     Model ourModel("resource/models/backpack/backpack.obj");
 
+    Spotlight spotLight(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f, 0.09f, 0.032f, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -108,7 +111,8 @@ int main()
 
         // don't forget to enable shader before setting uniforms
         ourShader.use();
-
+        spotLight.PassUniforms(ourShader, camera);
+        ourShader.setVec3("viewPos", camera.Position);
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();

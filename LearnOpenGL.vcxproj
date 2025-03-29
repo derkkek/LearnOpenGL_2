@@ -139,13 +139,15 @@
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\DirectionalLight.h" />
+    <ClInclude Include="src\filesystem.h" />
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\model.h" />
     <ClInclude Include="src\PointLight.h" />
+    <ClInclude Include="src\root_directory.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\shader_m.h" />
     <ClInclude Include="src\Spotlight.h" />
     <ClInclude Include="src\stb_image.h" />
-    <ClInclude Include="src\Texture.h" />
     <ClInclude Include="vendor\include\assimp\aabb.h" />
     <ClInclude Include="vendor\include\assimp\ai_assert.h" />
     <ClInclude Include="vendor\include\assimp\anim.h" />
@@ -532,10 +534,11 @@
     <ClCompile Include="src\PointLight.cpp" />
     <ClCompile Include="src\Spotlight.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resource\models\backpack\backpack.mesh" />
+    <None Include="resource\models\backpack\backpack.mtl" />
     <None Include="resource\shaders\light_shader.v" />
     <None Include="resource\shaders\light_shader.f" />
     <None Include="resource\shaders\shader.f" />
@@ -688,12 +691,28 @@
     <None Include="vendor\include\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\models\backpack\ao.jpg" />
+    <Image Include="resource\models\backpack\diffuse.jpg" />
+    <Image Include="resource\models\backpack\normal.png" />
+    <Image Include="resource\models\backpack\roughness.jpg" />
+    <Image Include="resource\models\backpack\specular.jpg" />
     <Image Include="resource\textures\awesomeface.png" />
     <Image Include="resource\textures\container.jpg" />
     <Image Include="resource\textures\container2.png" />
     <Image Include="resource\textures\container2_specular.png" />
     <Image Include="resource\textures\container2_specular_colored.png" />
     <Image Include="resource\textures\matrix.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\models\backpack\source_attribution.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="resource\models\backpack\backpack.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </Object>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
