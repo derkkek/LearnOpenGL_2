@@ -1173,6 +1173,9 @@
     <ClInclude Include="src\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Sphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />
@@ -1197,6 +1200,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PointLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sphere.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1645,6 +1651,7 @@
     </None>
     <None Include="resource\models\backpack\backpack.mtl" />
     <None Include="resource\models\backpack\backpack.mesh" />
+    <None Include="resource\models\sphere\sphere.obj" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
@@ -1678,6 +1685,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\models\backpack\specular.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\models\sphere\texture.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

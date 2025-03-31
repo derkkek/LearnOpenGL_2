@@ -146,6 +146,7 @@
     <ClInclude Include="src\root_directory.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\shader_m.h" />
+    <ClInclude Include="src\Sphere.h" />
     <ClInclude Include="src\Spotlight.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="vendor\include\assimp\aabb.h" />
@@ -532,6 +533,7 @@
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PointLight.cpp" />
+    <ClCompile Include="src\Sphere.cpp" />
     <ClCompile Include="src\Spotlight.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />
@@ -696,6 +698,7 @@
     <Image Include="resource\models\backpack\normal.png" />
     <Image Include="resource\models\backpack\roughness.jpg" />
     <Image Include="resource\models\backpack\specular.jpg" />
+    <Image Include="resource\models\sphere\texture.jpg" />
     <Image Include="resource\textures\awesomeface.png" />
     <Image Include="resource\textures\container.jpg" />
     <Image Include="resource\textures\container2.png" />
@@ -709,10 +712,13 @@
   <ItemGroup>
     <Object Include="resource\models\backpack\backpack.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
     </Object>
+    <None Include="resource\models\sphere\sphere.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

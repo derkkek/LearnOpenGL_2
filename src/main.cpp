@@ -8,6 +8,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
+#include "Sphere.h"
 
 #include "Spotlight.h"
 
@@ -83,7 +84,9 @@ int main()
 
     // load models
     // -----------
-    Model ourModel("resource/models/backpack/backpack.obj");
+    //Model ourModel("resource/models/sphere/sphere.obj");
+
+    Sphere sphere("resource/models/sphere/sphere.obj");
 
     Spotlight spotLight(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f, 0.09f, 0.032f, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
 
@@ -118,13 +121,17 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
+        
 
         // render the loaded model
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-        ourShader.setMat4("model", model);
-        ourModel.Draw(ourShader);
+        //glm::mat4 model = glm::mat4(1.0f);
+        //model = glm::translate(model, sphere.position); // translate it down so it's at the center of the scene
+        //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+        //ourShader.setMat4("model", model);
+        //
+        sphere.Translate(deltaTime, ourShader, "model");
+
+        sphere.mesh.Draw(ourShader);
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
