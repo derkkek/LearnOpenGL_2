@@ -541,6 +541,8 @@
   <ItemGroup>
     <None Include="resource\models\backpack\backpack.mesh" />
     <None Include="resource\models\backpack\backpack.mtl" />
+    <None Include="resource\shaders\depth_test.f" />
+    <None Include="resource\shaders\depth_test.v" />
     <None Include="resource\shaders\light_shader.v" />
     <None Include="resource\shaders\light_shader.f" />
     <None Include="resource\shaders\shader.f" />

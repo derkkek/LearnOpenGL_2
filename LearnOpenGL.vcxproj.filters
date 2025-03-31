@@ -1652,6 +1652,8 @@
     <None Include="resource\models\backpack\backpack.mtl" />
     <None Include="resource\models\backpack\backpack.mesh" />
     <None Include="resource\models\sphere\sphere.obj" />
+    <None Include="resource\shaders\depth_test.v" />
+    <None Include="resource\shaders\depth_test.f" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
