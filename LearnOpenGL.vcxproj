@@ -140,6 +140,7 @@
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\DirectionalLight.h" />
     <ClInclude Include="src\filesystem.h" />
+    <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\model.h" />
     <ClInclude Include="src\PointLight.h" />
@@ -531,6 +532,7 @@
   <ItemGroup>
     <ClCompile Include="src\DirectionalLight.cpp" />
     <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PointLight.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
@@ -543,8 +545,12 @@
     <None Include="resource\models\backpack\backpack.mtl" />
     <None Include="resource\shaders\depth_test.f" />
     <None Include="resource\shaders\depth_test.v" />
+    <None Include="resource\shaders\grid.f" />
+    <None Include="resource\shaders\grid.v" />
     <None Include="resource\shaders\light_shader.v" />
     <None Include="resource\shaders\light_shader.f" />
+    <None Include="resource\shaders\procedural_sphere.f" />
+    <None Include="resource\shaders\procedural_sphere.v" />
     <None Include="resource\shaders\shader.f" />
     <None Include="resource\shaders\shader.v" />
     <None Include="vendor\include\assimp\color4.inl" />

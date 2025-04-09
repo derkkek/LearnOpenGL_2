@@ -1,14 +1,17 @@
-#include <glad/glad.h>
+﻿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
 #include "Sphere.h"
+#include "Grid.h"
 
 #include "Spotlight.h"
 
@@ -34,6 +37,11 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 
+void update_vertices(std::vector<glm::vec3>& vertices, float time) {
+    for (auto& v : vertices) {
+        v.y = sin(v.x + time) * 0.5f; // Animate y-coordinate
+    }
+}
 
 int main()
 {
@@ -81,7 +89,6 @@ int main()
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_GREATER);
 
     float cubeVertices[] = {
         // positions          // texture Coords
@@ -164,22 +171,39 @@ int main()
 
     // build and compile shaders
     // -------------------------
-    Shader ourShader("resource/shaders/depth_test.v", "resource/shaders/depth_test.f");
+    Shader ourShader("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
+    Shader gridShader("resource/shaders/grid.v", "resource/shaders/grid.f");
 
-    // load models
-    // -----------
-    //Model ourModel("resource/models/sphere/sphere.obj");
+    Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 5000.0f); //5000000.0f
+    Sphere procedural2(glm::vec3(10.0f, 0.0f, -20.0f), glm::vec3(15.0f, 0.0f, -3.0f), 100.0f);
 
-    //Sphere sphere("resource/models/sphere/sphere.obj");
+    std::vector<Sphere*> sphereList;
+    sphereList.push_back(&procedural);
+    sphereList.push_back(&procedural2);
 
-    //Spotlight spotLight(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f, 0.09f, 0.032f, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
+    float G = 4.0f; // 2.0f 0.5f
+    float lightSpeed = 12000.0f; // Reduced for visual effect 250000.0f
+
+
+    //float sunMass = sun.mass;
+    //float earthDistance = glm::length(earth.position - sun.position);
+    //glm::vec3 earthInitialVel(0.0f, sqrt(G* sunMass / earthDistance), 0.0f);
+    //earth.velocity = earthInitialVel;
+
+
+    Spotlight spotLight(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f, 0.09f, 0.032f, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
+    Grid grid(200.0f, 100);
+
+
+    float rs = (2.0f * G * procedural.mass) / (lightSpeed * lightSpeed);
+    std::cout << "Schwarzschild Radius: " << rs << std::endl;
+
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    unsigned int floorTexture = loadTexture("resource/textures/metal.png");
-    unsigned int cubeTexture = loadTexture("resource/textures/marble.jpg");
-    ourShader.setInt("texture1", 0);
-
+    //unsigned int floorTexture = loadTexture("resource/textures/metal.png");
+    //unsigned int cubeTexture = loadTexture("resource/textures/marble.jpg");
+    //ourShader.setInt("texture1", 0);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -203,40 +227,76 @@ int main()
         ourShader.use();
         ourShader.setVec3("viewPos", camera.Position);
         // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 500.0f);
+        
+        //procedural.Move(deltaTime);
+        //procedural.HandleModelUniform(ourShader, "model");
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
-
-        glm::mat4 model = glm::mat4(1.0f);
-
-        glBindVertexArray(cubeVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, cubeTexture);
-        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
-        ourShader.setMat4("model", model);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-        ourShader.setMat4("model", model);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-
-        glBindVertexArray(planeVAO);
-        glBindTexture(GL_TEXTURE_2D, floorTexture);
-        ourShader.setMat4("model", glm::mat4(1.0f));
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
-
-
-        // render the loaded model
-        //glm::mat4 model = glm::mat4(1.0f);
-        //model = glm::translate(model, sphere.position); // translate it down so it's at the center of the scene
-        //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-        //ourShader.setMat4("model", model);
         //
-        //sphere.Translate(deltaTime, ourShader, "model");
+        //procedural.Draw();
 
-        //sphere.mesh.Draw(ourShader);
+        //procedural2.Move(deltaTime);
+        //procedural2.HandleModelUniform(ourShader, "model");
+        //procedural2.Draw();
+
+
+
+
+        //spotLight.PassUniforms(ourShader, camera);
+
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = i + 1; j < 2; j++)
+            {
+                sphereList.at(i)->CalcGravitation(*sphereList.at(j), G);
+            }
+        }
+        ////// Update positions/velocities
+        for (int i = 0; i < 2; i++) {
+            sphereList.at(i)->Translate(deltaTime, ourShader, "model");
+
+            ourShader.setVec3("velocity", sphereList.at(i)->velocity);
+            sphereList.at(i)->Draw();
+        }
+
+        gridShader.use();
+        gridShader.setMat4("view", view);
+        gridShader.setMat4("projection", projection);
+        glm::mat4 gridModel = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f));
+        gridShader.setMat4("model", gridModel);
+
+        grid.UpdateGridVertices(sphereList, G, lightSpeed);
+        grid.UpdateBuffer();
+        grid.Draw();
+
+
+        
+
+
+
+        //grid.UpdateGridVertices(procedural, G, lightSpeed);
+        //grid.Print();
+
+        //grid.BendGrid(procedural2, G, procedural2.mass, lightSpeed);
+        //grid.UpdateBuffer();
+        //grid.Draw();
+
+
+
+
+
+
+
+
+
+
+
+
+        //sphere1.Translate(deltaTime, ourShader, "model");
+
+        //sphere1.mesh.Draw(ourShader);
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -248,10 +308,7 @@ int main()
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
 
-    glDeleteVertexArrays(1, &cubeVAO);
-    glDeleteVertexArrays(1, &planeVAO);
-    glDeleteBuffers(1, &cubeVBO);
-    glDeleteBuffers(1, &planeVBO);
+
     glfwTerminate();
     return 0;
 }

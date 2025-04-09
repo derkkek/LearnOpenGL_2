@@ -1176,6 +1176,9 @@
     <ClInclude Include="src\Sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />
@@ -1203,6 +1206,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1654,6 +1660,10 @@
     <None Include="resource\models\sphere\sphere.obj" />
     <None Include="resource\shaders\depth_test.v" />
     <None Include="resource\shaders\depth_test.f" />
+    <None Include="resource\shaders\grid.f" />
+    <None Include="resource\shaders\grid.v" />
+    <None Include="resource\shaders\procedural_sphere.f" />
+    <None Include="resource\shaders\procedural_sphere.v" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">

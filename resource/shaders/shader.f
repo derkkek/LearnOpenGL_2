@@ -23,6 +23,7 @@ struct SpotLight {
 uniform sampler2D texture_diffuse1;
 uniform SpotLight spotLight; 
 uniform vec3 viewPos;
+uniform vec3 velocity;
 
 
  vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
@@ -45,7 +46,7 @@ uniform vec3 viewPos;
      vec3 diffuse = light.diffuse * diff * vec3(texture(texture_diffuse1, TexCoords));
      vec3 specular = light.specular * spec;
 
-     return (ambient + diffuse + specular);
+     return (ambient + diffuse + specular + clamp(velocity, 0.0f, 0.8f));
  }
 
 void main()
