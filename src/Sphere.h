@@ -9,7 +9,7 @@ class Sphere
 {
 public:
 	//Sphere(string const& path, glm::vec3 pos = glm::vec3(0), float mass = 100000.0f, glm::vec3 vel = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 force = glm::vec3(0.0,0.0f,0.0f), glm::vec3 acceleration = glm::vec3(0));
-	Sphere(glm::vec3 position, glm::vec3 velocity, float mass, float radius = 1.0f, int sectors = 36, int stacks = 18, int up = 3);
+	Sphere(glm::vec3 position, glm::vec3 velocity, float mass, int sectors = 36, int stacks = 18, int up = 3);
 	~Sphere() = default;
 
 	//std::unique_ptr<Model> mesh;

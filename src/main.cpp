@@ -174,8 +174,8 @@ int main()
     Shader ourShader("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
     Shader gridShader("resource/shaders/grid.v", "resource/shaders/grid.f");
 
-    Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 5000.0f, glm::pow(5000.0f, 1.0f / 3.0f) * 1/glm::pi<float>()); //5000000.0f
-    Sphere procedural2(glm::vec3(10.0f, 0.0f, -20.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f, glm::pow(500.0f, 1.0f / 3.0f) * 1 / glm::pi<float>());
+    Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 5000.0f); //5000000.0f
+    Sphere procedural2(glm::vec3(10.0f, 0.0f, -20.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
 
     std::vector<Sphere*> sphereList;
     sphereList.push_back(&procedural);

@@ -6,16 +6,16 @@
 //
 //}
 
-Sphere::Sphere(glm::vec3 position, glm::vec3 velocity, float mass, float radius, int sectors, int stacks, int up)
+Sphere::Sphere(glm::vec3 position, glm::vec3 velocity, float mass, int sectors, int stacks, int up)
     : interleavedStride((3 + 3 + 2) * sizeof(float)), position(position), velocity(velocity), mass(mass)
 {
-    set(radius, sectors, stacks, up);
+    set(mass, sectors, stacks, up);
 }
 
 void Sphere::set(float radius, int sectors, int stacks, int up)
 {
-    if (radius > 0)
-        this->radius = radius;
+    if (mass > 0)
+        this->radius = glm::pow(mass, 1.0f / 3.0f) * (1 / glm::pi<float>());
     this->sectorCount = sectors;
     if (sectors < MIN_SECTOR_COUNT)
         this->sectorCount = MIN_SECTOR_COUNT;

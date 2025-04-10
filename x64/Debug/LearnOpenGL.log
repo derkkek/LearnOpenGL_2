@@ -1,2 +1,12 @@
-﻿  main.cpp
+﻿  Grid.cpp
+C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp(85,47): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp(185,43): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp(185,43): warning C4244:         with
+C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp(185,43): warning C4244:         [
+C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp(185,43): warning C4244:             T=float
+C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp(185,43): warning C4244:         ]
+  Sphere.cpp
+C:\dev\OpenGL\LearnOpenGL\src\Sphere.cpp(77,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+  Generating Code...
   LearnOpenGL.vcxproj -> C:\dev\OpenGL\LearnOpenGL\x64\Debug\LearnOpenGL.exe
