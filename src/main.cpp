@@ -176,7 +176,7 @@ int main()
 
     Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 50000.0f); //5000000.0f
     Sphere procedural2(glm::vec3(10.0f, 0.0f, -200.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
-    Sphere procedural3(glm::vec3(-200.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 40.0f), 5000.0f);
+    Sphere procedural3(glm::vec3(-500.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 30.0f), 15000.0f);
     
     DirectionalLight dirLight(glm::vec3(-1.0f ,-1.0f, -1.0f), glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.2f));
     
@@ -262,9 +262,12 @@ int main()
 
         for (int i = 0; i < sphereList.size(); i++)
         {
-            for (int j = i + 1; j < sphereList.size(); j++)
+            for (int j = 0; j < sphereList.size(); j++)
             {
-                sphereList.at(i)->CalcGravitation(*sphereList.at(j), G);
+                if (j != i)
+                {
+                    sphereList.at(i)->CalcGravitation(*sphereList.at(j), G);
+                }
             }
         }
         ////// Update positions/velocities
