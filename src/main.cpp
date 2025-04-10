@@ -174,17 +174,18 @@ int main()
     Shader ourShader("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
     Shader gridShader("resource/shaders/grid.v", "resource/shaders/grid.f");
 
-    Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 5000.0f); //5000000.0f
-    Sphere procedural2(glm::vec3(10.0f, 0.0f, -20.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
+    Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 50000.0f); //5000000.0f
+    Sphere procedural2(glm::vec3(10.0f, 0.0f, -200.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
 
     std::vector<Sphere*> sphereList;
     sphereList.push_back(&procedural);
     sphereList.push_back(&procedural2);
 
-    std::cout << "radius : " << procedural.radius << std::endl;
+    std::cout << "radius 1 : " << procedural.radius << std::endl;
+    std::cout << "radius 2 : " << procedural2.radius << std::endl;
 
     float G = 4.0f; // 2.0f 0.5f
-    float lightSpeed = 12000.0f; // Reduced for visual effect 250000.0f
+    float lightSpeed = 10000.0f; // Reduced for visual effect 250000.0f
 
 
     //float sunMass = sun.mass;
@@ -194,7 +195,7 @@ int main()
 
 
     Spotlight spotLight(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f, 0.09f, 0.032f, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
-    Grid grid(200.0f, 100);
+    Grid grid(2000.0f, 100);
 
 
     float rs = (2.0f * G * procedural.mass) / (lightSpeed * lightSpeed);
@@ -229,7 +230,7 @@ int main()
         ourShader.use();
         ourShader.setVec3("viewPos", camera.Position);
         // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 500.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 2000.0f);
         
         //procedural.Move(deltaTime);
         //procedural.HandleModelUniform(ourShader, "model");

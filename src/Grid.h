@@ -26,7 +26,6 @@ public:
 	void Print();
 
 	void resetVertices();
-	void ApplyMultipleSphereDeformations(const std::vector<Sphere>& spheres, float G, float lightSpeed);
 
 	glm::mat4 model = glm::mat4(1.0f);
 
@@ -42,7 +41,6 @@ private:
 
 	float CalcRadialDistance(glm::vec3 sphereCenter, float grid_x, float grid_y, float grid_z);
 	float CalcSchwarzschildRadius(float G, float sphereMass, float lightSpeed);
-	float ComputeBendOffset(const Sphere& sphere, const glm::vec3& vertexPos, float G, float lightSpeed);
 
 	glm::mat4 view;
 
