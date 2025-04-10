@@ -27,7 +27,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(50.0f, 0.0f, 100.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -176,12 +176,14 @@ int main()
 
     Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 50000.0f); //5000000.0f
     Sphere procedural2(glm::vec3(10.0f, 0.0f, -200.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
+    Sphere procedural3(glm::vec3(-200.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 40.0f), 5000.0f);
     
     DirectionalLight dirLight(glm::vec3(-1.0f ,-1.0f, -1.0f), glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.2f));
     
     std::vector<Sphere*> sphereList;
     sphereList.push_back(&procedural);
     sphereList.push_back(&procedural2);
+    sphereList.push_back(&procedural3);
 
     std::cout << "radius 1 : " << procedural.radius << std::endl;
     std::cout << "radius 2 : " << procedural2.radius << std::endl;
@@ -258,15 +260,15 @@ int main()
 
         //spotLight.PassUniforms(ourShader, camera);
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < sphereList.size(); i++)
         {
-            for (int j = i + 1; j < 2; j++)
+            for (int j = i + 1; j < sphereList.size(); j++)
             {
                 sphereList.at(i)->CalcGravitation(*sphereList.at(j), G);
             }
         }
         ////// Update positions/velocities
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < sphereList.size(); i++) {
             sphereList.at(i)->Translate(deltaTime, ourShader, "model");
 
             ourShader.setVec3("velocity", sphereList.at(i)->velocity);

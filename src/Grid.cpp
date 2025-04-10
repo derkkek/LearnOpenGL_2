@@ -186,6 +186,6 @@ void Grid::UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, cons
 
             }
         }
-        vertices[i + 1] = totalDisplacement.y  -abs(verticalShift);
+        vertices[i + 1] = totalDisplacement.y - abs(verticalShift);
     }
 }

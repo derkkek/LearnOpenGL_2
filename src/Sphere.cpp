@@ -15,7 +15,7 @@ Sphere::Sphere(glm::vec3 position, glm::vec3 velocity, float mass, int sectors, 
 void Sphere::set(float radius, int sectors, int stacks, int up)
 {
     if (mass > 0)
-        this->radius = glm::pow(mass, 1.0f / 3.0f) * (1 / glm::pi<float>());
+        this->radius = 8.0f / 3.0f * glm::pow(mass, 1.0f / 3.0f) * (1 / glm::pi<float>());
     this->sectorCount = sectors;
     if (sectors < MIN_SECTOR_COUNT)
         this->sectorCount = MIN_SECTOR_COUNT;
