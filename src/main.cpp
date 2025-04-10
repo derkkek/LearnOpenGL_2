@@ -177,7 +177,7 @@ int main()
     Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 50000.0f); //5000000.0f
     Sphere procedural2(glm::vec3(10.0f, 0.0f, -200.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
     
-    DirectionalLight dirLight(glm::vec3(0.0f ,0.0f, -1.0f), glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
+    DirectionalLight dirLight(glm::vec3(-1.0f ,-1.0f, -1.0f), glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.2f));
     
     std::vector<Sphere*> sphereList;
     sphereList.push_back(&procedural);
@@ -232,11 +232,11 @@ int main()
         // don't forget to enable shader before setting uniforms
         ourShader.use();
         //dirLight.PassUniforms(ourShader);
-        ourShader.setVec3("dirLight.diffuse", dirLight.direction);
+        ourShader.setVec3("dirLight.direction", dirLight.direction);
 
         ourShader.setVec3("dirLight.diffuse", dirLight.diffuse);
         ourShader.setVec3("dirLight.ambient", dirLight.ambient);
-        ourShader.setVec3("dirLight.diffuse", dirLight.specular);
+        ourShader.setVec3("dirLight.specular", dirLight.specular);
         ourShader.setVec3("Color", glm::vec4(1.0f));
         ourShader.setVec3("viewPos", camera.Position);
         // view/projection transformations
@@ -270,7 +270,7 @@ int main()
             sphereList.at(i)->Translate(deltaTime, ourShader, "model");
 
             ourShader.setVec3("velocity", sphereList.at(i)->velocity);
-
+            ourShader.setVec3("Color", sphereList.at(i)->color);
             sphereList.at(i)->Draw();
         }
 

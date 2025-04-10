@@ -2,6 +2,8 @@
 #include "glm/glm.hpp"
 #include "model.h"
 #include "Shader.h"
+#include <random>
+
 const int MIN_SECTOR_COUNT = 2;
 const int MIN_STACK_COUNT = 2;
 
@@ -56,6 +58,8 @@ public:
 	std::vector<float> vertices;
 	float radius;
 
+	glm::vec3 color;
+
 private:
 	// for vertex data
 	unsigned int getVertexCount() const { return (unsigned int)vertices.size() / 3; }
@@ -70,7 +74,8 @@ private:
 	const float* getNormals() const { return normals.data(); }
 	const float* getTexCoords() const { return texCoords.data(); }
 	const unsigned int* getIndices() const { return indices.data(); }
-
+	
+	glm::vec3 GenerateRandomColor();
 
 
 	unsigned int VAO, VBO, EBO;

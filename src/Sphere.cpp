@@ -26,10 +26,22 @@ void Sphere::set(float radius, int sectors, int stacks, int up)
     if (up < 1 || up > 3)
         this->upAxis = 3;
 
+    this->color = GenerateRandomColor();
+
+
     buildVerticesSmooth();
     SetupBuffer();
     printSelf();
 }
+
+glm::vec3 Sphere::GenerateRandomColor()
+{
+    std::random_device rd;  // Seed
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+    return glm::vec3(dis(gen), dis(gen), dis(gen));
+}
+
 
 
 glm::vec3 Sphere::GetNetForce()
