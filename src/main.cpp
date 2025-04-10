@@ -13,7 +13,7 @@
 #include "Sphere.h"
 #include "Grid.h"
 
-#include "Spotlight.h"
+#include "DirectionalLight.h"
 
 #include <iostream>
 
@@ -176,13 +176,16 @@ int main()
 
     Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 50000.0f); //5000000.0f
     Sphere procedural2(glm::vec3(10.0f, 0.0f, -200.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
-
+    
+    DirectionalLight dirLight(glm::vec3(0.0f ,0.0f, -1.0f), glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
+    
     std::vector<Sphere*> sphereList;
     sphereList.push_back(&procedural);
     sphereList.push_back(&procedural2);
 
     std::cout << "radius 1 : " << procedural.radius << std::endl;
     std::cout << "radius 2 : " << procedural2.radius << std::endl;
+    std::cout << "light diff : " << glm::to_string(dirLight.diffuse)<< std::endl;
 
     float G = 4.0f; // 2.0f 0.5f
     float lightSpeed = 10000.0f; // Reduced for visual effect 250000.0f
@@ -194,7 +197,7 @@ int main()
     //earth.velocity = earthInitialVel;
 
 
-    Spotlight spotLight(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f, 0.09f, 0.032f, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
+    //Spotlight spotLight(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f, 0.09f, 0.032f, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
     Grid grid(2000.0f, 100);
 
 
@@ -228,10 +231,16 @@ int main()
 
         // don't forget to enable shader before setting uniforms
         ourShader.use();
+        //dirLight.PassUniforms(ourShader);
+        ourShader.setVec3("dirLight.diffuse", dirLight.direction);
+
+        ourShader.setVec3("dirLight.diffuse", dirLight.diffuse);
+        ourShader.setVec3("dirLight.ambient", dirLight.ambient);
+        ourShader.setVec3("dirLight.diffuse", dirLight.specular);
+        ourShader.setVec3("Color", glm::vec4(1.0f));
         ourShader.setVec3("viewPos", camera.Position);
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 2000.0f);
-        
         //procedural.Move(deltaTime);
         //procedural.HandleModelUniform(ourShader, "model");
         glm::mat4 view = camera.GetViewMatrix();
@@ -261,6 +270,7 @@ int main()
             sphereList.at(i)->Translate(deltaTime, ourShader, "model");
 
             ourShader.setVec3("velocity", sphereList.at(i)->velocity);
+
             sphereList.at(i)->Draw();
         }
 

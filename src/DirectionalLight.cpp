@@ -9,7 +9,7 @@ DirectionalLight::~DirectionalLight()
 {
 }
 
-void DirectionalLight::PassUniforms(Shader shader)
+void DirectionalLight::PassUniforms(Shader &shader)
 {
     shader.setVec3("dirLight.direction", this->direction);
     shader.setVec3("dirLight.ambient", this->ambient);
