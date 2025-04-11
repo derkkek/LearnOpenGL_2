@@ -173,13 +173,12 @@ void Grid::UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, cons
             float rs = (2 * G * sphere.mass) / (c * c);
 
             r = constant * sqrt(rs * (distance - rs));
-            /*if (dz > rs)*/
-            
+            if (r > rs)
             totalDisplacement.y += r;
 
             
             shpereY += sphere.position.y;
         }
-        vertices[i + 1] = totalDisplacement.y - 100 * constant; // -4.0f / 3.0f * shpereY;// -abs(verticalShift);
+        vertices[i + 1] = totalDisplacement.y - 170 * constant; // -4.0f / 3.0f * shpereY;// -abs(verticalShift);
     }
 }
