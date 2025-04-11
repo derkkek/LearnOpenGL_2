@@ -145,21 +145,13 @@ void Grid::BendGrid(const Sphere& sphere, float G, float sphereMass, float light
 void Grid::UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, const float c) 
 {
     // centre of mass calc
-    float totalMass = 0.0f;
-    float comY = 0.0f;
+
     //for (const auto& spherePtr : spheres) {
     //    const Sphere& sphere = *spherePtr; // Dereference the pointer
     //    comY += sphere.mass * sphere.position.y;
     //    totalMass += sphere.mass;
     //}
 
-    if (totalMass > 0) comY /= totalMass;
-
-    float originalMaxY = -std::numeric_limits<float>::infinity();
-    for (int i = 0; i < vertices.size(); i += 3) 
-    {
-        originalMaxY = std::max(originalMaxY, vertices[i + 1]);
-    }
 
 
 
@@ -169,23 +161,24 @@ void Grid::UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, cons
         glm::vec3 vertexPos(vertices[i], vertices[i + 1], vertices[i + 2]);
         glm::vec3 totalDisplacement(0.0f);
         float verticalShift = 0;
+        float shpereY{};
         for (const auto& spherePtr : spheres) 
 {
             const Sphere& sphere = *spherePtr;
-            verticalShift = sphere.position.y - originalMaxY;
 
             //glm::vec3 toObject = sphere.position - vertexPos;
             float distance = glm::distance(sphere.position,vertexPos);
-            float distance_m = distance * 1000.0f;
+            float distance_m = distance *1000.0f;
             float rs = (2 * G * sphere.mass) / (c * c);
 
             float dz = 2 * sqrt(rs * (distance_m - rs));
             if (dz > rs)
             {
-                totalDisplacement.y += dz * 4.0;
+                totalDisplacement.y += dz;
 
             }
+            shpereY = sphere.position.y;
         }
-        vertices[i + 1] = totalDisplacement.y - abs(verticalShift);
+        vertices[i + 1] = totalDisplacement.y - 4.0f/3.0f * shpereY;// -abs(verticalShift);
     }
 }

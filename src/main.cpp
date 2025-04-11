@@ -175,9 +175,9 @@ int main()
     Shader ourShader("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
     Shader gridShader("resource/shaders/grid.v", "resource/shaders/grid.f");
 
-    Sphere procedural(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 50000.0f); //5000000.0f
-    Sphere procedural2(glm::vec3(10.0f, 0.0f, -200.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
-    Sphere procedural3(glm::vec3(-500.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 30.0f), 15000.0f);
+    Sphere procedural(glm::vec3(0.0f,120.0f,0.0f), glm::vec3(1.0f, 0.0f, -1.0f), 50000.0f); //5000000.0f
+    Sphere procedural2(glm::vec3(10.0f, 120.0f, -200.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
+    Sphere procedural3(glm::vec3(-500.0f, 120.0f, 0.0f), glm::vec3(0.0f, 0.0f, 30.0f), 50000.0f);
     
     DirectionalLight dirLight(glm::vec3(-1.0f ,-1.0f, -1.0f), glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.2f));
     
@@ -191,7 +191,7 @@ int main()
     std::cout << "light diff : " << glm::to_string(dirLight.diffuse)<< std::endl;
 
     float G = 4.0f; // 2.0f 0.5f
-    float lightSpeed = 10000.0f; // Reduced for visual effect 250000.0f
+    float lightSpeed = 5000.0f; // Reduced for visual effect 250000.0f
 
 
     //float sunMass = sun.mass;
@@ -202,7 +202,8 @@ int main()
 
     //Spotlight spotLight(camera.Position, camera.Front, glm::cos(glm::radians(12.5f)), glm::cos(glm::radians(17.5f)), 1.0f, 0.09f, 0.032f, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(1.0f));
     Grid grid(2000.0f, 100);
-
+    std::cout << "Position sphere: vectoral " << glm::to_string(procedural.position) << "\n";
+    std::cout << "Position sphere: float y" << (procedural.position.y) << "\n";
 
     float rs = (2.0f * G * procedural.mass) / (lightSpeed * lightSpeed);
     std::cout << "Schwarzschild Radius: " << rs << std::endl;
@@ -296,7 +297,6 @@ int main()
 
 
         //grid.UpdateGridVertices(procedural, G, lightSpeed);
-        //grid.Print();
 
         //grid.BendGrid(procedural2, G, procedural2.mass, lightSpeed);
         //grid.UpdateBuffer();
