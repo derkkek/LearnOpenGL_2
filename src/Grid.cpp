@@ -144,40 +144,22 @@ void Grid::BendGrid(const Sphere& sphere, float G, float sphereMass, float light
 
 void Grid::UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, const float c) 
 {
-    // centre of mass calc
-
-    //for (const auto& spherePtr : spheres) {
-    //    const Sphere& sphere = *spherePtr; // Dereference the pointer
-    //    comY += sphere.mass * sphere.position.y;
-    //    totalMass += sphere.mass;
-    //}
-
-
-
-
     for (int i = 0; i < vertices.size(); i += 3) {
 
         // mass bending space
         glm::vec3 vertexPos(vertices[i], vertices[i + 1], vertices[i + 2]);
         glm::vec3 totalDisplacement(0.0f);
-        float r{};
-        float shpereY{};
-        float constant = 2.0f;
+        float constant = 3.0f;
         for (const auto& spherePtr : spheres) 
 {
             const Sphere& sphere = *spherePtr;
 
-            //glm::vec3 toObject = sphere.position - vertexPos;
             float distance = glm::distance(sphere.position,vertexPos);
-            //float distance_m = distance * 1000.0f;
             float rs = (2 * G * sphere.mass) / (c * c);
 
-            r = constant * sqrt(rs * (distance - rs));
+            float r = constant * sqrt(rs * (distance - rs));
             if (distance > rs)
             totalDisplacement.y += r;
-
-            
-            shpereY += sphere.position.y;
         }
         vertices[i + 1] = totalDisplacement.y - 150.0f * constant; // -4.0f / 3.0f * shpereY;// -abs(verticalShift);
     }

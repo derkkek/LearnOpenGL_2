@@ -177,7 +177,7 @@ int main()
 
     Sphere procedural(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f, 0.0f, 1.0f), 50000.0f); //5000000.0f
     Sphere procedural2(glm::vec3(10.0f, 0.0f, -200.0f), glm::vec3(30.0f, 0.0f, -3.0f), 500.0f);
-    Sphere procedural3(glm::vec3(-500.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 30.0f), 50000.0f);
+    Sphere procedural3(glm::vec3(-500.0f, 0.0f, -1000.0f), glm::vec3(0.0f, 0.0f, 30.0f), 50000.0f);
     
     DirectionalLight dirLight(glm::vec3(-1.0f ,-1.0f, -1.0f), glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.2f));
     
@@ -191,7 +191,7 @@ int main()
     std::cout << "light diff : " << glm::to_string(dirLight.diffuse)<< std::endl;
 
     float G = 4.0f; // 2.0f 0.5f
-    float lightSpeed = 150.0f; // Reduced for visual effect 250000.0f
+    float lightSpeed = 190.0f; // Reduced for visual effect 250000.0f
 
 
     //float sunMass = sun.mass;
