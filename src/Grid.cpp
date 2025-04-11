@@ -160,25 +160,26 @@ void Grid::UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, cons
         // mass bending space
         glm::vec3 vertexPos(vertices[i], vertices[i + 1], vertices[i + 2]);
         glm::vec3 totalDisplacement(0.0f);
-        float verticalShift = 0;
+        float r{};
         float shpereY{};
+        float constant = 3.0f;
         for (const auto& spherePtr : spheres) 
 {
             const Sphere& sphere = *spherePtr;
 
             //glm::vec3 toObject = sphere.position - vertexPos;
             float distance = glm::distance(sphere.position,vertexPos);
-            float distance_m = distance *1000.0f;
+            //float distance_m = distance * 1000.0f;
             float rs = (2 * G * sphere.mass) / (c * c);
 
-            float dz = 2 * sqrt(rs * (distance_m - rs));
-            if (dz > rs)
-            {
-                totalDisplacement.y += dz;
+            r = constant * sqrt(rs * (distance - rs));
+            /*if (dz > rs)*/
+            
+            totalDisplacement.y += r;
 
-            }
-            shpereY = sphere.position.y;
+            
+            shpereY += sphere.position.y;
         }
-        vertices[i + 1] = totalDisplacement.y - 4.0f/3.0f * shpereY;// -abs(verticalShift);
+        vertices[i + 1] = totalDisplacement.y - 100 * constant; // -4.0f / 3.0f * shpereY;// -abs(verticalShift);
     }
 }
