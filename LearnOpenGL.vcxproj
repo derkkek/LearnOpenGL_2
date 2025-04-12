@@ -543,12 +543,16 @@
   <ItemGroup>
     <None Include="resource\models\backpack\backpack.mesh" />
     <None Include="resource\models\backpack\backpack.mtl" />
+    <None Include="resource\shaders\2.stencil_single_color.fs" />
+    <None Include="resource\shaders\2.stencil_testing.fs" />
+    <None Include="resource\shaders\2.stencil_testing.vs" />
     <None Include="resource\shaders\depth_test.f" />
     <None Include="resource\shaders\depth_test.v" />
     <None Include="resource\shaders\grid.f" />
     <None Include="resource\shaders\grid.v" />
     <None Include="resource\shaders\light_shader.v" />
     <None Include="resource\shaders\light_shader.f" />
+    <None Include="resource\shaders\outline.f" />
     <None Include="resource\shaders\procedural_sphere.f" />
     <None Include="resource\shaders\procedural_sphere.v" />
     <None Include="resource\shaders\shader.f" />

@@ -1664,6 +1664,10 @@
     <None Include="resource\shaders\grid.v" />
     <None Include="resource\shaders\procedural_sphere.f" />
     <None Include="resource\shaders\procedural_sphere.v" />
+    <None Include="resource\shaders\outline.f" />
+    <None Include="resource\shaders\2.stencil_single_color.fs" />
+    <None Include="resource\shaders\2.stencil_testing.fs" />
+    <None Include="resource\shaders\2.stencil_testing.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
