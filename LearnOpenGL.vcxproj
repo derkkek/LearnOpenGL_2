@@ -546,8 +546,12 @@
     <None Include="resource\shaders\2.stencil_single_color.fs" />
     <None Include="resource\shaders\2.stencil_testing.fs" />
     <None Include="resource\shaders\2.stencil_testing.vs" />
+    <None Include="resource\shaders\5.1.framebuffers.fs" />
+    <None Include="resource\shaders\5.1.framebuffers.vs" />
     <None Include="resource\shaders\depth_test.f" />
     <None Include="resource\shaders\depth_test.v" />
+    <None Include="resource\shaders\framebuffers_screen.f" />
+    <None Include="resource\shaders\framebuffers_screen.v" />
     <None Include="resource\shaders\grid.f" />
     <None Include="resource\shaders\grid.v" />
     <None Include="resource\shaders\light_shader.v" />
