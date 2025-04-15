@@ -26,11 +26,10 @@ public:
 
 	virtual void Draw() const override;
 	virtual const glm::mat4 getModelMatrix() const override;
-	virtual const glm::vec3 getObjectColor() const override;
-	virtual
+	
 	void Print();
 
-	void resetVertices();
+
 
 	glm::mat4 model = glm::mat4(1.0f);
 
@@ -46,7 +45,7 @@ private:
 
 	float CalcRadialDistance(glm::vec3 sphereCenter, float grid_x, float grid_y, float grid_z);
 	float CalcSchwarzschildRadius(float G, float sphereMass, float lightSpeed);
-
+	void resetVertices();
 	glm::mat4 view;
 	glm::vec3 color = glm::vec3(0.5f);
 

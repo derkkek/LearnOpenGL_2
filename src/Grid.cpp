@@ -89,11 +89,6 @@ glm::mat4 const Grid::getModelMatrix() const
     return this->model;
 }
 
-glm::vec3 const Grid::getObjectColor() const
-{
-    return this->color;
-}
-
 void Grid::Print()
 {
     for (size_t i = 0; i < vertices.size(); i += 3)

@@ -14,10 +14,9 @@ public:
         glm::mat4 view = camera.GetViewMatrix();
         shader.setMat4("view", view);
         shader.setMat4("model", object->getModelMatrix());
-
+        
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), SCR_WIDTH / SCR_HEIGHT, 0.1f, 500.0f);
         shader.setMat4("projection", projection);
-        shader.setVec3("Color", object->getObjectColor());
         shader.setVec3("viewPos", camera.Position);
 
         // For example, set the "model" matrix uniform:

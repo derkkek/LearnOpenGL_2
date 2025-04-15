@@ -1185,6 +1185,12 @@
     <ClInclude Include="src\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\TextureLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />
@@ -1215,6 +1221,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1678,6 +1687,10 @@
     <None Include="resource\shaders\framebuffers_screen.f" />
     <None Include="resource\shaders\5.1.framebuffers.fs" />
     <None Include="resource\shaders\5.1.framebuffers.vs" />
+    <None Include="resource\shaders\6.1.cubemaps.f" />
+    <None Include="resource\shaders\6.1.cubemaps.v" />
+    <None Include="resource\shaders\6.1.skybox.f" />
+    <None Include="resource\shaders\6.1.skybox.v" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">

@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\DirectionalLight.h" />
     <ClInclude Include="src\filesystem.h" />
     <ClInclude Include="src\Grid.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="src\Sphere.h" />
     <ClInclude Include="src\Spotlight.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\TextureLoader.h" />
     <ClInclude Include="vendor\include\assimp\aabb.h" />
     <ClInclude Include="vendor\include\assimp\ai_assert.h" />
     <ClInclude Include="vendor\include\assimp\anim.h" />
@@ -532,6 +534,7 @@
     <Library Include="vendor\libs\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\DirectionalLight.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\Grid.cpp" />
@@ -550,6 +553,10 @@
     <None Include="resource\shaders\2.stencil_testing.vs" />
     <None Include="resource\shaders\5.1.framebuffers.fs" />
     <None Include="resource\shaders\5.1.framebuffers.vs" />
+    <None Include="resource\shaders\6.1.cubemaps.f" />
+    <None Include="resource\shaders\6.1.cubemaps.v" />
+    <None Include="resource\shaders\6.1.skybox.f" />
+    <None Include="resource\shaders\6.1.skybox.v" />
     <None Include="resource\shaders\depth_test.f" />
     <None Include="resource\shaders\depth_test.v" />
     <None Include="resource\shaders\framebuffers_screen.f" />

@@ -13,6 +13,8 @@
 #include "Sphere.h"
 #include "Grid.h"
 #include "Renderer.h"
+#include "TextureLoader.h"
+#include "Cube.h"
 
 #include "DirectionalLight.h"
 
@@ -82,22 +84,89 @@ int main()
 
     // build and compile shaders
     // -------------------------
-    Shader shader("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
+    Shader shader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
+    Shader skyboxShader("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
 
     DirectionalLight dirLight(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f));
 
 
+    float skyboxVertices[] = {
+        // positions          
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        -1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f
+    };
+    unsigned int skyboxVAO, skyboxVBO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glGenBuffers(1, &skyboxVBO);
+    glBindVertexArray(skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+
+    vector<std::string> faces
+    {
+        ("resource/textures/skybox/right.jpg"),
+        ("resource/textures/skybox/left.jpg"),
+        ("resource/textures/skybox/top.jpg"),
+        ("resource/textures/skybox/bottom.jpg"),
+        ("resource/textures/skybox/front.jpg"),
+        ("resource/textures/skybox/back.jpg")
+    };
+    unsigned int cubemapTexture = TextureLoader::loadCubemap(faces);
 
 
 
 
+    //Sphere sphere(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, 0.0f), 1.0f);
+    //Grid grid(1000.0f, 100.0f);
 
-    Sphere sphere(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, 0.0f), 1.0f);
-    Grid grid(1000.0f, 100.0f);
-
+    //sceneObjects.push_back(&sphere);
+    //sceneObjects.push_back(&grid);
+    
+    Cube cube;
     std::vector<IRenderable*> sceneObjects;
-    sceneObjects.push_back(&sphere);
-    sceneObjects.push_back(&grid);
+    sceneObjects.push_back(&cube);
     
     Renderer renderer;
     // draw as wireframe
@@ -118,8 +187,33 @@ int main()
         processInput(window);
 
         shader.use();
+        shader.setInt("texture1", 0);
+        
         dirLight.PassUniforms(shader);
-        renderer.renderScene(sceneObjects, shader, camera, SCR_WIDTH, SCR_HEIGHT);
+        renderer.renderObject(&cube, shader, camera, SCR_WIDTH, SCR_HEIGHT);
+
+
+
+
+
+        // draw skybox as last
+        glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+        skyboxShader.use();
+
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+        skyboxShader.setMat4("view", view);
+        skyboxShader.setMat4("projection", projection);
+        // skybox cube
+        glBindVertexArray(skyboxVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthFunc(GL_LESS); // set depth function back to default
+
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -186,43 +280,4 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
-}
-
-// utility function for loading a 2D texture from file
-// ---------------------------------------------------
-unsigned int loadTexture(char const* path)
-{
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
-
-    int width, height, nrComponents;
-    unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
-    if (data)
-    {
-        GLenum format;
-        if (nrComponents == 1)
-            format = GL_RED;
-        else if (nrComponents == 3)
-            format = GL_RGB;
-        else if (nrComponents == 4)
-            format = GL_RGBA;
-
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        stbi_image_free(data);
-    }
-    else
-    {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
-        stbi_image_free(data);
-    }
-
-    return textureID;
 }
