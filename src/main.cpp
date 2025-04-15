@@ -93,9 +93,11 @@ int main()
 
 
     Sphere sphere(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, 0.0f), 1.0f);
+    Grid grid(1000.0f, 100.0f);
 
     std::vector<IRenderable*> sceneObjects;
     sceneObjects.push_back(&sphere);
+    sceneObjects.push_back(&grid);
     
     Renderer renderer;
     // draw as wireframe
@@ -117,7 +119,6 @@ int main()
 
         shader.use();
         dirLight.PassUniforms(shader);
-
         renderer.renderScene(sceneObjects, shader, camera, SCR_WIDTH, SCR_HEIGHT);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

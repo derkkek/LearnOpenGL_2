@@ -79,10 +79,19 @@ void Grid::UpdateBuffer()
 
 }
 
-void Grid::Draw()
+void Grid::Draw() const
 {
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_LINES, 0, vertices.size() / 3); // 3 components per vertex
+}
+glm::mat4 const Grid::getModelMatrix() const
+{
+    return this->model;
+}
+
+glm::vec3 const Grid::getObjectColor() const
+{
+    return this->color;
 }
 
 void Grid::Print()

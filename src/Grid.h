@@ -8,9 +8,10 @@
 #include "iostream"
 #include <GLFW/glfw3.h>
 #include "Sphere.h"
+#include "IRenderable.h"
 
 
-class Grid
+class Grid : public IRenderable
 {
 public:
 	Grid(float size, int divisions);
@@ -22,7 +23,11 @@ public:
 	void UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, const float c);
 
 	void UpdateBuffer();
-	void Draw();
+
+	virtual void Draw() const override;
+	virtual const glm::mat4 getModelMatrix() const override;
+	virtual const glm::vec3 getObjectColor() const override;
+	virtual
 	void Print();
 
 	void resetVertices();
@@ -43,7 +48,7 @@ private:
 	float CalcSchwarzschildRadius(float G, float sphereMass, float lightSpeed);
 
 	glm::mat4 view;
-
+	glm::vec3 color = glm::vec3(0.5f);
 
 	glm::mat4 projection = glm::ortho(
 		-10.0f, 10.0f,  // X-axis range (left/right)
