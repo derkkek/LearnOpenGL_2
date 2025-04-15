@@ -88,18 +88,15 @@ int main()
 
 
 
-    // shader configuration
-    // --------------------
-    shader.use();
+
 
 
 
     Sphere sphere(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, 0.0f), 1.0f);
-    sphere.color = glm::vec3(1.0f);
-    sphere.model = glm::mat4(1.0f);
 
     std::vector<IRenderable*> sceneObjects;
     sceneObjects.push_back(&sphere);
+    
     Renderer renderer;
     // draw as wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -116,20 +113,12 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-
         processInput(window);
-        
-        glm::mat4 view = camera.GetViewMatrix();
-        shader.setMat4("view", view);
-        shader.setMat4("model", sphere.model);
 
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 500.0f);
-        shader.setMat4("projection", projection);
-        shader.setVec3("Color", sphere.color);
-        shader.setVec3("viewPos", camera.Position);
+        shader.use();
         dirLight.PassUniforms(shader);
 
-        renderer.renderObject(&sphere, shader);
+        renderer.renderScene(sceneObjects, shader, camera, SCR_WIDTH, SCR_HEIGHT);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

@@ -11,6 +11,8 @@ public:
 	virtual ~IRenderable() = default;
 
 	virtual const glm::mat4 getModelMatrix() const = 0;
+	
+	virtual const glm::vec3 getObjectColor() const = 0;
 
 	virtual void Draw() const = 0;
 };

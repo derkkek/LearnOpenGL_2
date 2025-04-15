@@ -45,6 +45,11 @@ const glm::mat4 Sphere::getModelMatrix() const
     return this->model;
 }
 
+const glm::vec3 Sphere::getObjectColor() const
+{
+    return this->color;
+}
+
 
 
 glm::vec3 Sphere::GenerateRandomColor()

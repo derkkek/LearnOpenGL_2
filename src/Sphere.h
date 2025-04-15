@@ -46,13 +46,14 @@ public:
 	//interface contracts
 	virtual void Draw() const override;
 	virtual const glm::mat4 getModelMatrix() const override;
+	virtual const glm::vec3 getObjectColor() const override;
 
 	void printSelf() const;
 	void set(float radius, int sectors, int stacks, int up);
 
 
 	glm::vec3 position;
-	glm::mat4 model;
+	glm::mat4 model = glm::mat4(1.0f);
 	glm::vec3 acceleration;
 	float mass;
 	glm::vec3 force;
