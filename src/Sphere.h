@@ -1,4 +1,5 @@
 #pragma once
+#include "IRenderable.h"
 #include "glm/glm.hpp"
 #include "model.h"
 #include "Shader.h"
@@ -7,7 +8,7 @@
 const int MIN_SECTOR_COUNT = 2;
 const int MIN_STACK_COUNT = 2;
 
-class Sphere
+class Sphere : public IRenderable
 {
 public:
 	//Sphere(string const& path, glm::vec3 pos = glm::vec3(0), float mass = 100000.0f, glm::vec3 vel = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 force = glm::vec3(0.0,0.0f,0.0f), glm::vec3 acceleration = glm::vec3(0));
@@ -22,7 +23,6 @@ public:
 	void CalcAcceleration();
 	void CalcVelocity(float deltaTime);
 	void Move(float deltatime);
-	void HandleModelUniform(Shader &shader, string const& location);
 	void CalcGravitation(Sphere &sphere, float G);
 
 	void Translate(float deltatime, Shader& shader, string const& model_location);
@@ -42,7 +42,11 @@ public:
 	void addIndices(unsigned int i1, unsigned int i2, unsigned int i3);
 	void SetupBuffer();
 	void buildInterleavedVertices();
-	void Draw();
+	
+	//interface contracts
+	virtual void Draw() const override;
+	virtual const glm::mat4 getModelMatrix() const override;
+
 	void printSelf() const;
 	void set(float radius, int sectors, int stacks, int up);
 
@@ -76,6 +80,7 @@ private:
 	const unsigned int* getIndices() const { return indices.data(); }
 	
 	glm::vec3 GenerateRandomColor();
+	void HandleModelUniform(Shader& shader, string const& location);
 
 
 	unsigned int VAO, VBO, EBO;

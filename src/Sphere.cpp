@@ -34,6 +34,19 @@ void Sphere::set(float radius, int sectors, int stacks, int up)
     printSelf();
 }
 
+void Sphere::Draw() const
+{
+    glBindVertexArray(this->VAO);
+    glDrawElements(GL_TRIANGLES, (unsigned int)indices.size(), GL_UNSIGNED_INT, (void*)0);
+}
+
+const glm::mat4 Sphere::getModelMatrix() const
+{
+    return this->model;
+}
+
+
+
 glm::vec3 Sphere::GenerateRandomColor()
 {
     std::random_device rd;  // Seed
@@ -41,8 +54,6 @@ glm::vec3 Sphere::GenerateRandomColor()
     std::uniform_real_distribution<float> dis(0.0f, 1.0f);
     return glm::vec3(dis(gen), dis(gen), dis(gen));
 }
-
-
 
 glm::vec3 Sphere::GetNetForce()
 {
@@ -140,13 +151,6 @@ void Sphere::buildInterleavedVertices()
         interleavedVertices.push_back(texCoords[j + 1]);
     }
 }
-
-void Sphere::Draw()
-{
-    glBindVertexArray(this->VAO);
-    glDrawElements(GL_TRIANGLES, (unsigned int)indices.size(), GL_UNSIGNED_INT, (void*) 0 );
-}
-
 
 
 void Sphere::clearArrays()
