@@ -198,6 +198,7 @@ int main()
 
         // draw skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+        
         skyboxShader.use();
 
         glm::mat4 model = glm::mat4(1.0f);

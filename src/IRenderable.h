@@ -12,7 +12,8 @@ public:
 
 	virtual const glm::mat4 getModelMatrix() const = 0;
 	
-	virtual void Draw() const = 0;
+	virtual void Draw() = 0;
+
 };
 
 

@@ -1,6 +1,7 @@
 #include "Cube.h"
 
-Cube::Cube()
+Cube::Cube(std::string& vertex_source, std::string& fragment_source)
+    :shader(vertex_source.c_str(), fragment_source.c_str())
 {
     SetupBuffer();
     AssignTexture();
@@ -52,16 +53,12 @@ const float Cube::vertices[180] =
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
-void Cube::BindTexture() const
+void Cube::Draw()
 {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, this->texture);
-}
-
-void Cube::Draw() const
-{
+    this->shader.use();
+    shader.setMat4("model", this->model);
+    //shader.setMat4("view")
     glBindVertexArray(this->VAO);
-    BindTexture();
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
 }
@@ -88,7 +85,7 @@ const glm::mat4 Cube::getModelMatrix() const
 
 void Cube::AssignTexture(const std::string& path)
 {
-    this->texture = TextureLoader::loadTexture(path.c_str());
+    this->textureID = TextureLoader::loadTexture(path.c_str());
 }
 
 
