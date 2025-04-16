@@ -24,7 +24,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
-unsigned int loadTexture(const char* path);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -84,8 +83,8 @@ int main()
 
     // build and compile shaders
     // -------------------------
-    Shader shader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-    Shader skyboxShader("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
+    //Shader shader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
+    //Shader skyboxShader("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
 
     DirectionalLight dirLight(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f));
 
@@ -168,7 +167,7 @@ int main()
     Cube cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
     std::vector<IRenderable*> sceneObjects;
     sceneObjects.push_back(&cube);
-    
+
     Renderer renderer;
     // draw as wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -190,31 +189,32 @@ int main()
         //shader.use();
         //shader.setInt("texture1", 0);
         
-        dirLight.PassUniforms(shader);
-        renderer.renderObject(&cube, shader, camera, SCR_WIDTH, SCR_HEIGHT);
+        //dirLight.PassUniforms(cube.shader);
 
+        renderer.renderObject(&cube, cube.shader, camera, SCR_WIDTH, SCR_HEIGHT);
 
-
-
-
-        // draw skybox as last
-        glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
         
-        skyboxShader.use();
 
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = camera.GetViewMatrix();
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
-        skyboxShader.setMat4("view", view);
-        skyboxShader.setMat4("projection", projection);
-        // skybox cube
-        glBindVertexArray(skyboxVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthFunc(GL_LESS); // set depth function back to default
+
+
+        //// draw skybox as last
+        //glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+        //
+        ////skyboxShader.use();
+
+        //glm::mat4 model = glm::mat4(1.0f);
+        //glm::mat4 view = camera.GetViewMatrix();
+        //glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        //view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+        ////skyboxShader.setMat4("view", view);
+        ////skyboxShader.setMat4("projection", projection);
+        //// skybox cube
+        //glBindVertexArray(skyboxVAO);
+        //glActiveTexture(GL_TEXTURE0);
+        //glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+        //glDrawArrays(GL_TRIANGLES, 0, 36);
+        //glBindVertexArray(0);
+        //glDepthFunc(GL_LESS); // set depth function back to default
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

@@ -13,6 +13,7 @@ public:
 	virtual void Draw() override;
 	
 	virtual const glm::mat4 getModelMatrix() const;
+	Shader shader;
 
 
 private:
@@ -20,7 +21,6 @@ private:
 	unsigned int VAO, VBO;
 	unsigned int textureID;
 
-	Shader shader;
 	unsigned int shaderID;
 	glm::mat4 model = glm::mat4(1.0f);
 
