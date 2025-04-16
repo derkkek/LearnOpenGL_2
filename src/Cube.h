@@ -7,10 +7,10 @@
 class Cube :public IRenderable
 {
 public:
-	Cube(std::string& vertex_source, std::string& fragment_source);
+	Cube(const std::string& vertex_source, const std::string& fragment_source);
 	~Cube() = default;
 
-	virtual void Draw();
+	virtual void Draw() override;
 	
 	virtual const glm::mat4 getModelMatrix() const;
 

@@ -44,7 +44,7 @@ public:
 	void buildInterleavedVertices();
 	
 	//interface contracts
-	virtual void Draw() const override;
+	virtual void Draw() override;
 	virtual const glm::mat4 getModelMatrix() const override;
 
 	void printSelf() const;

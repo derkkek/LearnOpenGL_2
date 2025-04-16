@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube(std::string& vertex_source, std::string& fragment_source)
+Cube::Cube(const std::string& vertex_source, const std::string& fragment_source)
     :shader(vertex_source.c_str(), fragment_source.c_str())
 {
     SetupBuffer();
@@ -57,7 +57,12 @@ void Cube::Draw()
 {
     this->shader.use();
     shader.setMat4("model", this->model);
+    shader.setInt("texture1", 0);
+    glActiveTexture(GL_TEXTURE0);
+
+    glBindTexture(GL_TEXTURE_2D, this->textureID);
     //shader.setMat4("view")
+
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);

@@ -79,7 +79,7 @@ void Grid::UpdateBuffer()
 
 }
 
-void Grid::Draw() const
+void Grid::Draw()
 {
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_LINES, 0, vertices.size() / 3); // 3 components per vertex

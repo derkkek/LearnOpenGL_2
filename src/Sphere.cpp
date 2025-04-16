@@ -34,7 +34,7 @@ void Sphere::set(float radius, int sectors, int stacks, int up)
     printSelf();
 }
 
-void Sphere::Draw() const
+void Sphere::Draw()
 {
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, (unsigned int)indices.size(), GL_UNSIGNED_INT, (void*)0);

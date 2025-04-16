@@ -164,7 +164,8 @@ int main()
     //sceneObjects.push_back(&sphere);
     //sceneObjects.push_back(&grid);
     
-    Cube cube;
+
+    Cube cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
     std::vector<IRenderable*> sceneObjects;
     sceneObjects.push_back(&cube);
     
@@ -186,8 +187,8 @@ int main()
 
         processInput(window);
 
-        shader.use();
-        shader.setInt("texture1", 0);
+        //shader.use();
+        //shader.setInt("texture1", 0);
         
         dirLight.PassUniforms(shader);
         renderer.renderObject(&cube, shader, camera, SCR_WIDTH, SCR_HEIGHT);
