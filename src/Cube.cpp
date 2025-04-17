@@ -53,10 +53,14 @@ const float Cube::vertices[180] =
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
-void Cube::Draw()
+void Cube::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos)
 {
     this->shader.use();
+
     shader.setMat4("model", this->model);
+    shader.setMat4("view",view);
+    shader.setMat4("projection", projection);
+    shader.setVec3("viewPos", viewPos);
     shader.setInt("texture1", 0);
     glActiveTexture(GL_TEXTURE0);
 

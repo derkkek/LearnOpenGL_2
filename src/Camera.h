@@ -21,6 +21,7 @@ const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 
 
+
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
 class Camera
 {
@@ -39,13 +40,21 @@ public:
     float MouseSensitivity;
     float Zoom;
 
+    float Near;
+    float Far;
+    float aspectRatio;
+
     // constructor with vectors
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    Camera(float aspectRatio, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH, float near = 0.1f, float far = 100.0f)
+        : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM), Near(near), Far(far), aspectRatio(aspectRatio)
     {
         Position = position;
         WorldUp = up;
         Yaw = yaw;
         Pitch = pitch;
+        Near = near;
+        Far = far;
+        aspectRatio = aspectRatio;
         updateCameraVectors();
     }
     // constructor with scalar values
@@ -62,6 +71,10 @@ public:
     glm::mat4 GetViewMatrix()
     {
         return glm::lookAt(Position, Position + Front, Up);
+    }
+    glm::mat4 GetProjectionMatrix()
+    {
+        return glm::perspective(glm::radians(this->Zoom), aspectRatio, Near, Far);
     }
 
     // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)

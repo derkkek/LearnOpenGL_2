@@ -3,14 +3,15 @@
 #include "glad/glad.h"
 #include "TextureLoader.h"
 #include "Shader.h"
+#include "Camera.h"
 
-class Cube :public IRenderable
+class Cube // :public IRenderable
 {
 public:
 	Cube(const std::string& vertex_source, const std::string& fragment_source);
 	~Cube() = default;
 
-	virtual void Draw() override;
+	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos);
 	
 	virtual const glm::mat4 getModelMatrix() const;
 	Shader shader;

@@ -15,6 +15,7 @@
 #include "Renderer.h"
 #include "TextureLoader.h"
 #include "Cube.h"
+#include "Skybox.h"
 
 #include "DirectionalLight.h"
 
@@ -30,7 +31,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -86,92 +87,9 @@ int main()
     //Shader shader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
 
     DirectionalLight dirLight(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f));
-
-
-    float skyboxVertices[] = {
-        // positions          
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-        -1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f
-    };
-    unsigned int skyboxVAO, skyboxVBO;
-    glGenVertexArrays(1, &skyboxVAO);
-    glGenBuffers(1, &skyboxVBO);
-    glBindVertexArray(skyboxVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     
-    glBindVertexArray(0);
-
-    vector<std::string> faces
-    {
-        ("resource/textures/skybox/right.jpg"),
-        ("resource/textures/skybox/left.jpg"),
-        ("resource/textures/skybox/top.jpg"),
-        ("resource/textures/skybox/bottom.jpg"),
-        ("resource/textures/skybox/front.jpg"),
-        ("resource/textures/skybox/back.jpg")
-    };
-    unsigned int cubemapTexture = TextureLoader::loadCubemap(faces);
-    Shader skyboxShader("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
-
-
-
-
-    //Sphere sphere(glm::vec3(0.0f), glm::vec3(1.0f, 0.0f, 0.0f), 1.0f);
-    //Grid grid(1000.0f, 100.0f);
-
-    //sceneObjects.push_back(&sphere);
-    //sceneObjects.push_back(&grid);
-    
-
     Cube cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-    std::vector<IRenderable*> sceneObjects;
-    sceneObjects.push_back(&cube);
-
-    Renderer renderer;
-    // draw as wireframe
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    Skybox skyBox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
 
     // render loop
     // -----------
@@ -187,36 +105,14 @@ int main()
 
         processInput(window);
 
-        //shader.use();
-        //shader.setInt("texture1", 0);
         
         //dirLight.PassUniforms(cube.shader);
+        cube.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
 
-        renderer.renderObject(&cube, cube.shader, camera, SCR_WIDTH, SCR_HEIGHT);
-
-        
-
+        skyBox.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
 
 
-        //// draw skybox as last
-        glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-        //
-
-        skyboxShader.use();
-        skyboxShader.setInt("skybox", 0);
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = camera.GetViewMatrix();
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
-        skyboxShader.setMat4("view", view);
-        skyboxShader.setMat4("projection", projection);
-        /// skybox cube
-        glBindVertexArray(skyboxVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthFunc(GL_LESS); // set depth function back to default
+     
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

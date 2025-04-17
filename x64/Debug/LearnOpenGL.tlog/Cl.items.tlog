@@ -4,6 +4,7 @@ C:\dev\OpenGL\LearnOpenGL\src\glad.c;C:\dev\OpenGL\LearnOpenGL\x64\Debug\glad.ob
 C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Grid.obj
 C:\dev\OpenGL\LearnOpenGL\src\main.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\main.obj
 C:\dev\OpenGL\LearnOpenGL\src\PointLight.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\PointLight.obj
+C:\dev\OpenGL\LearnOpenGL\src\Skybox.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Skybox.obj
 C:\dev\OpenGL\LearnOpenGL\src\Sphere.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Sphere.obj
 C:\dev\OpenGL\LearnOpenGL\src\Spotlight.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Spotlight.obj
 C:\dev\OpenGL\LearnOpenGL\src\stb_image.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\stb_image.obj

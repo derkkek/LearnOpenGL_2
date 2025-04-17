@@ -150,6 +150,7 @@
     <ClInclude Include="src\root_directory.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\shader_m.h" />
+    <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Sphere.h" />
     <ClInclude Include="src\Spotlight.h" />
     <ClInclude Include="src\stb_image.h" />
@@ -540,6 +541,7 @@
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PointLight.cpp" />
+    <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
     <ClCompile Include="src\Spotlight.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
