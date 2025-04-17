@@ -11,6 +11,8 @@ public:
     void renderObject(IRenderable* object, Shader& shader, Camera& camera, float SCR_WIDTH, float SCR_HEIGHT) {
         // Bind the shader (if necessary) and set uniforms.
 
+        // Then let the object handle its own draw calls.
+        object->Draw();
         glm::mat4 view = camera.GetViewMatrix();
         shader.setMat4("view", view);
         
@@ -18,8 +20,6 @@ public:
         shader.setMat4("projection", projection);
         shader.setVec3("viewPos", camera.Position);
 
-        // Then let the object handle its own draw calls.
-        object->Draw();
     }
 
     // Optionally, render a list of objects.
