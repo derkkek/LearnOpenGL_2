@@ -1,9 +1,9 @@
 #include "Skybox.h"
 
-Skybox::Skybox(const std::string& vertex_path, const std::string& fragment_path)
-    :shader(vertex_path.c_str(), fragment_path.c_str())
+Skybox::Skybox(const std::string& vertex_path, const std::string& fragment_path) : RenderableObject(vertex_path, fragment_path)
 {
     SetupBuffer();
+    AssignTexture();
 }
 
 void Skybox::SetupBuffer()
@@ -19,6 +19,11 @@ void Skybox::SetupBuffer()
     glBindVertexArray(0);
 }
 
+void Skybox::AssignTexture()
+{
+    this->textureID = TextureLoader::loadCubemap(this->faces);
+}
+
 void Skybox::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos)
 {
     this->shader.use();
@@ -32,7 +37,7 @@ void Skybox::Draw(const glm::mat4& view, const glm::mat4& projection, const glm:
     // skybox cube
     glBindVertexArray(this->VAO);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, this->cubemapTexture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->textureID);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
     glDepthFunc(GL_LESS); // set depth function back to default

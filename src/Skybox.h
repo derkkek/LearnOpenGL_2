@@ -3,22 +3,21 @@
 #include "Shader.h"
 #include <vector>
 #include "TextureLoader.h"
+#include "RenderableObject.h"
 
-class Skybox
+class Skybox : protected RenderableObject
 {
 public:
 	Skybox(const std::string& vertex_path, const std::string& fragment_path);
 	~Skybox() = default;
 
-	Shader shader;
-
     void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos);
 
 	
 private:
-    unsigned int VAO, VBO;
 
     void SetupBuffer();
+    void AssignTexture();
 
     std::vector<std::string> faces
     {
@@ -29,10 +28,6 @@ private:
         ("resource/textures/skybox/front.jpg"),
         ("resource/textures/skybox/back.jpg")
     };
-
-    unsigned int cubemapTexture = TextureLoader::loadCubemap(faces);
-    
-
 
 	float vertices[3 * 36] = {
         // positions          

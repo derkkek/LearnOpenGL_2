@@ -82,11 +82,6 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    // build and compile shaders
-    // -------------------------
-    //Shader shader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-
-    DirectionalLight dirLight(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(1.0f), glm::vec3(1.0f), glm::vec3(1.0f));
     
     Cube cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
     Skybox skyBox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
@@ -105,14 +100,9 @@ int main()
 
         processInput(window);
 
-        
-        //dirLight.PassUniforms(cube.shader);
         cube.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
 
         skyBox.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
-
-
-     
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -120,8 +110,6 @@ int main()
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
-
 
     glfwTerminate();
     return 0;
