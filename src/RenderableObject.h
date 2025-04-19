@@ -11,7 +11,7 @@ public:
 protected:
 	Shader shader;
 
-	unsigned int VAO, VBO;
+	unsigned int VAO, VBO, EBO;
 
 	unsigned int textureID;
 };

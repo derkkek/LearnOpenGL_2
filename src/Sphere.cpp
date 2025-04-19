@@ -6,8 +6,9 @@
 //
 //}
 
-Sphere::Sphere(glm::vec3 position, glm::vec3 velocity, float mass, int sectors, int stacks, int up)
-    : interleavedStride((3 + 3 + 2) * sizeof(float)), position(position), velocity(velocity), mass(mass)
+Sphere::Sphere(const std::string& vertex_source, const std::string& fragment_source, glm::vec3 position, glm::vec3 velocity, float mass, int sectors, int stacks, int up)
+    : RenderableObject(vertex_source, fragment_source), 
+      interleavedStride((3 + 3 + 2) * sizeof(float)), position(position), velocity(velocity), mass(mass)
 {
     set(mass, sectors, stacks, up);
 }
@@ -34,18 +35,18 @@ void Sphere::set(float radius, int sectors, int stacks, int up)
     printSelf();
 }
 
-void Sphere::Draw()
+void Sphere::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos)
 {
+    this->shader.use();
+    this->shader.setMat4("model", this->model);
+    this->shader.setMat4("view", view);
+    this->shader.setMat4("projection", projection);
+    this->shader.setVec3("viewPos", viewPos);
+    this->shader.setVec3("Color", this->color);
+
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, (unsigned int)indices.size(), GL_UNSIGNED_INT, (void*)0);
 }
-
-const glm::mat4 Sphere::getModelMatrix() const
-{
-    return this->model;
-}
-
-
 
 glm::vec3 Sphere::GenerateRandomColor()
 {
@@ -82,7 +83,6 @@ void Sphere::Move(float deltatime)
 	glm::mat4 initModel = glm::mat4(1.0f);
 	this->model = initModel;
 	this->model = glm::translate(this->model, this->position); // translate it down so it's at the center of the scene
-	//this->model = glm::scale(this->model, glm::vec3(0.2f));	// it's a bit too big for our scene, so scale it down
 }
 
 void Sphere::HandleModelUniform(Shader &shader, string const &location)

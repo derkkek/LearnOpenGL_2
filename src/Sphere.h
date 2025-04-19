@@ -1,18 +1,19 @@
 #pragma once
-#include "IRenderable.h"
 #include "glm/glm.hpp"
 #include "model.h"
 #include "Shader.h"
+#include "RenderableObject.h"
 #include <random>
+
 
 const int MIN_SECTOR_COUNT = 2;
 const int MIN_STACK_COUNT = 2;
 
-class Sphere : public IRenderable
+class Sphere : RenderableObject
 {
 public:
 	//Sphere(string const& path, glm::vec3 pos = glm::vec3(0), float mass = 100000.0f, glm::vec3 vel = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 force = glm::vec3(0.0,0.0f,0.0f), glm::vec3 acceleration = glm::vec3(0));
-	Sphere(glm::vec3 position, glm::vec3 velocity, float mass, int sectors = 36, int stacks = 18, int up = 3);
+	Sphere(const std::string& vertex_source, const std::string& fragment_source, glm::vec3 position = glm::vec3(0), glm::vec3 velocity = glm::vec3(0), float mass = 5.0f, int sectors = 36, int stacks = 18, int up = 3);
 	~Sphere() = default;
 
 	//std::unique_ptr<Model> mesh;
@@ -44,8 +45,8 @@ public:
 	void buildInterleavedVertices();
 	
 	//interface contracts
-	virtual void Draw() override;
-	virtual const glm::mat4 getModelMatrix() const override;
+	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos);
+
 
 	void printSelf() const;
 	void set(float radius, int sectors, int stacks, int up);
@@ -82,8 +83,6 @@ private:
 	glm::vec3 GenerateRandomColor();
 	void HandleModelUniform(Shader& shader, string const& location);
 
-
-	unsigned int VAO, VBO, EBO;
 	int sectorCount;                        // longitude, # of slices
 	int stackCount;                         // latitude, # of stacks
 	int upAxis;                             // +X=1, +Y=2, +z=3 (default)
