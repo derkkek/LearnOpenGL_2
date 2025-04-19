@@ -8,13 +8,13 @@
 #include "iostream"
 #include <GLFW/glfw3.h>
 #include "Sphere.h"
-#include "IRenderable.h"
+#include "RenderableObject.h"
 
 
-class Grid : public IRenderable
+class Grid : protected RenderableObject
 {
 public:
-	Grid(float size, int divisions);
+	Grid(float size, int divisions, const std::string& vertex_source, const std::string& fragment_source);
 	~Grid() = default;
 
 	void SetupBuffer();
@@ -24,8 +24,7 @@ public:
 
 	void UpdateBuffer();
 
-	virtual void Draw() override;
-	virtual const glm::mat4 getModelMatrix() const override;
+	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos);
 	
 	void Print();
 
@@ -35,7 +34,6 @@ public:
 
 
 private:
-	unsigned int VAO, VBO;
 	float left = -100.0f, right = 100.0f;  // Expand grid range
 	float front = -100.0f, back = 100.0f;
 	float step = 5.0f;

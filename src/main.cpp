@@ -85,6 +85,7 @@ int main()
     
     Cube cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
     Sphere sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
+    Grid grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f");
     Skybox skyBox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
 
     std::cout << glm::to_string(sphere.color) << "\n";
@@ -104,6 +105,7 @@ int main()
 
         sphere.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
         //cube.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
+        grid.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
 
         skyBox.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
 

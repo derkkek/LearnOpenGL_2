@@ -1,6 +1,7 @@
 #include "Grid.h"
 
-Grid::Grid(float size, int divisions) 
+Grid::Grid(float size, int divisions, const std::string& vertex_source, const std::string& fragment_source) 
+    : RenderableObject(vertex_source, fragment_source)
 {
     float step = size / divisions;
     float halfSize = size / 2.0f;
@@ -79,14 +80,15 @@ void Grid::UpdateBuffer()
 
 }
 
-void Grid::Draw()
+void Grid::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos)
 {
+    this->shader.use();
+    shader.setMat4("model", this->model);
+    shader.setMat4("view", view);
+    shader.setMat4("projection", projection);
+
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_LINES, 0, vertices.size() / 3); // 3 components per vertex
-}
-glm::mat4 const Grid::getModelMatrix() const
-{
-    return this->model;
 }
 
 void Grid::Print()
