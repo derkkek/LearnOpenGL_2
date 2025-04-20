@@ -9,7 +9,7 @@
 const int MIN_SECTOR_COUNT = 2;
 const int MIN_STACK_COUNT = 2;
 
-class Sphere : RenderableObject
+class Sphere : public RenderableObject
 {
 public:
 	//Sphere(string const& path, glm::vec3 pos = glm::vec3(0), float mass = 100000.0f, glm::vec3 vel = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 force = glm::vec3(0.0,0.0f,0.0f), glm::vec3 acceleration = glm::vec3(0));
@@ -45,7 +45,7 @@ public:
 	void buildInterleavedVertices();
 	
 	//interface contracts
-	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos);
+	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
 
 
 	void printSelf() const;

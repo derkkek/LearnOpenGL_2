@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "RenderableObject.h"
 
-class Cube : protected RenderableObject
+class Cube : public RenderableObject
 {
 public:
     Cube(const std::string& vertex_source, const std::string& fragment_source);

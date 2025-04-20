@@ -11,7 +11,7 @@
 #include "RenderableObject.h"
 
 
-class Grid : protected RenderableObject
+class Grid : public RenderableObject
 {
 public:
 	Grid(float size, int divisions, const std::string& vertex_source, const std::string& fragment_source);
@@ -24,7 +24,7 @@ public:
 
 	void UpdateBuffer();
 
-	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos);
+	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
 	
 	void Print();
 

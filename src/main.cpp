@@ -83,12 +83,17 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     
-    Cube cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-    Sphere sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
-    Grid grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f");
-    Skybox skyBox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
+    RenderableObject *cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
+    RenderableObject *sphere = new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
+    RenderableObject *grid = new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f");
+    RenderableObject *skyBox = new Skybox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
 
-    std::cout << glm::to_string(sphere.color) << "\n";
+    std::vector<RenderableObject*> objects;
+    objects.push_back(cube);
+    objects.push_back(sphere);
+    objects.push_back(grid);
+    objects.push_back(skyBox);
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -103,12 +108,9 @@ int main()
 
         processInput(window);
 
-        sphere.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
-        //cube.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
-        grid.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
-
-        skyBox.Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
-
+        for (RenderableObject* obj : objects) {
+            obj->Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
+        }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -116,6 +118,10 @@ int main()
         glfwPollEvents();
     }
 
+    objects.emplace_back(cube);
+    objects.emplace_back(sphere);
+    objects.emplace_back(grid);
+    objects.emplace_back(skyBox);
     glfwTerminate();
     return 0;
 }
