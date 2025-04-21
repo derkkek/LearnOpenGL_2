@@ -20,7 +20,7 @@ public:
 	void SetupBuffer();
 	void PassUniforms(Shader& shader, std::string const& location, std::string const& projection_location);
 	void BendGrid(const Sphere& sphere, float G, float sphereMass, float lightSpeed);
-	void UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, const float c);
+	void UpdateGridVertices(const std::vector<Sphere*>& spheres, const float G, const float c);
 
 	void UpdateBuffer();
 

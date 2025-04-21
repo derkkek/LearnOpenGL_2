@@ -148,7 +148,7 @@ void Grid::BendGrid(const Sphere& sphere, float G, float sphereMass, float light
     }
 }
 
-void Grid::UpdateGridVertices(std::vector<Sphere*>& spheres, const float G, const float c) 
+void Grid::UpdateGridVertices(const std::vector<Sphere*>& spheres, const float G, const float c) 
 {
     for (int i = 0; i < vertices.size(); i += 3) {
 
