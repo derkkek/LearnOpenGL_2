@@ -1,3 +1,6 @@
-﻿  main.cpp
+﻿  Grid.cpp
+C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp(91,47): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  main.cpp
 C:\dev\OpenGL\LearnOpenGL\src\main.cpp(89,58): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   LearnOpenGL.vcxproj -> C:\dev\OpenGL\LearnOpenGL\x64\Debug\LearnOpenGL.exe

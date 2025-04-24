@@ -111,7 +111,8 @@ int main()
 
         processInput(window);
 
-        gridCast->UpdateGridVertices(spheres, 1.0f, 200.0f); //not working debug it
+        gridCast->UpdateGridVertices(spheres, 4.0f, 100.0f); //not working debug it
+        //gridCast->Print();
         gridCast->UpdateBuffer();
         renderer.RenderScene(camera);
 
