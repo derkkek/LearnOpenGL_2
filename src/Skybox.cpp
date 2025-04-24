@@ -1,6 +1,6 @@
 #include "Skybox.h"
 
-Skybox::Skybox(const std::string& vertex_path, const std::string& fragment_path) : RenderableObject(vertex_path, fragment_path)
+Skybox::Skybox(Renderer& renderer, const std::string& vertex_path, const std::string& fragment_path) : RenderableObject(renderer, vertex_path, fragment_path)
 {
     SetupBuffer();
     AssignTexture();

@@ -8,13 +8,15 @@
 #include "iostream"
 #include <GLFW/glfw3.h>
 #include "Sphere.h"
+#include "Renderer.h"
+
 #include "RenderableObject.h"
 
 
 class Grid : public RenderableObject
 {
 public:
-	Grid(float size, int divisions, const std::string& vertex_source, const std::string& fragment_source);
+	Grid(Renderer& renderer, float size, int divisions, const std::string& vertex_source, const std::string& fragment_source);
 	~Grid() = default;
 
 	void SetupBuffer();

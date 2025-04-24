@@ -2,6 +2,8 @@
 #include "glm/glm.hpp"
 #include "model.h"
 #include "Shader.h"
+#include "Renderer.h"
+
 #include "RenderableObject.h"
 #include <random>
 
@@ -13,7 +15,7 @@ class Sphere : public RenderableObject
 {
 public:
 	//Sphere(string const& path, glm::vec3 pos = glm::vec3(0), float mass = 100000.0f, glm::vec3 vel = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 force = glm::vec3(0.0,0.0f,0.0f), glm::vec3 acceleration = glm::vec3(0));
-	Sphere(const std::string& vertex_source, const std::string& fragment_source, glm::vec3 position = glm::vec3(0), glm::vec3 velocity = glm::vec3(0), float mass = 5.0f, int sectors = 36, int stacks = 18, int up = 3);
+	Sphere(Renderer& renderer, const std::string& vertex_source, const std::string& fragment_source, glm::vec3 position = glm::vec3(0), glm::vec3 velocity = glm::vec3(0), float mass = 1000.0f, int sectors = 36, int stacks = 18, int up = 3);
 	~Sphere() = default;
 
 	//std::unique_ptr<Model> mesh;

@@ -82,18 +82,21 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    
-    RenderableObject *cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-    RenderableObject *sphere = new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
-    RenderableObject *grid = new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f");
-    RenderableObject *skyBox = new Skybox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
+    Renderer renderer;
 
-    std::vector<RenderableObject*> objects;
-    objects.push_back(cube);
-    objects.push_back(sphere);
-    objects.push_back(grid);
-    objects.push_back(skyBox);
+    RenderableObject *cube = new Cube(renderer,"resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
+    RenderableObject *sphere = new Sphere(renderer,"resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f");
+    RenderableObject *grid = new Grid(renderer, 1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f");
+    RenderableObject *skyBox = new Skybox(renderer, "resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f");
 
+    //std::vector<RenderableObject*> objects;
+    //objects.push_back(cube);
+    //objects.push_back(sphere);
+    //objects.push_back(grid);
+    //objects.push_back(skyBox);
+    Grid* gridCast = dynamic_cast<Grid*>(grid);
+    std::vector<Sphere*> spheres;
+    spheres.push_back(dynamic_cast<Sphere*>(sphere));
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -108,20 +111,15 @@ int main()
 
         processInput(window);
 
-        for (RenderableObject* obj : objects) {
-            obj->Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
-        }
+        gridCast->UpdateGridVertices(spheres, 1.0f, 200.0f); //not working debug it
+        gridCast->UpdateBuffer();
+        renderer.RenderScene(camera);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
-    objects.emplace_back(cube);
-    objects.emplace_back(sphere);
-    objects.emplace_back(grid);
-    objects.emplace_back(skyBox);
     glfwTerminate();
     return 0;
 }

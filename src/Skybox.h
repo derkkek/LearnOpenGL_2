@@ -1,5 +1,5 @@
 #pragma once
-#include "IRenderable.h"
+#include "Renderer.h"
 #include "Shader.h"
 #include <vector>
 #include "TextureLoader.h"
@@ -8,7 +8,7 @@
 class Skybox : public RenderableObject
 {
 public:
-	Skybox(const std::string& vertex_path, const std::string& fragment_path);
+	Skybox(Renderer& renderer, const std::string& vertex_path, const std::string& fragment_path);
 	~Skybox() = default;
 
     void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;

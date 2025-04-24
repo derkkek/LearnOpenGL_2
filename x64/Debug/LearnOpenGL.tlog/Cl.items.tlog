@@ -5,6 +5,7 @@ C:\dev\OpenGL\LearnOpenGL\src\Grid.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Grid.
 C:\dev\OpenGL\LearnOpenGL\src\main.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\main.obj
 C:\dev\OpenGL\LearnOpenGL\src\PointLight.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\PointLight.obj
 C:\dev\OpenGL\LearnOpenGL\src\RenderableObject.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\RenderableObject.obj
+C:\dev\OpenGL\LearnOpenGL\src\Renderer.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Renderer.obj
 C:\dev\OpenGL\LearnOpenGL\src\Skybox.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Skybox.obj
 C:\dev\OpenGL\LearnOpenGL\src\Sphere.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Sphere.obj
 C:\dev\OpenGL\LearnOpenGL\src\Spotlight.cpp;C:\dev\OpenGL\LearnOpenGL\x64\Debug\Spotlight.obj
