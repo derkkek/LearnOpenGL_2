@@ -6,8 +6,8 @@
 //
 //}
 
-Sphere::Sphere(Renderer& renderer, const std::string& vertex_source, const std::string& fragment_source, glm::vec3 position, glm::vec3 velocity, float mass, int sectors, int stacks, int up)
-    : RenderableObject(renderer, vertex_source, fragment_source), 
+Sphere::Sphere(const std::string& vertex_source, const std::string& fragment_source, glm::vec3 position, glm::vec3 velocity, float mass, int sectors, int stacks, int up)
+    : RenderableObject(vertex_source, fragment_source), 
       interleavedStride((3 + 3 + 2) * sizeof(float)), position(position), velocity(velocity), mass(mass)
 {
     set(mass, sectors, stacks, up);

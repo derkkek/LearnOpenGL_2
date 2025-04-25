@@ -1,9 +1,10 @@
 #pragma once
 #include "Camera.h"
 #include "Shader.h"
+#include "RenderableObject.h"
 #include <vector>
-// Forward declaration to resolve circular dependency
-class RenderableObject;
+
+
 class Renderer 
 {
 public:

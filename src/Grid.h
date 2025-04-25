@@ -16,7 +16,7 @@
 class Grid : public RenderableObject
 {
 public:
-	Grid(Renderer& renderer, float size, int divisions, const std::string& vertex_source, const std::string& fragment_source);
+	Grid(float size, int divisions, const std::string& vertex_source, const std::string& fragment_source);
 	~Grid() = default;
 
 	void SetupBuffer();

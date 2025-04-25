@@ -1,7 +1,7 @@
 #include "Grid.h"
 
-Grid::Grid(Renderer& renderer, float size, int divisions, const std::string& vertex_source, const std::string& fragment_source) 
-    : RenderableObject(renderer, vertex_source, fragment_source)
+Grid::Grid(float size, int divisions, const std::string& vertex_source, const std::string& fragment_source) 
+    : RenderableObject(vertex_source, fragment_source)
 {
     float step = size / divisions;
     float halfSize = size / 2.0f;

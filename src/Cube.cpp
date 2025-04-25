@@ -1,10 +1,9 @@
 #include "Cube.h"
 
-Cube::Cube(Renderer& renderer, const std::string& vertex_source, const std::string& fragment_source) : RenderableObject(renderer, vertex_source, fragment_source)
+Cube::Cube(const std::string& vertex_source, const std::string& fragment_source) : RenderableObject(vertex_source, fragment_source)
 {
     SetupBuffer();
     AssignTexture();
-
 }
 
 void Cube::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos)

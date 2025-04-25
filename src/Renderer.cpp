@@ -1,6 +1,5 @@
 #include "Renderer.h"
 
-#include "RenderableObject.h" // Full definition here
 
 void Renderer::RenderObject(RenderableObject* object, Camera& camera)
 {

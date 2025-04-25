@@ -10,7 +10,7 @@
 class Cube : public RenderableObject
 {
 public:
-    Cube(Renderer& renderer, const std::string& vertex_source, const std::string& fragment_source);
+    Cube(const std::string& vertex_source, const std::string& fragment_source);
 	~Cube() = default;
 
 	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
