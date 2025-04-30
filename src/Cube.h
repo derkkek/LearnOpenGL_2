@@ -18,8 +18,17 @@ public:
 private:
 	glm::mat4 model = glm::mat4(1.0f);
 
+    unsigned int instanceVBO;
+
 	void SetupBuffer();
 	void AssignTexture(const std::string& path = "resource/textures/container.jpg");
+    void DefineInstanceOffsets();
+
+
+    glm::vec3 translations[100];
+
+
+
 
     float vertices[180] =
     {

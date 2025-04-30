@@ -1,10 +1,2 @@
-﻿  Cube.cpp
-  main.cpp
-C:\dev\OpenGL\LearnOpenGL\src\main.cpp(100,28): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\dev\OpenGL\LearnOpenGL\src\main.cpp(100,28): warning C4244:         with
-C:\dev\OpenGL\LearnOpenGL\src\main.cpp(100,28): warning C4244:         [
-C:\dev\OpenGL\LearnOpenGL\src\main.cpp(100,28): warning C4244:             T=float
-C:\dev\OpenGL\LearnOpenGL\src\main.cpp(100,28): warning C4244:         ]
-  Generating Code...
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+﻿  main.cpp
   LearnOpenGL.vcxproj -> C:\dev\OpenGL\LearnOpenGL\x64\Debug\LearnOpenGL.exe

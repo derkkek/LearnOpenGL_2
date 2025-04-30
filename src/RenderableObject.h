@@ -15,6 +15,7 @@ protected:
 
 	unsigned int VAO, VBO, EBO;
 
+
 	unsigned int textureID;
 };
 
