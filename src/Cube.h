@@ -21,7 +21,6 @@ private:
 	void SetupBuffer();
 	void AssignTexture(const std::string& path = "resource/textures/container.jpg");
 
-
     float vertices[180] =
     {
         // positions          // texture Coords

@@ -83,11 +83,31 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     Renderer renderer;
-
-    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f"));
-    renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
-    renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
+    RenderableObject* cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
+    renderer.AddScene(cube);
+    //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
+    //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
     renderer.AddScene(new Skybox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f"));
+
+
+    glm::vec3 translations[100];
+    int index = 0;
+    float offset = 5.0f;
+    for (int x = -50; x < 50; x += 1)
+    {
+        glm::vec3 translation;
+        translation.x = 1.5f*x + offset + 20.0f;//(float)x / 10.0f + offset;
+        translation.y = sin(x);
+        translation.z = 0.0f;
+        translations[index++] = translation;
+    }
+
+    cube->shader.use();
+    for (unsigned int i = 0; i < 100; i++)
+    {
+        cube->shader.setVec3(("offsets[" + std::to_string(i) + "]"), translations[i]);
+    }
+
 
     //Grid* gridCast = dynamic_cast<Grid*>(grid);
     //std::vector<Sphere*> spheres;

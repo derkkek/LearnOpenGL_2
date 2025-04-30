@@ -21,7 +21,7 @@ void Cube::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::v
     //shader.setMat4("view")
 
     glBindVertexArray(this->VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, 100);
     glBindVertexArray(0);
 }
 
