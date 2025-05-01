@@ -93,6 +93,8 @@ int main()
     //spheres.push_back(dynamic_cast<Sphere*>(sphere));
     // render loop
     // -----------
+
+    std::cout << "TEST FOR GITHUB";
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
