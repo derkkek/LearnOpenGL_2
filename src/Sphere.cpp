@@ -42,6 +42,7 @@ void Sphere::Draw(const glm::mat4& view, const glm::mat4& projection, const glm:
     this->shader.setMat4("view", view);
     this->shader.setMat4("projection", projection);
     this->shader.setVec3("viewPos", viewPos);
+
     this->shader.setVec3("Color", this->color);
 
     glBindVertexArray(this->VAO);

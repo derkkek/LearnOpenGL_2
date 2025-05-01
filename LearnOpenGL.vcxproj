@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\dev\OpenGL\LearnOpenGL\vendor\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\OpenGL\LearnOpenGL\vendor\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\dev\OpenGL\LearnOpenGL\vendor\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\dev\OpenGL\LearnOpenGL\vendor\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendor\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendor\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,6 +147,7 @@
     <ClInclude Include="src\model.h" />
     <ClInclude Include="src\PointLight.h" />
     <ClInclude Include="src\RenderableObject.h" />
+    <ClInclude Include="src\RenderData.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\root_directory.h" />
     <ClInclude Include="src\Shader.h" />

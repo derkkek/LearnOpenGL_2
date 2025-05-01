@@ -1197,6 +1197,9 @@
     <ClInclude Include="src\RenderableObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\RenderData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />
