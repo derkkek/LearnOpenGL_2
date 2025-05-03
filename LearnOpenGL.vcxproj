@@ -157,6 +157,7 @@
     <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Sphere.h" />
     <ClInclude Include="src\Spotlight.h" />
+    <ClInclude Include="src\SpriteRenderer.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\TextureLoader.h" />
@@ -554,6 +555,7 @@
     <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
     <ClCompile Include="src\Spotlight.cpp" />
+    <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />
@@ -583,6 +585,8 @@
     <None Include="resource\shaders\procedural_sphere.v" />
     <None Include="resource\shaders\shader.f" />
     <None Include="resource\shaders\shader.v" />
+    <None Include="resource\shaders\sprite.f" />
+    <None Include="resource\shaders\sprite.v" />
     <None Include="vendor\include\assimp\color4.inl" />
     <None Include="vendor\include\assimp\material.inl" />
     <None Include="vendor\include\assimp\matrix3x3.inl" />
