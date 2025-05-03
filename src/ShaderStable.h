@@ -8,8 +8,9 @@
 
 class ShaderStable
 {
-	unsigned int ID;
 public:
+    unsigned int ID;
+
 	ShaderStable() = default;
 	~ShaderStable() = default;
 
