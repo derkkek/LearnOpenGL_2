@@ -1212,6 +1212,15 @@
     <ClInclude Include="src\SpriteRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\game_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\5.1.ball_object_collisions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />
@@ -1269,6 +1278,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SpriteRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\5.1.ball_object_collisions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1738,6 +1756,10 @@
     <None Include="resource\shaders\6.1.skybox.v" />
     <None Include="resource\shaders\sprite.f" />
     <None Include="resource\shaders\sprite.v" />
+    <None Include="resource\levels\four.lvl" />
+    <None Include="resource\levels\one.lvl" />
+    <None Include="resource\levels\three.lvl" />
+    <None Include="resource\levels\two.lvl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
@@ -1774,6 +1796,18 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\models\sphere\texture.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\background.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\block.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\block_solid.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\paddle.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

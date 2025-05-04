@@ -137,11 +137,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\5.1.ball_object_collisions.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\DirectionalLight.h" />
     <ClInclude Include="src\filesystem.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\game_level.h" />
+    <ClInclude Include="src\game_object.h" />
     <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\IRenderable.h" />
     <ClInclude Include="src\mesh.h" />
@@ -541,9 +544,12 @@
     <Library Include="vendor\libs\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\5.1.ball_object_collisions.cpp" />
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\DirectionalLight.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\game_level.cpp" />
+    <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\PointLight.cpp" />
@@ -561,6 +567,10 @@
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resource\levels\four.lvl" />
+    <None Include="resource\levels\one.lvl" />
+    <None Include="resource\levels\three.lvl" />
+    <None Include="resource\levels\two.lvl" />
     <None Include="resource\models\backpack\backpack.mesh" />
     <None Include="resource\models\backpack\backpack.mtl" />
     <None Include="resource\shaders\2.stencil_single_color.fs" />
@@ -742,11 +752,15 @@
     <Image Include="resource\models\backpack\specular.jpg" />
     <Image Include="resource\models\sphere\texture.jpg" />
     <Image Include="resource\textures\awesomeface.png" />
+    <Image Include="resource\textures\background.jpg" />
+    <Image Include="resource\textures\block.png" />
+    <Image Include="resource\textures\block_solid.png" />
     <Image Include="resource\textures\container.jpg" />
     <Image Include="resource\textures\container2.png" />
     <Image Include="resource\textures\container2_specular.png" />
     <Image Include="resource\textures\container2_specular_colored.png" />
     <Image Include="resource\textures\matrix.jpg" />
+    <Image Include="resource\textures\paddle.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resource\models\backpack\source_attribution.txt" />

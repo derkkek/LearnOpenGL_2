@@ -76,11 +76,11 @@ int main(int argc, char* argv[])
 
         // manage user input
         // -----------------
-        //Breakout.ProcessInput(deltaTime);
+        Breakout.ProcessInput(deltaTime);
 
         // update game state
         // -----------------
-        //Breakout.Update(deltaTime);
+        Breakout.Update(deltaTime);
 
         // render
         // ------
