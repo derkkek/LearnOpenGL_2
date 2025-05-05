@@ -89,6 +89,7 @@ void Game::ProcessInput(float dt)
 void Game::Update(float dt)
 {
     ball->Move(dt, Width);
+    DoCollisions();
 }
 
 void Game::Render()
@@ -102,6 +103,34 @@ void Game::Render()
         // draw player
         player->Draw(*renderer);
         ball->Draw(*renderer);
+    }
+}
+
+bool Game::CheckCollision(GameObject& one, GameObject& two)
+{
+    bool collisionX = one.Position.x + one.Size.x >= two.Position.x &&
+        two.Position.x + two.Size.x >= one.Position.x;
+
+    bool collisionY = one.Position.y + one.Size.y >= two.Position.y &&
+        two.Position.y + two.Size.y >= one.Position.y;
+
+    return collisionX && collisionY;
+}
+
+void Game::DoCollisions()
+{
+    for (GameObject& box : Levels[Level].Bricks)
+    {
+        if (!box.Destroyed)
+        {
+            if (CheckCollision(*ball, box))
+            {
+                if (!box.IsSolid)
+                {
+                    box.Destroyed = true;
+                }
+            }
+        }
     }
 }
 

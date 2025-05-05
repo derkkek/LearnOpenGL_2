@@ -37,6 +37,9 @@ public:
 	void ProcessInput(float dt);
 	void Update(float dt);
 	void Render();
+	bool CheckCollision(GameObject& one, GameObject& two);
+	void DoCollisions();
+
 
 private:
 };
