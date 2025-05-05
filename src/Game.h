@@ -38,6 +38,9 @@ public:
 	void Update(float dt);
 	void Render();
 	bool CheckCollision(GameObject& one, GameObject& two);
+	bool CheckCollision(BallObject& one, GameObject& two); // AABB - Circle
+
+
 	void DoCollisions();
 
 
