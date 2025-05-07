@@ -31,7 +31,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 0.0f, 20.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -42,7 +42,7 @@ float lastFrame = 0.0f;
 
 glm::vec3 computeForce(Cube* cube)
 {
-    return glm::vec3(0.0f, -0.00091f * cube->mass, 0.0f);
+    return glm::vec3(0.0f, -9.8f, 0.0f);
 }
 void InitParticles(Renderer& renderer)
 {
@@ -63,7 +63,7 @@ void InitParticles(Renderer& renderer)
         cube->position.x = rand;
         cube->position.y = rand;
 
-        cube->Transform();
+        cube->Translate(deltaTime);
         std::cout << glm::to_string(static_cast<Cube*>(object)->position) << "\n";
     }
 }
@@ -155,12 +155,12 @@ int main()
                 continue;
             }
 
-            glm::vec3 force = computeForce(cube);
+            //glm::vec3 force = computeForce(cube);
             
-            glm::vec3 acc = force / cube->mass;
+            glm::vec3 acc = glm::vec3(0.0f, -3.27f, 0.0f);
 
             cube->velocity += acc * deltaTime;
-            cube->Transform();
+            cube->Translate(deltaTime);
 
         }
 

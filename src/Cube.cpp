@@ -32,10 +32,11 @@ void Cube::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::v
 
 }
 
-void Cube::Transform()
+void Cube::Translate(float deltatime)
 {
     this->model = glm::mat4(1.0f);
-    this->position += this->velocity;
+    glm::vec3 vel = this->velocity;
+    this->position += vel * deltatime;
     this->model = glm::translate(this->model, this->position);
 }
 
