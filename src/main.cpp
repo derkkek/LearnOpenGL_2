@@ -6,7 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
-
+ 
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
@@ -39,6 +39,34 @@ bool firstMouse = true;
 // timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
+
+glm::vec3 computeForce(Cube* cube)
+{
+    return glm::vec3(0.0f, -0.1f * cube->mass, 0.0f);
+}
+void InitParticles(Renderer& renderer)
+{
+    for (RenderableObject* object : renderer.sceneObjects)
+    {
+        Cube* cube = dynamic_cast<Cube*>(object);
+
+        if (cube == nullptr)
+        {
+            continue;
+        }
+
+        std::random_device rd; // obtain a random number from hardware
+        std::mt19937 gen(rd()); // seed the generator
+        std::uniform_int_distribution<> distr(0.0f, 10.0f); // define the range
+
+        float rand = distr(gen);
+        cube->position.x = rand;
+        cube->position.y = rand;
+
+        cube->Transform();
+        std::cout << glm::to_string(static_cast<Cube*>(object)->position) << "\n";
+    }
+}
 int main()
 {
     // glfw: initialize and configure
@@ -82,8 +110,12 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     Renderer renderer;
-    RenderableObject* cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-    renderer.AddScene(cube);
+    //RenderableObject* cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
+    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", glm::vec3(5.0f, 1.0f, 1.0f)));
+    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", glm::vec3(8.0f, 5.0f, 1.0f)));
+    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f"));
+    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f"));
+    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f"));
     //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
     renderer.AddScene(new Skybox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f"));
@@ -93,6 +125,10 @@ int main()
     //spheres.push_back(dynamic_cast<Sphere*>(sphere));
     // render loop
     // -----------
+    InitParticles(renderer);
+    
+
+
 
     std::cout << "TEST FOR GITHUB";
     while (!glfwWindowShouldClose(window))
@@ -110,6 +146,24 @@ int main()
         //gridCast->UpdateGridVertices(spheres, 4.0f, 100.0f);
         //gridCast->UpdateBuffer();
         
+        for (RenderableObject* object : renderer.sceneObjects)
+        {
+            Cube* cube = dynamic_cast<Cube*>(object);
+
+            if (cube == nullptr)
+            {
+                continue;
+            }
+
+            glm::vec3 force = computeForce(cube);
+            glm::vec3 acc = force / cube->mass;
+
+            cube->velocity = acc * deltaTime;
+            cube->Transform();
+
+        }
+
+
         renderer.RenderScene(camera);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

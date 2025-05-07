@@ -1,6 +1,9 @@
 #include "Cube.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 
-Cube::Cube(const std::string& vertex_source, const std::string& fragment_source) : RenderableObject(vertex_source, fragment_source)
+Cube::Cube(const std::string& vertex_source, const std::string& fragment_source, glm::vec3 position) 
+    : position(position), RenderableObject(vertex_source, fragment_source)
 {
     SetupBuffer();
     AssignTexture();
@@ -9,7 +12,10 @@ Cube::Cube(const std::string& vertex_source, const std::string& fragment_source)
 void Cube::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos)
 {
     this->shader.use();
+    //this->model = glm::mat4(1.0f);
+    //this->model = glm::translate(this->model, this->position);
 
+    //Transform();
     shader.setMat4("model", this->model);
     shader.setMat4("view",view);
     shader.setMat4("projection", projection);
@@ -22,6 +28,15 @@ void Cube::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::v
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
+
+
+}
+
+void Cube::Transform()
+{
+    this->model = glm::mat4(1.0f);
+    this->position += this->velocity;
+    this->model = glm::translate(this->model, this->position);
 }
 
 void Cube::SetupBuffer()
