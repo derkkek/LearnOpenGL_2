@@ -42,7 +42,7 @@ float lastFrame = 0.0f;
 
 glm::vec3 computeForce(Cube* cube)
 {
-    return glm::vec3(0.0f, -0.1f * cube->mass, 0.0f);
+    return glm::vec3(0.0f, -0.00091f * cube->mass, 0.0f);
 }
 void InitParticles(Renderer& renderer)
 {
@@ -156,9 +156,10 @@ int main()
             }
 
             glm::vec3 force = computeForce(cube);
+            
             glm::vec3 acc = force / cube->mass;
 
-            cube->velocity = acc * deltaTime;
+            cube->velocity += acc * deltaTime;
             cube->Transform();
 
         }

@@ -15,7 +15,7 @@ public:
 
 	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
 	
-    float mass = 1.0f;
+    float mass = 1000.0f;
     glm::vec3 position;
     glm::vec3 velocity = glm::vec3(0.0f);
 
