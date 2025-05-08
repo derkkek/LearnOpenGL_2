@@ -9,10 +9,6 @@ Cube::Cube(glm::vec3 position)
     AssignTexture();
 }
 
-void Cube::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos)
-{
-    
-}
 
 const int Cube::GetVertexCount() const
 {

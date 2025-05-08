@@ -26,7 +26,7 @@ public:
 
 	void UpdateBuffer();
 
-	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
+	//void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
 	
 	void Print();
 

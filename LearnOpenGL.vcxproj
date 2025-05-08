@@ -156,6 +156,7 @@
     <ClInclude Include="src\root_directory.h" />
     <ClInclude Include="src\ShaderStable.h" />
     <ClInclude Include="src\shader_m.h" />
+    <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Spotlight.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
     <ClInclude Include="src\stb_image.h" />
@@ -554,6 +555,7 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\ShaderStable.cpp" />
+    <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Spotlight.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\stb_image.cpp" />

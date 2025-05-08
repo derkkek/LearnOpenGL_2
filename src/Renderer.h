@@ -1,6 +1,7 @@
 #pragma once
 #include "Camera.h"
 #include "ShaderStable.h"
+#include "Skybox.h"
 #include "RenderableObject.h"
 #include "ResourceManager.h"
 #include <vector>
@@ -10,17 +11,20 @@ class Renderer
 {
 public:
     std::vector<RenderableObject*> sceneObjects;
+    RenderableObject* skybox;
     ShaderStable shader;
 
     Renderer() = default;
     ~Renderer();
-    void Init(ShaderStable& shader, Camera& camera);
+    void Init(Camera& camera);
     // Render a single object using the provided shader.
     void RenderObject(RenderableObject* object, Camera& camera);
+    void RenderSkybox(RenderableObject* skybox, Camera& camera);
 
     // Optionally, render a list of objects.
     void RenderScene(Camera& camera);
     void AddScene(RenderableObject* object);
+    void AddSkybox(RenderableObject* skybox);
 private:
 
 };

@@ -110,8 +110,8 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     Renderer *renderer = new Renderer;
-    ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
-    renderer->Init(ResourceManager::GetShader("textured_cubes"), camera);
+    //ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
+    renderer->Init(camera);
     //RenderableObject* cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
     renderer->AddScene(new Cube(glm::vec3(5.0f, 1.0f, 1.0f)));
     renderer->AddScene(new Cube(glm::vec3(8.0f, 5.0f, 1.0f)));
@@ -120,7 +120,7 @@ int main()
     renderer->AddScene(new Cube(glm::vec3(10.0f, 5.0f, 1.0f)));
     //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
-    //renderer->AddScene(new Skybox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f"));
+    renderer->AddSkybox(new Skybox());
 
     //Grid* gridCast = dynamic_cast<Grid*>(grid);
     //std::vector<Sphere*> spheres;

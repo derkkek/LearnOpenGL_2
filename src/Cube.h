@@ -13,8 +13,7 @@ public:
     Cube(glm::vec3 position = glm::vec3(1.0f));
 	~Cube() = default;
 
-	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
-    virtual const int GetVertexCount() const override;
+    const int GetVertexCount() const override;
 
     float mass = 1000.0f;
     glm::vec3 position;
