@@ -1,20 +1,25 @@
 #pragma once
 #include "Shader.h"
 #include "iostream"
+#include "glm/glm.hpp"
 
 class RenderableObject
 {
 public:
-	RenderableObject(const std::string& vertex_path, const std::string& fragment_path);
+	RenderableObject();
 	virtual ~RenderableObject() = default; // it's virtual because of to trigger derived objects' destructors.
 
 	virtual void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) = 0;
-	Shader shader;
+	virtual const int GetVertexCount() const = 0;
 
+	unsigned int GetVao();
+	unsigned int GetTexId();
+	glm::mat4 GetModel();
 protected:
 
 	unsigned int VAO, VBO, EBO;
 
+	glm::mat4 model = glm::mat4(1.0f);
 
 	unsigned int textureID;
 };

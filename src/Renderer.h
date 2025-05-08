@@ -1,7 +1,8 @@
 #pragma once
 #include "Camera.h"
-#include "Shader.h"
+#include "ShaderStable.h"
 #include "RenderableObject.h"
+#include "ResourceManager.h"
 #include <vector>
 
 
@@ -9,10 +10,11 @@ class Renderer
 {
 public:
     std::vector<RenderableObject*> sceneObjects;
+    ShaderStable shader;
 
     Renderer() = default;
     ~Renderer();
-
+    void Init(ShaderStable& shader, Camera& camera);
     // Render a single object using the provided shader.
     void RenderObject(RenderableObject* object, Camera& camera);
 

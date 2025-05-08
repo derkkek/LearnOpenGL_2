@@ -44,9 +44,9 @@ glm::vec3 computeForce(Cube* cube)
 {
     return glm::vec3(0.0f, -9.8f, 0.0f);
 }
-void InitParticles(Renderer& renderer)
+void InitParticles(Renderer* renderer)
 {
-    for (RenderableObject* object : renderer.sceneObjects)
+    for (RenderableObject* object : renderer->sceneObjects)
     {
         Cube* cube = dynamic_cast<Cube*>(object);
 
@@ -109,16 +109,18 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    Renderer renderer;
+    Renderer *renderer = new Renderer;
+    ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
+    renderer->Init(ResourceManager::GetShader("textured_cubes"), camera);
     //RenderableObject* cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", glm::vec3(5.0f, 1.0f, 1.0f)));
-    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", glm::vec3(8.0f, 5.0f, 1.0f)));
-    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f"));
-    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f"));
-    renderer.AddScene(new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f"));
+    renderer->AddScene(new Cube(glm::vec3(5.0f, 1.0f, 1.0f)));
+    renderer->AddScene(new Cube(glm::vec3(8.0f, 5.0f, 1.0f)));
+    renderer->AddScene(new Cube(glm::vec3(3.0f, 7.0f, 1.0f)));
+    renderer->AddScene(new Cube(glm::vec3(1.0f, 3.0f, 1.0f)));
+    renderer->AddScene(new Cube(glm::vec3(10.0f, 5.0f, 1.0f)));
     //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
-    renderer.AddScene(new Skybox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f"));
+    //renderer->AddScene(new Skybox("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f"));
 
     //Grid* gridCast = dynamic_cast<Grid*>(grid);
     //std::vector<Sphere*> spheres;
@@ -146,7 +148,7 @@ int main()
         //gridCast->UpdateGridVertices(spheres, 4.0f, 100.0f);
         //gridCast->UpdateBuffer();
         
-        for (RenderableObject* object : renderer.sceneObjects)
+        for (RenderableObject* object : renderer->sceneObjects)
         {
             Cube* cube = dynamic_cast<Cube*>(object);
 
@@ -161,11 +163,13 @@ int main()
 
             cube->velocity += acc * deltaTime;
             cube->Translate(deltaTime);
+            glm::mat4 modelPrint = cube->GetModel();
+            glm::to_string(modelPrint);
 
         }
 
 
-        renderer.RenderScene(camera);
+        renderer->RenderScene(camera);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -173,6 +177,7 @@ int main()
         glfwPollEvents();
     }
     glfwTerminate();
+    delete renderer;
     return 0;
 }
 

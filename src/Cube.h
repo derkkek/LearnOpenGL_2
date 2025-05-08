@@ -10,11 +10,12 @@
 class Cube : public RenderableObject
 {
 public:
-    Cube(const std::string& vertex_source, const std::string& fragment_source, glm::vec3 position = glm::vec3(1.0f));
+    Cube(glm::vec3 position = glm::vec3(1.0f));
 	~Cube() = default;
 
 	void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
-	
+    virtual const int GetVertexCount() const override;
+
     float mass = 1000.0f;
     glm::vec3 position;
     glm::vec3 velocity = glm::vec3(0.0f);
@@ -22,8 +23,6 @@ public:
     void Translate(float deltatime);
 
 private:
-	glm::mat4 model = glm::mat4(1.0f);
-
     unsigned int instanceVBO;
 
 	void SetupBuffer();

@@ -1,7 +1,21 @@
 #include "RenderableObject.h"
 
-RenderableObject::RenderableObject(const std::string& vertex_path, const std::string& fragment_path)
-	:shader(vertex_path.c_str(), fragment_path.c_str())
+RenderableObject::RenderableObject()
 {
 
+}
+
+unsigned int RenderableObject::GetVao()
+{
+	return this->VAO;
+}
+
+unsigned int RenderableObject::GetTexId()
+{
+	return this->textureID;
+}
+
+glm::mat4 RenderableObject::GetModel()
+{
+	return this->model;
 }

@@ -1170,12 +1170,6 @@
     <ClInclude Include="src\shader_m.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Sphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Grid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\IRenderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1186,9 +1180,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\RenderableObject.h">
@@ -1244,16 +1235,7 @@
     <ClCompile Include="src\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Grid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Cube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\RenderableObject.cpp">
