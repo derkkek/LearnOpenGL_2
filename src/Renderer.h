@@ -25,6 +25,7 @@ public:
     void RenderScene(Camera& camera);
     void AddScene(RenderableObject* object);
     void AddSkybox(RenderableObject* skybox);
+    void ForwardCubeCommonConfig(Camera& camera);
 private:
 
 };

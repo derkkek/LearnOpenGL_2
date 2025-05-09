@@ -13,16 +13,13 @@ void Renderer::Init(Camera& camera)
 	glActiveTexture(GL_TEXTURE0);
 }
 
+/*Renders Cube not variety of objects!!!*/
 void Renderer::RenderObject(RenderableObject* object, Camera& camera)
 {
 	//object->Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
 	ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
-	cubeShader.Use();
-	cubeShader.SetMatrix4("model", object->GetModel());
 
-	cubeShader.SetMatrix4("view", camera.GetViewMatrix());
-	cubeShader.SetMatrix4("projection", camera.GetProjectionMatrix());
-	cubeShader.SetVector3f("viewPos", camera.Position);
+	cubeShader.SetMatrix4("model", object->GetModel());
 
 	glBindTexture(GL_TEXTURE_2D, object->GetTexId());
     glBindVertexArray(object->GetVao());
@@ -52,6 +49,8 @@ void Renderer::RenderSkybox(RenderableObject* skybox, Camera& camera)
 
 void Renderer::RenderScene(Camera& camera)
 {
+	ForwardCubeCommonConfig(camera);
+
 	for (RenderableObject* obj : sceneObjects)
 	{
 		RenderObject(obj, camera);
@@ -67,6 +66,15 @@ void Renderer::AddScene(RenderableObject* object)
 void Renderer::AddSkybox(RenderableObject* skybox)
 {
 	this->skybox = skybox;
+}
+
+void Renderer::ForwardCubeCommonConfig(Camera& camera)
+{
+	ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
+	cubeShader.Use();
+	cubeShader.SetMatrix4("view", camera.GetViewMatrix());
+	cubeShader.SetMatrix4("projection", camera.GetProjectionMatrix());
+	cubeShader.SetVector3f("viewPos", camera.Position);
 }
 
 Renderer::~Renderer()
