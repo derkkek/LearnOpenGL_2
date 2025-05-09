@@ -1,9 +1,13 @@
 #include "Square.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 
-Square::Square()
+Square::Square(glm::vec3 position)
+	:rigidbody(position)
 {
 	SetupBuffer();
 	AssignTexture();
+	this->model = glm::translate(this->model, this->rigidbody.position); // Assign the result
 }
 
 const int Square::GetVertexCount() const
@@ -37,4 +41,9 @@ void Square::AssignTexture(const std::string& path)
 {
 	this->textureID = TextureLoader::loadTexture(path.c_str());
 
+}
+
+void Square::UpdateModel()
+{
+	this->model = glm::translate(this->model, this->rigidbody.position);
 }

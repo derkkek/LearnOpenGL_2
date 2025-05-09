@@ -17,7 +17,7 @@ void Renderer::Init(Camera& camera)
 void Renderer::RenderObject(RenderableObject* object, Camera& camera)
 {
 	ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
-
+	
 	cubeShader.SetMatrix4("model", object->GetModel());
 
 	glBindTexture(GL_TEXTURE_2D, object->GetTexId());
