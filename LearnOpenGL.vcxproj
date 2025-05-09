@@ -159,6 +159,7 @@
     <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Spotlight.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
+    <ClInclude Include="src\Square.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\TextureLoader.h" />
@@ -558,6 +559,7 @@
     <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Spotlight.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
+    <ClCompile Include="src\Square.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />

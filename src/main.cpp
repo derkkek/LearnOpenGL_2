@@ -16,6 +16,7 @@
 #include "TextureLoader.h"
 #include "Cube.h"
 #include "Skybox.h"
+#include "Square.h"
 
 #include "DirectionalLight.h"
 
@@ -31,7 +32,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 0.0f, 20.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -113,11 +114,12 @@ int main()
     //ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
     renderer->Init(camera);
     //RenderableObject* cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-    renderer->AddScene(new Cube(glm::vec3(5.0f, 1.0f, 1.0f)));
-    renderer->AddScene(new Cube(glm::vec3(8.0f, 5.0f, 1.0f)));
-    renderer->AddScene(new Cube(glm::vec3(3.0f, 7.0f, 1.0f)));
-    renderer->AddScene(new Cube(glm::vec3(1.0f, 3.0f, 1.0f)));
-    renderer->AddScene(new Cube(glm::vec3(10.0f, 5.0f, 1.0f)));
+    //renderer->AddScene(new Cube(glm::vec3(5.0f, 1.0f, 1.0f)));
+    //renderer->AddScene(new Cube(glm::vec3(8.0f, 5.0f, 1.0f)));
+    //renderer->AddScene(new Cube(glm::vec3(3.0f, 7.0f, 1.0f)));
+    //renderer->AddScene(new Cube(glm::vec3(1.0f, 3.0f, 1.0f)));
+    //renderer->AddScene(new Cube(glm::vec3(10.0f, 5.0f, 1.0f)));
+    renderer->AddScene(new Square());
     //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
     renderer->AddSkybox(new Skybox());

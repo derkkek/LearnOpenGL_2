@@ -16,7 +16,6 @@ void Renderer::Init(Camera& camera)
 /*Renders Cube not variety of objects!!!*/
 void Renderer::RenderObject(RenderableObject* object, Camera& camera)
 {
-	//object->Draw(camera.GetViewMatrix(), camera.GetProjectionMatrix(), camera.Position);
 	ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
 
 	cubeShader.SetMatrix4("model", object->GetModel());
@@ -55,6 +54,7 @@ void Renderer::RenderScene(Camera& camera)
 	{
 		RenderObject(obj, camera);
 	}
+
 	RenderSkybox(skybox, camera);
 }
 
