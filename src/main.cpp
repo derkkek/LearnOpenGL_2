@@ -150,13 +150,12 @@ int main()
 
         processInput(window);
 
-        sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -9.8f, 0.0f));
+        sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -9.81f, 0.0f));
 
         sqareCast->rigidbody.Translate(deltaTime);
 
 
         sqareCast->UpdateModel();
-        std::cout << "FORCE:" << glm::to_string(sqareCast->rigidbody.force) << "\n\n\n";
 
         renderer->RenderScene(camera);
 
