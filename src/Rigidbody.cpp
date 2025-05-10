@@ -28,6 +28,10 @@ void Rigidbody::CalcAcc()
 
 void Rigidbody::CalcVel(float deltatime)
 {
+	if (this->position.y <= 0.0f)
+	{
+		this->velocity = -this->velocity;
+	}
 	this->velocity += this->acceleration * deltatime;
 }
 
