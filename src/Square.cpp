@@ -48,7 +48,4 @@ void Square::UpdateModel()
 	this->model = glm::mat4(1.0f);
 	this->model = glm::translate(this->model, this->rigidbody.position);
 	
-	std::cout << "RIGIDBODY POS IN SQUARE: \n\n\n" << glm::to_string(this->rigidbody.position) << "\n\n\n";
-
-	std::cout << "MODEL IN SQUARE: \n\n\n" << glm::to_string(this->model) << "\n\n\n";
 }
