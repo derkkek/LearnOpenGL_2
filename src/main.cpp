@@ -121,7 +121,7 @@ int main()
     //renderer->AddScene(new Cube(glm::vec3(10.0f, 5.0f, 1.0f)));
     RenderableObject* square = new Square();
 
-    renderer->AddScene(new Square());
+    renderer->AddScene(square);
     //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
     renderer->AddSkybox(new Skybox());

@@ -17,7 +17,7 @@ public:
 
 	void ResetForce();
 
-	glm::vec3 position;
+	glm::vec3 position = glm::vec3(0.0f);
 	glm::vec3 orientetion = glm::vec3(0.0f);
 
 	glm::vec3 force = glm::vec3(0.0f);
