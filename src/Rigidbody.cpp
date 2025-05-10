@@ -1,4 +1,5 @@
 #include "Rigidbody.h"
+#include <iostream>
 
 Rigidbody::Rigidbody(glm::vec3 position)
 	:position(position)
@@ -16,6 +17,7 @@ void Rigidbody::Translate(float deltatime)
 	CalcVel(deltatime);
 	CalcPos(deltatime);
 
+	//std::cout << glm::to_string(this->position) << "\n";
 	ResetForce();
 }
 

@@ -120,6 +120,7 @@ int main()
     //renderer->AddScene(new Cube(glm::vec3(1.0f, 3.0f, 1.0f)));
     //renderer->AddScene(new Cube(glm::vec3(10.0f, 5.0f, 1.0f)));
     RenderableObject* square = new Square();
+
     renderer->AddScene(new Square());
     //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
@@ -134,7 +135,7 @@ int main()
     
     Square* sqareCast = dynamic_cast<Square*>(square);
 
-    sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -1.0f, 0.0f));
+    //sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -1.0f, 0.0f));
 
     std::cout << "TEST FOR GITHUB";
     while (!glfwWindowShouldClose(window))
@@ -149,32 +150,10 @@ int main()
 
         processInput(window);
 
-        //gridCast->UpdateGridVertices(spheres, 4.0f, 100.0f);
-        //gridCast->UpdateBuffer();
-        
-        for (RenderableObject* object : renderer->sceneObjects)
-        {
-            Cube* cube = dynamic_cast<Cube*>(object);
-
-            if (cube == nullptr)
-            {
-                continue;
-            }
-
-            //glm::vec3 force = computeForce(cube);
-            
-            glm::vec3 acc = glm::vec3(0.0f, -3.27f, 0.0f);
-
-            cube->velocity += acc * deltaTime;
-            cube->Translate(deltaTime);
-            glm::mat4 modelPrint = cube->GetModel();
-            glm::to_string(modelPrint);
-
-        }
         sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -1.0f, 0.0f));
 
         sqareCast->rigidbody.Translate(deltaTime);
-
+        sqareCast->UpdateModel();
         renderer->RenderScene(camera);
 
         sqareCast->rigidbody.ResetForce();

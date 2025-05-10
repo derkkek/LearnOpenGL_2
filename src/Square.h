@@ -3,6 +3,7 @@
 #include "TextureLoader.h"
 #include "Rigidbody.h"
 
+
 class Square : public RenderableObject
 {
 public:
@@ -11,11 +12,11 @@ public:
     const int GetVertexCount() const override;
     
     Rigidbody rigidbody;
+    void UpdateModel();
 
 private:
     void SetupBuffer();
     void AssignTexture(const std::string& path = "resource/textures/block.png");
-    void UpdateModel();
 
     float vertices[4 * 6] = {
         // pos      // tex
