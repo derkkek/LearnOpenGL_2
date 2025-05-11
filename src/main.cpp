@@ -169,6 +169,7 @@ int main()
     }
     glfwTerminate();
     delete renderer;
+    delete physicsEngine;
     return 0;
 }
 

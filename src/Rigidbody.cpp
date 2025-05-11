@@ -22,30 +22,37 @@ void Rigidbody::Translate(float deltatime)
 
 void Rigidbody::CalcAcc()
 {
-	this->acceleration += this->force / this->mass;
+	this->acceleration = this->force / this->mass;
 }
 
 void Rigidbody::CalcVel(float deltatime)
 {
-	if (this->position.y <= 0.0f)
-	{
-		this->velocity = -this->velocity / 1.2f;
-		this->position.y += 0.001f;
-
-		if (this->velocity.y <= 1.0f)
-		{
-			this->position.y = 0.0f;
-			this->velocity.y = 0.0f;
-			this->acceleration.y = 0.0f;
-			ResetForce();
-		}
-	}
 	this->velocity += this->acceleration * deltatime;
 }
 
 void Rigidbody::CalcPos(float deltatime)
 {
 	this->position += this->velocity * deltatime;
+}
+
+void Rigidbody::Integrate(float dt)
+{
+	// 1. compute acceleration
+	CalcAcc();
+	// 2. update velocity
+	CalcVel(dt);
+
+	// 3. update position
+	CalcPos(dt);
+	
+	// 4. collision with ground (y=0)
+
+	if (position.y < 0.0f) 
+	{
+		position.y = 0.0f;
+		// invert Y velocity with restitution
+		velocity.y = -velocity.y * 0.8f;
+	}
 }
 
 glm::vec3 Rigidbody::ForwardPosition()

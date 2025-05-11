@@ -15,6 +15,9 @@ public:
 	void CalcVel(float deltatime);
 	void CalcPos(float deltatime);
 
+	void Integrate(float dt);
+
+
 	glm::vec3 ForwardPosition();
 
 	void ResetForce();
@@ -25,6 +28,9 @@ public:
 	glm::vec3 force = glm::vec3(0.0f);
 	glm::vec3 acceleration = glm::vec3(0.0f);
 	glm::vec3 velocity = glm::vec3(0.0f);
+
+	glm::vec3 angularVelocity = glm::vec3(0.0f); // = delta radian / delta time
+
 	float mass = 1000.0f;
 private:
 

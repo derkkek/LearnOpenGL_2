@@ -21,7 +21,6 @@ void Renderer::RenderObject(RenderableObject* object, Camera& camera)
 	object->GetModel();
 
 	glm::mat4 model = object->GetModel();
-	std::cout <<"MODEL IN RENDERER: \n\n\n" << glm::to_string(model) << "\n\n\n";
 
 	cubeShader.SetMatrix4("model", model);
 
