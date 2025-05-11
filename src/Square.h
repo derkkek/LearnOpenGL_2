@@ -10,8 +10,9 @@ public:
 	Square(glm::vec3 position = glm::vec3(0.0f, 5.0f, 0.0f));
 	~Square() = default;
     const int GetVertexCount() const override;
-    
-    Rigidbody rigidbody;
+    const glm::mat4 GetModel() override;
+
+    Rigidbody* rigidbody;
     void UpdateModel();
 
 private:

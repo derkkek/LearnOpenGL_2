@@ -3,16 +3,22 @@
 #include <glm/gtx/string_cast.hpp>
 
 Square::Square(glm::vec3 position)
-	:rigidbody(position)
+	:rigidbody(new Rigidbody(position))
 {
 	SetupBuffer();
 	AssignTexture();
-	this->model = glm::translate(this->model, this->rigidbody.position); // Assign the result
+	this->model = glm::translate(this->model, this->rigidbody->position); // Assign the result
 }
 
 const int Square::GetVertexCount() const
 {
 	return 3 * 2;
+}
+
+const glm::mat4 Square::GetModel()
+{
+	UpdateModel();
+	return this->model;
 }
 
 void Square::SetupBuffer()
@@ -46,6 +52,6 @@ void Square::AssignTexture(const std::string& path)
 void Square::UpdateModel()
 {
 	this->model = glm::mat4(1.0f);
-	this->model = glm::translate(this->model, this->rigidbody.position);
+	this->model = glm::translate(this->model, this->rigidbody->ForwardPosition());
 	
 }

@@ -31,6 +31,7 @@ void Rigidbody::CalcVel(float deltatime)
 	{
 		this->velocity = -this->velocity / 1.2f;
 		this->position.y += 0.001f;
+
 		if (this->velocity.y <= 1.0f)
 		{
 			this->position.y = 0.0f;
@@ -45,6 +46,11 @@ void Rigidbody::CalcVel(float deltatime)
 void Rigidbody::CalcPos(float deltatime)
 {
 	this->position += this->velocity * deltatime;
+}
+
+glm::vec3 Rigidbody::ForwardPosition()
+{
+	return this->position;
 }
 
 void Rigidbody::ResetForce()

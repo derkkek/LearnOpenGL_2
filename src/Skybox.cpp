@@ -9,6 +9,10 @@ const int Skybox::GetVertexCount() const
 {
     return 108 / 3;
 }
+const glm::mat4 Skybox::GetModel()
+{
+    return glm::mat4(1.0f);
+}
 void Skybox::SetupBuffer()
 {
     glGenVertexArrays(1, &this->VAO);

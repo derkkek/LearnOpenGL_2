@@ -17,6 +17,7 @@
 #include "Cube.h"
 #include "Skybox.h"
 #include "Square.h"
+#include "PhysicsEngine.h"
 
 #include "DirectionalLight.h"
 
@@ -113,15 +114,11 @@ int main()
     Renderer *renderer = new Renderer;
     //ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
     renderer->Init(camera);
-    //RenderableObject* cube = new Cube("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f");
-    //renderer->AddScene(new Cube(glm::vec3(5.0f, 1.0f, 1.0f)));
-    //renderer->AddScene(new Cube(glm::vec3(8.0f, 5.0f, 1.0f)));
-    //renderer->AddScene(new Cube(glm::vec3(3.0f, 7.0f, 1.0f)));
-    //renderer->AddScene(new Cube(glm::vec3(1.0f, 3.0f, 1.0f)));
-    //renderer->AddScene(new Cube(glm::vec3(10.0f, 5.0f, 1.0f)));
     RenderableObject* square = new Square();
+    RenderableObject* square2 = new Square(glm::vec3(3.0f, 5.0f, 0.0f));
 
     renderer->AddScene(square);
+    renderer->AddScene(square2);
     //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
     renderer->AddSkybox(new Skybox());
@@ -134,6 +131,15 @@ int main()
     InitParticles(renderer);
     
     Square* sqareCast = dynamic_cast<Square*>(square);
+    Square* square2_cast = dynamic_cast<Square*>(square2);
+
+    std::vector<Square*> squares;
+    squares.push_back(sqareCast);
+    squares.push_back(square2_cast);
+
+    PhysicsEngine* physicsEngine = new PhysicsEngine();
+    physicsEngine->AddRigidBody(sqareCast->rigidbody);
+    physicsEngine->AddRigidBody(square2_cast->rigidbody);
 
     //sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -1.0f, 0.0f));
 
@@ -150,16 +156,12 @@ int main()
 
         processInput(window);
 
-        sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -9.81f, 0.0f));
 
-        sqareCast->rigidbody.Translate(deltaTime);
+        physicsEngine->StepWorld(deltaTime);
 
-
-        sqareCast->UpdateModel();
 
         renderer->RenderScene(camera);
 
-        sqareCast->rigidbody.ResetForce();
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);

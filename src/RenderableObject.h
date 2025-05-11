@@ -10,10 +10,10 @@ public:
 	virtual ~RenderableObject() = default; // it's virtual because of to trigger derived objects' destructors.
 
 	virtual const int GetVertexCount() const = 0;
-
+	virtual const glm::mat4 GetModel() = 0;
 	unsigned int GetVao();
 	unsigned int GetTexId();
-	glm::mat4 GetModel();
+	
 protected:
 
 	unsigned int VAO, VBO, EBO;

@@ -15,6 +15,8 @@ public:
 	void CalcVel(float deltatime);
 	void CalcPos(float deltatime);
 
+	glm::vec3 ForwardPosition();
+
 	void ResetForce();
 
 	glm::vec3 position;

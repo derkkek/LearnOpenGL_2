@@ -148,6 +148,7 @@
     <ClInclude Include="src\IRenderable.h" />
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\model.h" />
+    <ClInclude Include="src\PhysicsEngine.h" />
     <ClInclude Include="src\PointLight.h" />
     <ClInclude Include="src\RenderableObject.h" />
     <ClInclude Include="src\RenderData.h" />
@@ -552,6 +553,7 @@
     <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PhysicsEngine.cpp" />
     <ClCompile Include="src\PointLight.cpp" />
     <ClCompile Include="src\RenderableObject.cpp" />
     <ClCompile Include="src\Renderer.cpp" />

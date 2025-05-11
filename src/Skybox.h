@@ -12,7 +12,7 @@ public:
 	~Skybox() = default;
 
     const int GetVertexCount() const override;
-
+    const glm::mat4 GetModel() override;
 
 	
 private:

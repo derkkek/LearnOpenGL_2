@@ -16,9 +16,3 @@ unsigned int RenderableObject::GetTexId()
 {
 	return this->textureID;
 }
-
-glm::mat4 RenderableObject::GetModel()
-{
-	std::cout << "MODEL IN RENDERABLE OBJECT: \n\n\n" << glm::to_string(model) << "\n\n\n";
-	return this->model;
-}
