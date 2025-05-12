@@ -20,13 +20,13 @@ private:
     void AssignTexture(const std::string& path = "resource/textures/block.png");
 
     float vertices[4 * 6] = {
-        // pos      // tex
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.0f,
+        // pos (centered)      // tex
+        -0.5f,  0.5f,         0.0f, 1.0f,   // Top-left
+         0.5f, -0.5f,         1.0f, 0.0f,   // Bottom-right
+        -0.5f, -0.5f,         0.0f, 0.0f,   // Bottom-left
 
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f
+        -0.5f,  0.5f,         0.0f, 1.0f,   // Top-left
+         0.5f,  0.5f,         1.0f, 1.0f,   // Top-right
+         0.5f, -0.5f,         1.0f, 0.0f    // Bottom-right
     };
 };

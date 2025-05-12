@@ -1,9 +1,11 @@
 #include "Rigidbody.h"
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 Rigidbody::Rigidbody(glm::vec3 position)
 	:position(position)
 {
+
 }
 
 void Rigidbody::AddForce(glm::vec3 amount)
@@ -11,14 +13,6 @@ void Rigidbody::AddForce(glm::vec3 amount)
 	this->force += amount;
 }
 
-void Rigidbody::Translate(float deltatime)
-{
-	CalcAcc();
-	CalcVel(deltatime);
-	CalcPos(deltatime);
-
-	//std::cout << glm::to_string(this->position) << "\n";
-}
 
 void Rigidbody::CalcAcc()
 {
@@ -45,6 +39,9 @@ void Rigidbody::Integrate(float dt)
 	// 3. update position
 	CalcPos(dt);
 	
+	Rotate(glm::vec3(0.0f, 1.0f, 0.0f), dt);
+
+
 	// 4. collision with ground (y=0)
 
 	if (position.y < 0.0f) 
@@ -58,6 +55,21 @@ void Rigidbody::Integrate(float dt)
 glm::vec3 Rigidbody::ForwardPosition()
 {
 	return this->position;
+}
+
+glm::quat Rigidbody::Rotate(glm::vec3 angular_velocity, float dt)
+{
+	// Calculate rotation angle and axis
+	float angle = glm::length(angular_velocity) * dt; // Magnitude of angular velocity × time
+	glm::vec3 axis = glm::normalize(angular_velocity); // Rotation axis direction
+
+	// Create rotation quaternion
+	glm::quat angularDelta = glm::angleAxis(angle, axis);
+
+	// Apply rotation in LOCAL space (order matters: orientetion * delta)
+	this->orientetion = glm::normalize(this->orientetion * angularDelta);
+
+	return angularDelta;
 }
 
 void Rigidbody::ResetForce()

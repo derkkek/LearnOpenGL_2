@@ -2,6 +2,8 @@
 #include "glm/glm.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/quaternion.hpp> 
+#include "glm/gtx/quaternion.hpp"
 class Rigidbody
 {
 public:
@@ -9,8 +11,6 @@ public:
 	~Rigidbody() = default;
 
 	void AddForce(glm::vec3 amount);
-	void Translate(float deltatime);
-
 	void CalcAcc();
 	void CalcVel(float deltatime);
 	void CalcPos(float deltatime);
@@ -19,11 +19,13 @@ public:
 
 
 	glm::vec3 ForwardPosition();
+	glm::quat Rotate(glm::vec3 angular_velocity, float dt);
+
 
 	void ResetForce();
 
 	glm::vec3 position;
-	glm::vec3 orientetion = glm::vec3(0.0f);
+	glm::quat orientetion = glm::quat(1.0, 0.0, 0.0, 0.0);
 
 	glm::vec3 force = glm::vec3(0.0f);
 	glm::vec3 acceleration = glm::vec3(0.0f);

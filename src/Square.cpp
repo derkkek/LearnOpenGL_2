@@ -52,6 +52,11 @@ void Square::AssignTexture(const std::string& path)
 void Square::UpdateModel()
 {
 	this->model = glm::mat4(1.0f);
+
+	glm::mat4 rotationMatrix = glm::toMat4(this->rigidbody->orientetion);
+
 	this->model = glm::translate(this->model, this->rigidbody->ForwardPosition());
-	
+
+	this->model *= rotationMatrix;
+
 }
