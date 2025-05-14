@@ -16,7 +16,7 @@ void PhysicsEngine::StepWorld(float deltatime)
 	{
 		rb->AddForce(glm::vec3(0.0f, -9.81f * rb->mass, 0.0f));
 
-		rb->Integrate(deltatime);
+		rb->Integrate_RungeKutta(deltatime);
 
 		rb->ResetForce();
 	}
