@@ -17,6 +17,7 @@
 #include "Cube.h"
 #include "Skybox.h"
 #include "Square.h"
+#include "Circle.h"
 #include "PhysicsEngine.h"
 
 #include "DirectionalLight.h"
@@ -114,11 +115,11 @@ int main()
     Renderer *renderer = new Renderer;
     //ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
     renderer->Init(camera);
-    RenderableObject* square = new Square();
-    RenderableObject* square2 = new Square(glm::vec3(3.0f, 5.0f, 0.0f));
+    RenderableObject* circle = new Circle(0.5f, 128, glm::vec3(0.0f));
+    RenderableObject* circle2 = new Circle(0.5f, 128,glm::vec3(3.0f, 5.0f, 0.0f));
 
-    renderer->AddScene(square);
-    renderer->AddScene(square2);
+    renderer->AddScene(circle);
+    renderer->AddScene(circle2);
     //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
     renderer->AddSkybox(new Skybox());
@@ -130,16 +131,16 @@ int main()
     // -----------
     InitParticles(renderer);
     
-    Square* sqareCast = dynamic_cast<Square*>(square);
-    Square* square2_cast = dynamic_cast<Square*>(square2);
+    Circle* circleCast = dynamic_cast<Circle*>(circle);
+    Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
 
-    std::vector<Square*> squares;
-    squares.push_back(sqareCast);
-    squares.push_back(square2_cast);
+    std::vector<Circle*> squares;
+    squares.push_back(circleCast);
+    squares.push_back(circle2_cast);
 
     PhysicsEngine* physicsEngine = new PhysicsEngine();
-    physicsEngine->AddRigidBody(sqareCast->rigidbody);
-    physicsEngine->AddRigidBody(square2_cast->rigidbody);
+    physicsEngine->AddRigidBody(circleCast->rigidbody);
+    physicsEngine->AddRigidBody(circle2_cast->rigidbody);
 
     //sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -1.0f, 0.0f));
 

@@ -20,7 +20,8 @@ public:
     ~Renderer();
     void Init(Camera& camera);
     // Render a single object using the provided shader.
-    void RenderObject(RenderableObject* object, Camera& camera);
+    void RenderCube(RenderableObject* object, Camera& camera);
+    void RenderCircle(RenderableObject* object, Camera& camera);
     void RenderSkybox(RenderableObject* skybox, Camera& camera);
 
     // Optionally, render a list of objects.

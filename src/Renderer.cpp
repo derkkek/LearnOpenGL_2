@@ -14,7 +14,7 @@ void Renderer::Init(Camera& camera)
 }
 
 /*Renders Cube not variety of objects!!!*/
-void Renderer::RenderObject(RenderableObject* object, Camera& camera)
+void Renderer::RenderCube(RenderableObject* object, Camera& camera)
 {
 	ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
 	
@@ -28,6 +28,23 @@ void Renderer::RenderObject(RenderableObject* object, Camera& camera)
     glBindVertexArray(object->GetVao());
     glDrawArrays(GL_TRIANGLES, 0, object->GetVertexCount());
     glBindVertexArray(0);
+}
+
+void Renderer::RenderCircle(RenderableObject* object, Camera& camera)
+{
+	ShaderStable circleShader = ResourceManager::GetShader("textured_cubes");
+
+	object->GetModel();
+
+	glm::mat4 model = object->GetModel();
+
+	circleShader.SetMatrix4("model", model);
+	glBindTexture(GL_TEXTURE_2D, object->GetTexId());
+	glBindVertexArray(object->GetVao());
+	glDrawElements(GL_TRIANGLES, object->indices.size(), GL_UNSIGNED_INT, 0); // asd
+
+	glBindVertexArray(0);
+
 }
 
 void Renderer::RenderSkybox(RenderableObject* skybox, Camera& camera)
@@ -56,7 +73,7 @@ void Renderer::RenderScene(Camera& camera)
 
 	for (RenderableObject* obj : sceneObjects)
 	{
-		RenderObject(obj, camera);
+		RenderCircle(obj, camera);
 	}
 
 	RenderSkybox(skybox, camera);

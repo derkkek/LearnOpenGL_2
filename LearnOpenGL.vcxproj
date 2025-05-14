@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="src\5.1.ball_object_collisions.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Circle.h" />
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\DirectionalLight.h" />
     <ClInclude Include="src\filesystem.h" />
@@ -546,6 +547,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\5.1.ball_object_collisions.cpp" />
+    <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\DirectionalLight.cpp" />
     <ClCompile Include="src\Game.cpp" />

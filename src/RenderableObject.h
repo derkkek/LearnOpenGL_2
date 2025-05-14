@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "iostream"
 #include "glm/glm.hpp"
+#include <vector>
 
 class RenderableObject
 {
@@ -13,10 +14,14 @@ public:
 	virtual const glm::mat4 GetModel() = 0;
 	unsigned int GetVao();
 	unsigned int GetTexId();
+
+	std::vector<unsigned int> indices;
+
 	
 protected:
 
 	unsigned int VAO, VBO, EBO;
+
 
 	glm::mat4 model = glm::mat4(1.0f);
 
