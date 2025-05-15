@@ -1,6 +1,6 @@
 #include "Skybox.h"
 
-Skybox::Skybox() : RenderableObject()
+Skybox::Skybox(const std::string& texture_path) : RenderableObject(texture_path)
 {
     SetupBuffer();
     AssignTexture();

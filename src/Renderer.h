@@ -16,9 +16,9 @@ public:
     RenderableObject* skybox;
     ShaderStable shader;
 
-    Renderer() = default;
+    Renderer();
     ~Renderer();
-    void Init(Camera& camera);
+    void SetupMeshes();
     // Render a single object using the provided shader.
     void RenderCube(RenderableObject* object, Camera& camera);
     void RenderCircle(RenderableObject* object, Camera& camera);

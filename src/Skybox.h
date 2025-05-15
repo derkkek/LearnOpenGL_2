@@ -8,7 +8,7 @@
 class Skybox : public RenderableObject
 {
 public:
-	Skybox();
+	Skybox(const std::string& texture_path = "resource/textures/skybox/front.jpg");
 	~Skybox() = default;
 
     const int GetVertexCount() const override;

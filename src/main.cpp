@@ -43,33 +43,6 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-glm::vec3 computeForce(Cube* cube)
-{
-    return glm::vec3(0.0f, -9.8f, 0.0f);
-}
-void InitParticles(Renderer* renderer)
-{
-    for (RenderableObject* object : renderer->sceneObjects)
-    {
-        Cube* cube = dynamic_cast<Cube*>(object);
-
-        if (cube == nullptr)
-        {
-            continue;
-        }
-
-        std::random_device rd; // obtain a random number from hardware
-        std::mt19937 gen(rd()); // seed the generator
-        std::uniform_int_distribution<> distr(0.0f, 10.0f); // define the range
-
-        float rand = distr(gen);
-        cube->position.x = rand;
-        cube->position.y = rand;
-
-        cube->Translate(deltaTime);
-        std::cout << glm::to_string(static_cast<Cube*>(object)->position) << "\n";
-    }
-}
 int main()
 {
     // glfw: initialize and configure
@@ -114,7 +87,6 @@ int main()
 
     Renderer *renderer = new Renderer;
     //ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
-    renderer->Init(camera);
     RenderableObject* circle = new Circle(0.5f, 128, glm::vec3(0.0f));
     RenderableObject* circle2 = new Circle(0.5f, 128,glm::vec3(3.0f, 5.0f, 0.0f));
 
@@ -124,12 +96,14 @@ int main()
     //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
     renderer->AddSkybox(new Skybox());
 
+    renderer->SetupMeshes();
+
+
     //Grid* gridCast = dynamic_cast<Grid*>(grid);
     //std::vector<Sphere*> spheres;
     //spheres.push_back(dynamic_cast<Sphere*>(sphere));
     // render loop
     // -----------
-    InitParticles(renderer);
     
     Circle* circleCast = dynamic_cast<Circle*>(circle);
     Circle* circle2_cast = dynamic_cast<Circle*>(circle2);

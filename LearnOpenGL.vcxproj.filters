@@ -1155,9 +1155,6 @@
     <ClInclude Include="vendor\include\assimp\ZipArchiveIOSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1177,9 +1174,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TextureLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\RenderableObject.h">
@@ -1215,9 +1209,6 @@
     <ClInclude Include="src\Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Square.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Rigidbody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1225,6 +1216,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Circle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1248,9 +1242,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PointLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\RenderableObject.cpp">
@@ -1289,9 +1280,6 @@
     <ClCompile Include="src\Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Square.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Rigidbody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1299,6 +1287,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,14 +1,16 @@
 #include "Renderer.h"
-void Renderer::Init(Camera& camera)
+#include "MeshData.h"
+void Renderer::SetupMeshes()
 {
 	ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
 	ResourceManager::LoadShader("resource/shaders/6.1.skybox.v", "resource/shaders/6.1.skybox.f", nullptr, "skybox");
 
 	ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
-	cubeShader.Use();
-	cubeShader.SetMatrix4("view", camera.GetViewMatrix());
-	cubeShader.SetMatrix4("projection", camera.GetProjectionMatrix());
-	cubeShader.SetVector3f("viewPos", camera.Position);
+	
+	for (RenderableObject* obj : sceneObjects)
+	{
+		obj->SetupBuffer();
+	}
 	cubeShader.SetInteger("texture1", 0);
 	glActiveTexture(GL_TEXTURE0);
 }
@@ -41,7 +43,8 @@ void Renderer::RenderCircle(RenderableObject* object, Camera& camera)
 	circleShader.SetMatrix4("model", model);
 	glBindTexture(GL_TEXTURE_2D, object->GetTexId());
 	glBindVertexArray(object->GetVao());
-	glDrawElements(GL_TRIANGLES, object->indices.size(), GL_UNSIGNED_INT, 0); // asd
+	MeshData meshdata = object->SendMeshData();
+	glDrawElements(GL_TRIANGLES, object->SendMeshData().indices.size(), GL_UNSIGNED_INT, 0); // asd
 
 	glBindVertexArray(0);
 
@@ -96,6 +99,11 @@ void Renderer::ForwardCubeCommonConfig(Camera& camera)
 	cubeShader.SetMatrix4("view", camera.GetViewMatrix());
 	cubeShader.SetMatrix4("projection", camera.GetProjectionMatrix());
 	cubeShader.SetVector3f("viewPos", camera.Position);
+}
+
+Renderer::Renderer()
+{
+	SetupMeshes();
 }
 
 Renderer::~Renderer()

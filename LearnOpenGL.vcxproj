@@ -140,14 +140,13 @@
     <ClInclude Include="src\5.1.ball_object_collisions.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Circle.h" />
-    <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\DirectionalLight.h" />
     <ClInclude Include="src\filesystem.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\game_level.h" />
     <ClInclude Include="src\game_object.h" />
     <ClInclude Include="src\IRenderable.h" />
-    <ClInclude Include="src\mesh.h" />
+    <ClInclude Include="src\MeshData.h" />
     <ClInclude Include="src\model.h" />
     <ClInclude Include="src\PhysicsEngine.h" />
     <ClInclude Include="src\PointLight.h" />
@@ -162,7 +161,6 @@
     <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Spotlight.h" />
     <ClInclude Include="src\SpriteRenderer.h" />
-    <ClInclude Include="src\Square.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\TextureLoader.h" />
@@ -548,13 +546,13 @@
   <ItemGroup>
     <ClCompile Include="src\5.1.ball_object_collisions.cpp" />
     <ClCompile Include="src\Circle.cpp" />
-    <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\DirectionalLight.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\game_level.cpp" />
     <ClCompile Include="src\game_object.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MeshData.cpp" />
     <ClCompile Include="src\PhysicsEngine.cpp" />
     <ClCompile Include="src\PointLight.cpp" />
     <ClCompile Include="src\RenderableObject.cpp" />
@@ -565,7 +563,6 @@
     <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Spotlight.cpp" />
     <ClCompile Include="src\SpriteRenderer.cpp" />
-    <ClCompile Include="src\Square.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />
