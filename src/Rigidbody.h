@@ -4,10 +4,12 @@
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtc/quaternion.hpp> 
 #include "glm/gtx/quaternion.hpp"
+#include <glm/gtx/norm.hpp>
+
 class Rigidbody
 {
 public:
-	Rigidbody(glm::vec3 position);
+	Rigidbody(glm::vec3 position, float area);
 	~Rigidbody() = default;
 
 	void AddForce(glm::vec3 amount);
@@ -15,6 +17,7 @@ public:
 	void CalcVel(float deltatime);
 	void CalcPos(float deltatime);
 
+	glm::vec3 CalcAirDragForce(float air_density, float drag_coeffiecent);
 
 	void Integrate(float dt);
 	void Integrate_RungeKutta(float dt);
@@ -26,14 +29,15 @@ public:
 
 	void ResetForce();
 
-	float mass = 1000.0f;
-
+	float mass = 1.0f;
 
 	glm::vec3 force = glm::vec3(0.0f);
 	glm::vec3 acceleration = glm::vec3(0.0f);
 	glm::vec3 velocity = glm::vec3(0.0f);
 	glm::vec3 linearMomentum = mass * velocity;
+	float speed = glm::length(velocity);
 
+	float area;
 
 	glm::vec3 position;
 	glm::quat orientetion = glm::quat(1.0, 0.0, 0.0, 0.0);

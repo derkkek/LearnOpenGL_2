@@ -2,8 +2,8 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
-Rigidbody::Rigidbody(glm::vec3 position)
-	:position(position)
+Rigidbody::Rigidbody(glm::vec3 position, float area)
+	:position(position), area(area)
 {
 
 }
@@ -29,6 +29,17 @@ void Rigidbody::CalcPos(float deltatime)
 	this->position += this->velocity * deltatime;
 }
 
+glm::vec3 Rigidbody::CalcAirDragForce(float air_density, float drag_coeffiecent)
+{
+	glm::vec3 vDrag = glm::normalize(velocity);
+
+	float fDrag = air_density * speed * speed * area * drag_coeffiecent;
+
+	vDrag *= fDrag;
+
+	return vDrag;
+}
+
 
 void Rigidbody::Integrate(float dt)
 {
@@ -36,7 +47,6 @@ void Rigidbody::Integrate(float dt)
 	CalcAcc();
 	// 2. update velocity
 	CalcVel(dt);
-
 	// 3. update position
 	CalcPos(dt);
 	
@@ -51,6 +61,7 @@ void Rigidbody::Integrate(float dt)
 		// invert Y velocity with restitution
 		velocity.y = -velocity.y * 0.8f;
 	}
+
 }
 
 void Rigidbody::Integrate_RungeKutta(float dt)
@@ -79,7 +90,7 @@ void Rigidbody::Integrate_RungeKutta(float dt)
 	// Update velocity and position using weighted averages
 	velocity = v0 + (k1v + 2.0f * k2v + 2.0f * k3v + k4v) / 6.0f;
 	position = p0 + (k1p + 2.0f * k2p + 2.0f * k3p + k4p) / 6.0f;
-
+	speed = glm::length(velocity);
 	// Handle rotation (same as Euler)
 	Rotate(glm::vec3(0.0f, 1.0f, 0.0f), dt);
 
@@ -89,6 +100,7 @@ void Rigidbody::Integrate_RungeKutta(float dt)
 		position.y = 0.0f;
 		velocity.y = -velocity.y * 0.8f;  // Apply restitution
 	}
+
 }
 
 glm::vec3 Rigidbody::ForwardPosition()

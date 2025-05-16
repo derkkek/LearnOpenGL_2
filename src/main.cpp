@@ -23,6 +23,8 @@
 #include "DirectionalLight.h"
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -42,7 +44,19 @@ bool firstMouse = true;
 // timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
+float GetRandomNumber(float min, float max, bool isInteger) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
 
+    if (isInteger) {
+        std::uniform_int_distribution<> dis(min, max);
+        return static_cast<float>(dis(gen));
+    }
+    else {
+        std::uniform_real_distribution<float> dis(min, max);
+        return dis(gen);
+    }
+}
 int main()
 {
     // glfw: initialize and configure
@@ -85,40 +99,41 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    Renderer *renderer = new Renderer;
-    //ResourceManager::LoadShader("resource/shaders/6.1.cubemaps.v", "resource/shaders/6.1.cubemaps.f", nullptr, "textured_cubes");
-    RenderableObject* circle = new Circle(0.5f, 128, glm::vec3(0.0f));
-    RenderableObject* circle2 = new Circle(0.5f, 128,glm::vec3(3.0f, 5.0f, 0.0f));
 
-    renderer->AddScene(circle);
-    renderer->AddScene(circle2);
-    //renderer.AddScene(new Sphere("resource/shaders/procedural_sphere.v", "resource/shaders/procedural_sphere.f"));
-    //renderer.AddScene(new Grid(1000.0f, 100.0f, "resource/shaders/grid.v", "resource/shaders/grid.f"));
+
+    
+
+    PhysicsEngine* physicsEngine = new PhysicsEngine();
+    Renderer* renderer = new Renderer;
+
+
+    for (int i = 0; i < physicsEngine->MaxUnits; i++)
+    {
+        // X: Random between -5 and 5
+        float posX = GetRandomNumber(-10.0f, 10.0f, false);
+
+        // Y: Random between 0 and 10 (adjust based on your needs)
+        float posY = GetRandomNumber(0.0f, 5.0f, false);
+
+        RenderableObject* circle = new Circle(0.5f, 128, glm::vec3(posX, posY*i, 0.0f));
+        //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
+
+        renderer->AddScene(circle);
+        //renderer->AddScene(circle2);
+
+        Circle* circleCast = dynamic_cast<Circle*>(circle);
+        //Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
+
+        physicsEngine->AddRigidBody(circleCast->rigidbody);
+        //physicsEngine->AddRigidBody(circle2_cast->rigidbody);
+
+    }
+
     renderer->AddSkybox(new Skybox());
 
     renderer->SetupMeshes();
 
 
-    //Grid* gridCast = dynamic_cast<Grid*>(grid);
-    //std::vector<Sphere*> spheres;
-    //spheres.push_back(dynamic_cast<Sphere*>(sphere));
-    // render loop
-    // -----------
-    
-    Circle* circleCast = dynamic_cast<Circle*>(circle);
-    Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
-
-    std::vector<Circle*> squares;
-    squares.push_back(circleCast);
-    squares.push_back(circle2_cast);
-
-    PhysicsEngine* physicsEngine = new PhysicsEngine();
-    physicsEngine->AddRigidBody(circleCast->rigidbody);
-    physicsEngine->AddRigidBody(circle2_cast->rigidbody);
-
-    //sqareCast->rigidbody.AddForce(glm::vec3(0.0f, -1.0f, 0.0f));
-
-    std::cout << "TEST FOR GITHUB";
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);

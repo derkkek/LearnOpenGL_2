@@ -8,14 +8,17 @@ class Circle : public RenderableObject
 {
 public:
 	Circle(float radius, int vCount, glm::vec3 position, const std::string &texture_path = "resource/textures/awesomeface.png");
-	const int GetVertexCount() const override;
-	const glm::mat4 GetModel() override;
 	~Circle() = default;
+
+	const int GetVertexCount() const override;
+	
+	const glm::mat4 GetModel() override;
+	
 	Rigidbody* rigidbody;
 
 private:
 	float radius;
-	int vCount;
+	int vCount;	
 
 	void BuildCircle();
 

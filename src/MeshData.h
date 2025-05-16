@@ -22,6 +22,7 @@ public:
 
 	MeshData() = default;
 	~MeshData() = default;
+	const int GetVertexCount() const;
 
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;

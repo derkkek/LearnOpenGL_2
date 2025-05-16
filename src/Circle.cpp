@@ -1,7 +1,7 @@
 #include "Circle.h"
 
 Circle::Circle(float radius, int vCount, glm::vec3 position, const std::string &texture_path)
-	: RenderableObject(texture_path), radius(radius), vCount(vCount),rigidbody(new Rigidbody(position))
+	: RenderableObject(texture_path), radius(radius), vCount(vCount),rigidbody(new Rigidbody(position, 3.14159 * radius * radius))
 {
 	BuildCircle();
 }
@@ -17,8 +17,8 @@ const glm::mat4 Circle::GetModel()
     return this->model;
 }
 
-void Circle::BuildCircle() {
-    std::cout << "BUILD CIRCLE CALLED\n\n";
+void Circle::BuildCircle() 
+{
     float angle = 360.0f / vCount;
     mesh.vertices.clear();
 

@@ -20,7 +20,6 @@ unsigned int RenderableObject::GetTexId()
 
 void RenderableObject::SetupBuffer()
 {
-    std::cout << "SETUP BUFFER CALLED\n\n";
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
