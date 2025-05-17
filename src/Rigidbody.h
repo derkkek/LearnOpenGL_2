@@ -29,13 +29,14 @@ public:
 
 	void ResetForce();
 
+	const float AIRDENSITY = 1.23f; //  kg/m^3;
+	const float DRAG_COEFF = 0.6f;
 	float mass = 1.0f;
 
 	glm::vec3 force = glm::vec3(0.0f);
 	glm::vec3 acceleration = glm::vec3(0.0f);
-	glm::vec3 velocity = glm::vec3(0.0f);
+	glm::vec3 velocity;
 	glm::vec3 linearMomentum = mass * velocity;
-	float speed = glm::length(velocity);
 
 	float area;
 

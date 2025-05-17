@@ -115,7 +115,7 @@ int main()
         // Y: Random between 0 and 10 (adjust based on your needs)
         float posY = GetRandomNumber(0.0f, 5.0f, false);
 
-        RenderableObject* circle = new Circle(0.5f, 128, glm::vec3(posX, posY*i, 0.0f));
+        RenderableObject* circle = new Circle(0.25f, 128, glm::vec3(posX, posY*i, 0.0f));
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
 
         renderer->AddScene(circle);

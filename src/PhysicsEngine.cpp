@@ -14,17 +14,12 @@ void PhysicsEngine::StepWorld(float deltatime)
 {
 	for (Rigidbody* rb : rigidbodies)
 	{
-		rb->AddForce(glm::vec3(0.0f, -9.81f * rb->mass, 0.0f));
 
-		std::cout << "FORCE GRAVITY: " << glm::to_string(rb->force) << "\n\n";
+		rb->Integrate(deltatime);
 
-		rb->Integrate_RungeKutta(deltatime);
 
-		glm::vec3 dragforce = rb->CalcAirDragForce(AIRDENSITY, DRAG_COEFF);
-		rb->AddForce(dragforce);
 
-		std::cout << "FORCE GRAVITY PLUS DRAG FORCE: " << glm::to_string(rb->force) << "\n\n";
-		rb->ResetForce();
+		//std::cout << "VELOCITY: " << glm::to_string(rb->velocity) << "\n\n";
 	}
 }
 
