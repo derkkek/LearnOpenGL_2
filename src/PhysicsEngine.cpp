@@ -14,7 +14,6 @@ void PhysicsEngine::StepWorld(float deltatime)
 {
 	for (Rigidbody* rb : rigidbodies)
 	{
-
 		rb->Integrate(deltatime);
 
 

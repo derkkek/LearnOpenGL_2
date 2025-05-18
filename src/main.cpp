@@ -124,7 +124,7 @@ int main()
         Circle* circleCast = dynamic_cast<Circle*>(circle);
         //Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
 
-        physicsEngine->AddRigidBody(circleCast->rigidbody);
+        physicsEngine->AddRigidBody(circleCast);
         //physicsEngine->AddRigidBody(circle2_cast->rigidbody);
 
     }
@@ -158,8 +158,9 @@ int main()
         glfwPollEvents();
     }
     glfwTerminate();
-    delete renderer;
+    //delete renderer;
     delete physicsEngine;
+
     return 0;
 }
 

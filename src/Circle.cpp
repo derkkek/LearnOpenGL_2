@@ -1,7 +1,7 @@
 #include "Circle.h"
 
 Circle::Circle(float radius, int vCount, glm::vec3 position, const std::string &texture_path)
-	: RenderableObject(texture_path), radius(radius), vCount(vCount),rigidbody(new Rigidbody(position, 3.14159 * radius * radius))
+	: RenderableObject(texture_path), radius(radius), vCount(vCount), Rigidbody(position, 3.14159f * radius * radius)
 {
 	BuildCircle();
 }
@@ -15,6 +15,11 @@ const glm::mat4 Circle::GetModel()
 {
     UpdateModel();
     return this->model;
+}
+
+float Circle::CalcMomentOfInertia()
+{
+    return 0.25f * mass * radius * radius;
 }
 
 void Circle::BuildCircle() 
@@ -53,9 +58,9 @@ void Circle::UpdateModel()
 {
     this->model = glm::mat4(1.0f);
 
-    glm::mat4 rotationMatrix = glm::toMat4(this->rigidbody->orientetion);
+    glm::mat4 rotationMatrix = glm::toMat4(orientetion);
 
-    this->model = glm::translate(this->model, this->rigidbody->ForwardPosition());
+    this->model = glm::translate(this->model, ForwardPosition());
 
     this->model *= rotationMatrix;
 }

@@ -9,7 +9,7 @@ class RenderableObject
 {
 public:
 	RenderableObject(const std::string& texture_path);
-	virtual ~RenderableObject() = default; // it's virtual because of to trigger derived objects' destructors.
+	virtual ~RenderableObject() {} // it's virtual because of to trigger derived objects' destructors.
 
 	virtual const int GetVertexCount() const = 0;
 	virtual const glm::mat4 GetModel() = 0;

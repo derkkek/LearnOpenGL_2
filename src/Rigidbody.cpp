@@ -33,6 +33,7 @@ void Rigidbody::CalcPos(float deltatime)
 
 void Rigidbody::Integrate(float dt)
 {
+
 	glm::vec3 vDrag = glm::normalize(velocity);
 	vDrag = -vDrag;
 

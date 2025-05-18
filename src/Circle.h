@@ -4,7 +4,7 @@
 #include "RenderableObject.h"
 #include "TextureLoader.h"
 #include "MeshData.h"
-class Circle : public RenderableObject
+class Circle : public Rigidbody, public RenderableObject
 {
 public:
 	Circle(float radius, int vCount, glm::vec3 position, const std::string &texture_path = "resource/textures/awesomeface.png");
@@ -14,8 +14,7 @@ public:
 	
 	const glm::mat4 GetModel() override;
 	
-	Rigidbody* rigidbody;
-
+	float CalcMomentOfInertia() override;
 private:
 	float radius;
 	int vCount;	

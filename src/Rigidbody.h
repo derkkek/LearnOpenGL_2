@@ -10,7 +10,9 @@ class Rigidbody
 {
 public:
 	Rigidbody(glm::vec3 position, float area);
-	~Rigidbody() = default;
+	virtual ~Rigidbody() {}
+
+	virtual float CalcMomentOfInertia() = 0;
 
 	void AddForce(glm::vec3 amount);
 	void CalcAcc();
@@ -18,7 +20,7 @@ public:
 	void CalcPos(float deltatime);
 
 	glm::vec3 CalcAirDragForce(float air_density, float drag_coeffiecent);
-
+	//bool CheckForCollisions();
 	void Integrate(float dt);
 	void Integrate_RungeKutta(float dt);
 
@@ -38,13 +40,15 @@ public:
 	glm::vec3 velocity;
 	glm::vec3 linearMomentum = mass * velocity;
 
+	glm::vec3 impactForces = glm::vec3(0.0f);
+	bool collision = false;
+
 	float area;
 
 	glm::vec3 position;
 	glm::quat orientetion = glm::quat(1.0, 0.0, 0.0, 0.0);
 	/*Calculate angular velocity with Tensors and torques, etc.*/
-	glm::vec3 angularVelocity = glm::vec3(0.0f); // Orientation is a result of angular velocity, not a source for it.
-
+	float angularVelocity = 0.0f; // Orientation is a result of angular velocity, not a source for it.
 private:
 
 };
