@@ -1,7 +1,7 @@
 #include "Circle.h"
 
 Circle::Circle(float radius, int vCount, glm::vec3 position, const std::string &texture_path)
-	: RenderableObject(texture_path), radius(radius), vCount(vCount), Rigidbody(position, 3.14159f * radius * radius)
+	: RenderableObject(texture_path), radius(radius), vCount(vCount), momentOfInertia(0.25f * mass * radius * radius), Rigidbody(position, 3.14159f * radius * radius)
 {
 	BuildCircle();
 }
@@ -19,7 +19,20 @@ const glm::mat4 Circle::GetModel()
 
 float Circle::CalcMomentOfInertia()
 {
-    return 0.25f * mass * radius * radius;
+	momentOfInertia = 0.25f * mass * radius * radius; // Moment of inertia for a solid disk
+    return momentOfInertia;
+}
+
+float Circle::CalcTorque()
+{
+    torque= radius * 1.0 - radius * 0.0f;
+    return torque;
+}
+
+float Circle::CalcAngularAcc()
+{
+	angularAcc = torque / momentOfInertia;
+    return angularAcc;
 }
 
 void Circle::BuildCircle() 

@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 
 Rigidbody::Rigidbody(glm::vec3 position, float area)
-	:position(position), area(area), mass(1.0f), velocity(glm::vec3(0.0f, -0.01f, 0.0f))
+	:position(position), area(area), mass(10.0f), velocity(glm::vec3(0.0f, -0.01f, 0.0f)), angularVelocity(0.0f), torque(0.0f), angularAcc(0.0f), force(glm::vec3(0.0f))
 {
 
 }
@@ -27,6 +27,11 @@ void Rigidbody::CalcVel(float deltatime)
 void Rigidbody::CalcPos(float deltatime)
 {
 	this->position += this->velocity * deltatime;
+}
+
+void Rigidbody::CalcAngularVel(float deltatime)
+{
+	angularVelocity += angularAcc * deltatime;
 }
 
 
@@ -56,8 +61,16 @@ void Rigidbody::Integrate(float dt)
 
 	// 3. update position
 	CalcPos(dt);
+
+	CalcMomentOfInertia();
+
+	CalcTorque();
+
+	CalcAngularAcc();
 	
-	Rotate(glm::vec3(0.0f, 1.0f, 0.0f), dt);
+	CalcAngularVel(dt);
+	
+	Rotate(glm::vec3(0.0f, 0.0f, angularVelocity), dt);
 
 
 

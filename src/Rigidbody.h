@@ -13,11 +13,15 @@ public:
 	virtual ~Rigidbody() {}
 
 	virtual float CalcMomentOfInertia() = 0;
+	virtual float CalcTorque() = 0;
+	virtual float CalcAngularAcc() = 0;
 
 	void AddForce(glm::vec3 amount);
 	void CalcAcc();
 	void CalcVel(float deltatime);
 	void CalcPos(float deltatime);
+	void CalcAngularVel(float deltatime);
+
 
 	glm::vec3 CalcAirDragForce(float air_density, float drag_coeffiecent);
 	//bool CheckForCollisions();
@@ -33,9 +37,9 @@ public:
 
 	const float AIRDENSITY = 1.23f; //  kg/m^3;
 	const float DRAG_COEFF = 0.6f;
-	float mass = 1.0f;
+	float mass;
 
-	glm::vec3 force = glm::vec3(0.0f);
+	glm::vec3 force;
 	glm::vec3 acceleration = glm::vec3(0.0f);
 	glm::vec3 velocity;
 	glm::vec3 linearMomentum = mass * velocity;
@@ -49,6 +53,9 @@ public:
 	glm::quat orientetion = glm::quat(1.0, 0.0, 0.0, 0.0);
 	/*Calculate angular velocity with Tensors and torques, etc.*/
 	float angularVelocity = 0.0f; // Orientation is a result of angular velocity, not a source for it.
+	float torque; // in 2d it's scalar.
+	float angularAcc;
+
 private:
 
 };
