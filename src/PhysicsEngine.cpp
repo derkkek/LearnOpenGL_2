@@ -14,7 +14,8 @@ void PhysicsEngine::StepWorld(float deltatime)
 {
 	for (Rigidbody* body : rigidbodies)
 	{
-
+		body->ApplyForce(glm::vec3(0.0f, -9.81f * body->mass, 0.0f), body->globalCentroid);
+		std::cout << "POSITION:" << glm::to_string(body->position) << "\n\n";
 		// integrate linear velocity
 		body->linearVelocity += body->inverseMass * (body->forceAccumulator * deltatime);
 
@@ -39,6 +40,11 @@ void PhysicsEngine::StepWorld(float deltatime)
 
 		body->globalInverseInertiaTensor = body->orientation * body->localInertiaTensor * body->inverseOrientation;
 
+		if (body->position.y < 0.0f)
+		{
+			body->position = glm::vec3(body->position.x, 0.0f, body->position.z);
+			body->linearVelocity = glm::vec3(body->linearVelocity.x, -body->linearVelocity.y * 0.8f, body->linearVelocity.z);
+		}
 		//std::cout << "VELOCITY: " << glm::to_string(rb->velocity) << "\n\n";
 	}
 }

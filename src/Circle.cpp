@@ -74,6 +74,6 @@ void Circle::UpdateModel()
     //glm::mat4 rotationMatrix = glm::toMat4(orientation);
 
     this->model = glm::translate(this->model, this->position);
-    std::cout << "POSITION:" << glm::to_string(position) << "\n\n";
+
     //this->model *= rotationMatrix;
 }
