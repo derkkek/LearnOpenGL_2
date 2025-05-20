@@ -140,6 +140,7 @@
     <ClInclude Include="src\5.1.ball_object_collisions.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Circle.h" />
+    <ClInclude Include="src\Collider.h" />
     <ClInclude Include="src\DirectionalLight.h" />
     <ClInclude Include="src\filesystem.h" />
     <ClInclude Include="src\Game.h" />

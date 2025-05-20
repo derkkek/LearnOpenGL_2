@@ -1221,6 +1221,9 @@
     <ClInclude Include="src\MeshData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Collider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />

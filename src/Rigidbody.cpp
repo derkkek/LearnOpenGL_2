@@ -3,148 +3,100 @@
 #include <GLFW/glfw3.h>
 
 Rigidbody::Rigidbody(glm::vec3 position, float area)
-	:position(position), area(area), mass(10.0f), velocity(glm::vec3(0.0f, -0.01f, 0.0f)), angularVelocity(0.0f), torque(0.0f), angularAcc(0.0f), force(glm::vec3(0.0f))
+	:position(position)
 {
 
 }
 
-void Rigidbody::AddForce(glm::vec3 amount)
+
+void Rigidbody::UpdateGlobalCentroidFromPosition()
 {
-	this->force += amount;
+	globalCentroid = orientation * localCentroid + position;
 }
 
-
-void Rigidbody::CalcAcc()
+void Rigidbody::UpdatePositionFromGlobalCentroid()
 {
-	this->acceleration = this->force / this->mass;
+	position = orientation * -localCentroid + globalCentroid;
 }
 
-void Rigidbody::CalcVel(float deltatime)
-{
-	this->velocity += this->acceleration * deltatime;
+void Rigidbody::AddCollider(Collider& collider)  
+{  
+   // add collider to collider list  
+   colliders.push_back(collider);  
+
+   // reset local centroid & mass  
+   localCentroid = glm::vec3(0.0f);  
+   mass = 0.0f;  
+
+   // compute local centroid & mass  
+   for (Collider& collider : colliders)  
+   {  
+       // accumulate mass  
+       mass += collider.mass;  
+
+       // accumulate weighted contribution  
+       localCentroid += collider.mass * collider.localCentroid;  
+   }  
+
+   // compute inverse mass  
+   inverseMass = 1.0f / mass;
+
+   // compute final local centroid  
+   localCentroid *= inverseMass;  
+
+   // compute local inertia tensor  
+   glm::mat3 localInertiaTensor(0.0f);  
+   for (Collider& collider : colliders)  
+   {  
+       const glm::vec3 r = localCentroid - collider.localCentroid;  
+       const float rDotR = glm::dot(r, r);  
+       const glm::mat3 rOutR = glm::outerProduct(r, r);  
+
+       // accumulate local inertia tensor contribution,  
+       // using Parallel Axis Theorem  
+       localInertiaTensor += collider.localInertiaTensor + collider.mass * (rDotR * glm::mat3(1.0f) - rOutR);  
+   }  
+
+   // compute inverse inertia tensor  
+   localInverseInertiaTensor = glm::inverse(localInertiaTensor);  
 }
 
-void Rigidbody::CalcPos(float deltatime)
+const glm::vec3 Rigidbody::LocalToGlobal(const glm::vec3& p) const
 {
-	this->position += this->velocity * deltatime;
+    return orientation * p + position;
 }
 
-void Rigidbody::CalcAngularVel(float deltatime)
+const glm::vec3 Rigidbody::GlobalToLocal(const glm::vec3& p) const
 {
-	angularVelocity += angularAcc * deltatime;
+    return inverseOrientation * (p - position);;
 }
 
-
-
-void Rigidbody::Integrate(float dt)
+const glm::vec3 Rigidbody::LocalToGlobalVec(const glm::vec3& v) const
 {
-
-	glm::vec3 vDrag = glm::normalize(velocity);
-	vDrag = -vDrag;
-
-	float speed = glm::length(velocity);
-
-	float fDrag = AIRDENSITY * speed * speed * area * DRAG_COEFF;
-
-	vDrag *= fDrag;
-
-	glm::vec3 vGrav = glm::vec3(0.0f, -9.81f, 0.0f) * mass;
-
-	glm::vec3 totalForce = vGrav + vDrag;
-
-	AddForce(totalForce);
-
-	// 1. compute acceleration
-	CalcAcc();
-	// 2. update velocity
-	CalcVel(dt);
-
-	// 3. update position
-	CalcPos(dt);
-
-	CalcMomentOfInertia();
-
-	CalcTorque();
-
-	CalcAngularAcc();
-	
-	CalcAngularVel(dt);
-	
-	Rotate(glm::vec3(0.0f, 0.0f, angularVelocity), dt);
-
-
-
-	// 4. collision with ground (y=0)
-
-	if (position.y < 0.0f) 
-	{
-		position.y = 0.0f;
-		// invert Y velocity with restitution
-		velocity.y = -velocity.y * 0.8f;
-	}
-	
-	ResetForce();
+    return orientation * v;
 }
 
-void Rigidbody::Integrate_RungeKutta(float dt)
+const glm::vec3 Rigidbody::GlobalToLocalVec(const glm::vec3& v) const
 {
-	// Save initial state (position and velocity)
-	glm::vec3 p0 = position;
-	glm::vec3 v0 = velocity;
+    return inverseOrientation * v;
+}
 
-	// Compute initial acceleration (F/m)
-	CalcAcc();
-	glm::vec3 a = acceleration;  // Store acceleration since force is constant for RK4 steps
+void Rigidbody::ApplyForce(const glm::vec3& f, const glm::vec3& at)
+{
+	forceAccumulator += f;
+	torqueAccumulator += glm::cross(at - globalCentroid, f);
+}
 
-	// Compute RK4 slopes for velocity (k1v, k2v, k3v, k4v) and position (k1p, k2p, k3p, k4p)
-	glm::vec3 k1v = a * dt;
-	glm::vec3 k1p = v0 * dt;
+glm::mat3 Rigidbody::RotationMatrix(const glm::vec3& axis, float angle)
+{
+    if (glm::length(axis) < 1e-6f) // Avoid division by zero
+        return glm::mat3(1.0f); // Return identity matrix for zero axis
 
-	glm::vec3 k2v = a * dt;  // Acceleration remains constant (no drag/velocity-dependent forces)
-	glm::vec3 k2p = (v0 + 0.5f * k1v) * dt;
+    return glm::mat3(glm::rotate(glm::mat4(1.0f), angle, axis));
+}
 
-	glm::vec3 k3v = a * dt;  // Same as k2v
-	glm::vec3 k3p = (v0 + 0.5f * k2v) * dt;
-
-	glm::vec3 k4v = a * dt;  // Same as k1v
-	glm::vec3 k4p = (v0 + k3v) * dt;
-
-	// Update velocity and position using weighted averages
-	velocity = v0 + (k1v + 2.0f * k2v + 2.0f * k3v + k4v) / 6.0f;
-	position = p0 + (k1p + 2.0f * k2p + 2.0f * k3p + k4p) / 6.0f;
-	// Handle rotation (same as Euler)
-	Rotate(glm::vec3(0.0f, 1.0f, 0.0f), dt);
-
-	// Collision with ground (y = 0)
-	if (position.y < 0.0f)
-	{
-		position.y = 0.0f;
-		velocity.y = -velocity.y * 0.8f;  // Apply restitution
-	}
+void Rigidbody::SIEulerIntegration(float dt)
+{
 
 }
 
-glm::vec3 Rigidbody::ForwardPosition()
-{
-	return this->position;
-}
-
-glm::quat Rigidbody::Rotate(glm::vec3 angular_velocity, float dt)
-{
-	// Calculate rotation angle and axis
-	float angle = glm::length(angular_velocity) * dt; // Magnitude of angular velocity × time
-	glm::vec3 axis = glm::normalize(angular_velocity); // Rotation axis direction
-
-	// Create rotation quaternion
-	glm::quat angularDelta = glm::angleAxis(angle, axis);
-
-	// Apply rotation in LOCAL space (order matters: orientetion * delta)
-	this->orientetion = glm::normalize(this->orientetion * angularDelta);
-
-	return angularDelta;
-}
-
-void Rigidbody::ResetForce()
-{
-	this->force = glm::vec3(0.0f);
-}

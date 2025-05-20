@@ -17,23 +17,23 @@ const glm::mat4 Circle::GetModel()
     return this->model;
 }
 
-float Circle::CalcMomentOfInertia()
-{
-	momentOfInertia = 0.25f * mass * radius * radius; // Moment of inertia for a solid disk
-    return momentOfInertia;
-}
-
-float Circle::CalcTorque()
-{
-    torque= radius * 1.0 - radius * 0.0f;
-    return torque;
-}
-
-float Circle::CalcAngularAcc()
-{
-	angularAcc = torque / momentOfInertia;
-    return angularAcc;
-}
+//float Circle::CalcMomentOfInertia()
+//{
+//	momentOfInertia = 0.25f * mass * radius * radius; // Moment of inertia for a solid disk
+//    return momentOfInertia;
+//}
+//
+//float Circle::CalcTorque()
+//{
+//    torque= radius * 1.0 - radius * 0.0f;
+//    return torque;
+//}
+//
+//float Circle::CalcAngularAcc()
+//{
+//	angularAcc = torque / momentOfInertia;
+//    return angularAcc;
+//}
 
 void Circle::BuildCircle() 
 {
@@ -71,9 +71,9 @@ void Circle::UpdateModel()
 {
     this->model = glm::mat4(1.0f);
 
-    glm::mat4 rotationMatrix = glm::toMat4(orientetion);
+    //glm::mat4 rotationMatrix = glm::toMat4(orientation);
 
-    this->model = glm::translate(this->model, ForwardPosition());
-
-    this->model *= rotationMatrix;
+    this->model = glm::translate(this->model, this->position);
+    std::cout << "POSITION:" << glm::to_string(position) << "\n\n";
+    //this->model *= rotationMatrix;
 }

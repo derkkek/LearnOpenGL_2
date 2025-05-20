@@ -14,9 +14,9 @@ public:
 	
 	const glm::mat4 GetModel() override;
 	
-	float CalcMomentOfInertia() override;
-	float CalcTorque() override;
-	float CalcAngularAcc() override;
+	//float CalcMomentOfInertia() override;
+	//float CalcTorque() override;
+	//float CalcAngularAcc() override;
 
 
 private:
