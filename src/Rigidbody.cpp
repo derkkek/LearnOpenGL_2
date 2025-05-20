@@ -19,6 +19,17 @@ void Rigidbody::UpdatePositionFromGlobalCentroid()
 	position = orientation * -localCentroid + globalCentroid;
 }
 
+void Rigidbody::UpdateOrientation()
+{
+    // orthonormalize orientation matrix
+    glm::quat q = glm::toQuat(orientation);
+    glm::normalize(q);
+    orientation = glm::toMat3(q);// ToMatrix() ?
+
+    // compute inverse orientation matrix
+    inverseOrientation = glm::transpose(orientation);
+}
+
 void Rigidbody::AddCollider(Collider& collider)  
 {  
    // add collider to collider list  

@@ -13,6 +13,7 @@ class Rigidbody
 public:
 	float mass;
 	float inverseMass;
+	glm::mat3 localInertiaTensor;
 	glm::mat3 localInverseInertiaTensor;
 	glm::mat3 globalInverseInertiaTensor;
 
@@ -33,7 +34,7 @@ public:
 	void UpdateGlobalCentroidFromPosition();
 	void UpdatePositionFromGlobalCentroid();
 
-	//void UpdateOrientation();
+	void UpdateOrientation();
 
 	void AddCollider(Collider& collider);
 

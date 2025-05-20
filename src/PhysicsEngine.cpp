@@ -34,8 +34,10 @@ void PhysicsEngine::StepWorld(float deltatime)
 		body->orientation = body->RotationMatrix(axis, angle) * body->orientation;
 
 		// update physical properties
-		//body->UpdateOrientation();
+		body->UpdateOrientation();
 		body->UpdatePositionFromGlobalCentroid();
+
+		body->globalInverseInertiaTensor = body->orientation * body->localInertiaTensor * body->inverseOrientation;
 
 		//std::cout << "VELOCITY: " << glm::to_string(rb->velocity) << "\n\n";
 	}
