@@ -25,7 +25,7 @@ void Rigidbody::UpdateOrientation()
 {
     // orthonormalize orientation matrix
     glm::quat q = glm::toQuat(orientation);
-    glm::normalize(q);
+    q = glm::normalize(q);
     orientation = glm::toMat3(q);// ToMatrix() ?
 
     // compute inverse orientation matrix

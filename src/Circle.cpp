@@ -71,9 +71,24 @@ void Circle::UpdateModel()
 {
     this->model = glm::mat4(1.0f);
 
-    //glm::mat4 rotationMatrix = glm::toMat4(orientation);
+    glm::mat4 rotationMatrix = glm::mat4(orientation);
 
     this->model = glm::translate(this->model, this->position);
 
-    //this->model *= rotationMatrix;
+    this->model *= rotationMatrix;
 }
+
+/*
+* THE FOLLOWING ALSO WORKS, COPILOT'S OFFER.
+void Circle::UpdateModel()
+{
+    // Convert orientation (mat3) to mat4
+    glm::mat4 rotationMatrix(1.0f);
+    rotationMatrix[0] = glm::vec4(orientation[0], 0.0f);
+    rotationMatrix[1] = glm::vec4(orientation[1], 0.0f);
+    rotationMatrix[2] = glm::vec4(orientation[2], 0.0f);
+
+    // Model = Translation * Rotation
+    this->model = glm::translate(glm::mat4(1.0f), position) * rotationMatrix;
+}
+*/
