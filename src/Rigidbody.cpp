@@ -10,6 +10,10 @@ Rigidbody::Rigidbody(glm::vec3 position, float area)
 
 }
 
+Rigidbody::~Rigidbody()
+{
+}
+
 
 void Rigidbody::UpdateGlobalCentroidFromPosition()
 {

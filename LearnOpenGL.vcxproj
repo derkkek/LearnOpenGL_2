@@ -138,6 +138,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\5.1.ball_object_collisions.h" />
+    <ClInclude Include="src\AABB.h" />
+    <ClInclude Include="src\Broadphase.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Circle.h" />
     <ClInclude Include="src\Collider.h" />
@@ -149,6 +151,7 @@
     <ClInclude Include="src\IRenderable.h" />
     <ClInclude Include="src\MeshData.h" />
     <ClInclude Include="src\model.h" />
+    <ClInclude Include="src\NSquared.h" />
     <ClInclude Include="src\PhysicsEngine.h" />
     <ClInclude Include="src\PointLight.h" />
     <ClInclude Include="src\RenderableObject.h" />
@@ -546,7 +549,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\5.1.ball_object_collisions.cpp" />
+    <ClCompile Include="src\AABB.cpp" />
     <ClCompile Include="src\Circle.cpp" />
+    <ClCompile Include="src\Collider.cpp" />
     <ClCompile Include="src\DirectionalLight.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\game_level.cpp" />
@@ -554,6 +559,7 @@
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MeshData.cpp" />
+    <ClCompile Include="src\NSquared.cpp" />
     <ClCompile Include="src\PhysicsEngine.cpp" />
     <ClCompile Include="src\PointLight.cpp" />
     <ClCompile Include="src\RenderableObject.cpp" />

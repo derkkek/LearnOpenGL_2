@@ -31,6 +31,7 @@ public:
 
 	std::vector<Collider> colliders;
 	Rigidbody(glm::vec3 position, float area);
+	~Rigidbody();
 	void UpdateGlobalCentroidFromPosition();
 	void UpdatePositionFromGlobalCentroid();
 

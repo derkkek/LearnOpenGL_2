@@ -3,11 +3,7 @@
 
 PhysicsEngine::~PhysicsEngine()
 {
-	for (Rigidbody* rb : rigidbodies)
-	{
-		delete rb;
-		rb = nullptr;
-	}
+	rigidbodies.clear();
 }
 
 void PhysicsEngine::StepWorld(float deltatime)
