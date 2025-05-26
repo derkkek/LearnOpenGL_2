@@ -8,10 +8,11 @@
 class Skybox : public RenderableObject
 {
 public:
-	Skybox(const std::string& vertex_path, const std::string& fragment_path);
+	Skybox(const std::string& texture_path = "resource/textures/skybox/front.jpg");
 	~Skybox() = default;
 
-    void Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos) override;
+    const int GetVertexCount() const override;
+    const glm::mat4 GetModel() override;
 
 	
 private:

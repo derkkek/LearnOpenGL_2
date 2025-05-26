@@ -1,27 +1,26 @@
 #include "Cube.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 
-Cube::Cube(const std::string& vertex_source, const std::string& fragment_source) : RenderableObject(vertex_source, fragment_source)
+Cube::Cube(glm::vec3 position) 
+    : position(position)
 {
     SetupBuffer();
     AssignTexture();
 }
 
-void Cube::Draw(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& viewPos)
+
+const int Cube::GetVertexCount() const
 {
-    this->shader.use();
+    return 180/5; // size of vertices divided by size of a vertex.
+}
 
-    shader.setMat4("model", this->model);
-    shader.setMat4("view",view);
-    shader.setMat4("projection", projection);
-    shader.setVec3("viewPos", viewPos);
-    shader.setInt("texture1", 0);
-    glActiveTexture(GL_TEXTURE0);
-
-    glBindTexture(GL_TEXTURE_2D, this->textureID);
-
-    glBindVertexArray(this->VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    glBindVertexArray(0);
+void Cube::Translate(float deltatime)
+{
+    this->model = glm::mat4(1.0f);
+    glm::vec3 vel = this->velocity;
+    this->position += vel * deltatime;
+    this->model = glm::translate(this->model, this->position);
 }
 
 void Cube::SetupBuffer()

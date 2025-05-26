@@ -1155,9 +1155,6 @@
     <ClInclude Include="vendor\include\assimp\ZipArchiveIOSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1170,15 +1167,6 @@
     <ClInclude Include="src\shader_m.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Grid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\IRenderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1188,16 +1176,52 @@
     <ClInclude Include="src\TextureLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cube.h">
+    <ClInclude Include="src\RenderableObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderStable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\5.1.ball_object_collisions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\RenderableObject.h">
+    <ClInclude Include="src\Rigidbody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\RenderData.h">
+    <ClInclude Include="src\PhysicsEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Circle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1205,9 +1229,6 @@
     <Library Include="vendor\libs\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1226,22 +1247,52 @@
     <ClCompile Include="src\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Sphere.cpp">
+    <ClCompile Include="src\RenderableObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Grid.cpp">
+    <ClCompile Include="src\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cube.cpp">
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderStable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game_level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\5.1.ball_object_collisions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\RenderableObject.cpp">
+    <ClCompile Include="src\Rigidbody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
+    <ClCompile Include="src\PhysicsEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1709,6 +1760,12 @@
     <None Include="resource\shaders\6.1.cubemaps.v" />
     <None Include="resource\shaders\6.1.skybox.f" />
     <None Include="resource\shaders\6.1.skybox.v" />
+    <None Include="resource\shaders\sprite.f" />
+    <None Include="resource\shaders\sprite.v" />
+    <None Include="resource\levels\four.lvl" />
+    <None Include="resource\levels\one.lvl" />
+    <None Include="resource\levels\three.lvl" />
+    <None Include="resource\levels\two.lvl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
@@ -1745,6 +1802,18 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resource\models\sphere\texture.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\background.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\block.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\block_solid.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\textures\paddle.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
