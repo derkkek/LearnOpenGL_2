@@ -25,9 +25,9 @@ ColliderPairList& NSquared::ComputePairs(void)
                 continue;
 
             // add collider pair
-            if (aabbA->Collides(aabbB))
-                pairs.push_back(
-                    std::make_pair(aabbA->getCollider(), aabbB->getCollider()));
+            //if (aabbA->Collides(aabbB))
+            //    pairs.push_back(
+            //        std::make_pair(aabbA->getCollider(), aabbB->getCollider()));
 
         } // end of inner loop
     } // end of outer loop

@@ -49,10 +49,12 @@ float GetRandomNumber(float min, float max, bool isInteger) {
     static std::mt19937 gen(rd());
 
     if (isInteger) {
-        std::uniform_int_distribution<> dis(min, max);
+        // Properly cast to int and ensure correct bounds
+        int imin = static_cast<int>(std::ceil(min));
+        int imax = static_cast<int>(std::floor(max));
+        std::uniform_int_distribution<> dis(imin, imax);
         return static_cast<float>(dis(gen));
-    }
-    else {
+    } else {
         std::uniform_real_distribution<float> dis(min, max);
         return dis(gen);
     }
@@ -110,18 +112,19 @@ int main()
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
         // X: Random between -5 and 5
-        float posX = GetRandomNumber(-10.0f, 10.0f, false);
+        float posX = GetRandomNumber(-8.0f, 8.0f, false);
 
         // Y: Random between 0 and 10 (adjust based on your needs)
         float posY = GetRandomNumber(0.0f, 5.0f, false);
 
-        RenderableObject* circle = new Circle(0.25f, 128, glm::vec3(posX, posY*i, 0.0f));
+        RenderableObject* circle = new Circle(0.25f, 128, glm::vec3(posX, posY, 0.0f));
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
 
         renderer->AddScene(circle);
         //renderer->AddScene(circle2);
 
         Rigidbody* circleCast = dynamic_cast<Rigidbody*>(circle);
+        circleCast->ApplyForce(glm::vec3(GetRandomNumber(-10.0f, 10.0f, false) * circleCast->mass, GetRandomNumber(-10.0f, 10.0f, false) * circleCast->mass, 0.0f), circleCast->globalCentroid);
         //Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
 
         physicsEngine->AddRigidBody(circleCast);
@@ -159,7 +162,7 @@ int main()
     }
     glfwTerminate();
     delete renderer;
-    //delete physicsEngine;
+    delete physicsEngine;
 
     return 0;
 }

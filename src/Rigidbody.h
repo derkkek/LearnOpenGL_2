@@ -5,8 +5,9 @@
 #include <glm/gtc/quaternion.hpp> 
 #include <glm/gtc/matrix_transform.hpp> // Include for glm::rotate
 #include <glm/gtx/norm.hpp>
-#include "Collider.h"
+//#include "Collider.h"
 #include <vector>
+#include "CircleCollider.h"
 
 class Rigidbody
 {
@@ -28,16 +29,21 @@ public:
 
 	glm::vec3 forceAccumulator;
 	glm::vec3 torqueAccumulator;
+	
+	float radius;
 
-	std::vector<Collider> colliders;
-	Rigidbody(glm::vec3 position, float area);
+	bool CheckCollision(Rigidbody* rb);
+
+
+	//std::vector<Collider> colliders;
+	Rigidbody(glm::vec3 position, float area, float radius);
 	~Rigidbody();
 	void UpdateGlobalCentroidFromPosition();
 	void UpdatePositionFromGlobalCentroid();
 
 	void UpdateOrientation();
 
-	void AddCollider(Collider& collider);
+	//void AddCollider(Collider& collider);
 
 	const glm::vec3 LocalToGlobal(const glm::vec3& p) const;
 	const glm::vec3 GlobalToLocal(const glm::vec3& p) const;

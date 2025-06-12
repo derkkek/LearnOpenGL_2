@@ -1,11 +1,13 @@
 #include "Rigidbody.h"
 #include <iostream>
 #include <GLFW/glfw3.h>	
-Rigidbody::Rigidbody(glm::vec3 position, float area)
-	:position(position), localCentroid(0.0f), globalCentroid(position), forceAccumulator(0.0f), 
+
+Rigidbody::Rigidbody(glm::vec3 position, float area, float radius)
+	:position(position), radius(radius), localCentroid(0.0f), globalCentroid(position), forceAccumulator(0.0f),
     torqueAccumulator(0.0f), localInertiaTensor(glm::mat3(1.0f)), 
     localInverseInertiaTensor(glm::mat3(1.0f)), globalInverseInertiaTensor(glm::mat3(1.0f)), 
     linearVelocity(0.0f), angularVelocity(1.0f)/*it shouldn't be 1. debugging purposes.*/, inverseMass(1.0f), mass(1.0f), orientation(glm::mat3(1.0f))
+    
 {
 
 }
@@ -13,7 +15,12 @@ Rigidbody::Rigidbody(glm::vec3 position, float area)
 Rigidbody::~Rigidbody()
 {
 }
-
+bool Rigidbody::CheckCollision(Rigidbody* rb)
+{
+    float distance = glm::distance(this->globalCentroid, rb->globalCentroid);
+    float totalRadius = this->radius + rb->radius;
+    return distance <= totalRadius;
+}
 
 void Rigidbody::UpdateGlobalCentroidFromPosition()
 {
@@ -36,47 +43,47 @@ void Rigidbody::UpdateOrientation()
     inverseOrientation = glm::transpose(orientation);
 }
 
-void Rigidbody::AddCollider(Collider& collider)  
-{  
-   // add collider to collider list  
-   colliders.push_back(collider);  
-
-   // reset local centroid & mass  
-   localCentroid = glm::vec3(0.0f);  
-   mass = 0.0f;  
-
-   // compute local centroid & mass  
-   for (Collider& collider : colliders)  
-   {  
-       // accumulate mass  
-       mass += collider.mass;  
-
-       // accumulate weighted contribution  
-       localCentroid += collider.mass * collider.localCentroid;  
-   }  
-
-   // compute inverse mass  
-   inverseMass = 1.0f / mass;
-
-   // compute final local centroid  
-   localCentroid *= inverseMass;  
-
-   // compute local inertia tensor  
-   glm::mat3 localInertiaTensor(0.0f);  
-   for (Collider& collider : colliders)  
-   {  
-       const glm::vec3 r = localCentroid - collider.localCentroid;  
-       const float rDotR = glm::dot(r, r);  
-       const glm::mat3 rOutR = glm::outerProduct(r, r);  
-
-       // accumulate local inertia tensor contribution,  
-       // using Parallel Axis Theorem  
-       localInertiaTensor += collider.localInertiaTensor + collider.mass * (rDotR * glm::mat3(1.0f) - rOutR);  
-   }  
-
-   // compute inverse inertia tensor  
-   localInverseInertiaTensor = glm::inverse(localInertiaTensor);  
-}
+//void Rigidbody::AddCollider(Collider& collider)  
+//{  
+//   // add collider to collider list  
+//   colliders.push_back(collider);  
+//
+//   // reset local centroid & mass  
+//   localCentroid = glm::vec3(0.0f);  
+//   mass = 0.0f;  
+//
+//   // compute local centroid & mass  
+//   for (Collider& collider : colliders)  
+//   {  
+//       // accumulate mass  
+//       mass += collider.mass;  
+//
+//       // accumulate weighted contribution  
+//       localCentroid += collider.mass * collider.localCentroid;  
+//   }  
+//
+//   // compute inverse mass  
+//   inverseMass = 1.0f / mass;
+//
+//   // compute final local centroid  
+//   localCentroid *= inverseMass;  
+//
+//   // compute local inertia tensor  
+//   glm::mat3 localInertiaTensor(0.0f);  
+//   for (Collider& collider : colliders)  
+//   {  
+//       const glm::vec3 r = localCentroid - collider.localCentroid;  
+//       const float rDotR = glm::dot(r, r);  
+//       const glm::mat3 rOutR = glm::outerProduct(r, r);  
+//
+//       // accumulate local inertia tensor contribution,  
+//       // using Parallel Axis Theorem  
+//       localInertiaTensor += collider.localInertiaTensor + collider.mass * (rDotR * glm::mat3(1.0f) - rOutR);  
+//   }  
+//
+//   // compute inverse inertia tensor  
+//   localInverseInertiaTensor = glm::inverse(localInertiaTensor);  
+//}
 
 const glm::vec3 Rigidbody::LocalToGlobal(const glm::vec3& p) const
 {

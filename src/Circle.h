@@ -4,6 +4,7 @@
 #include "RenderableObject.h"
 #include "TextureLoader.h"
 #include "MeshData.h"
+#include "CircleCollider.h"
 class Circle : public Rigidbody, public RenderableObject
 {
 public:
@@ -20,7 +21,6 @@ public:
 
 
 private:
-	float radius;
 	int vCount;	
 	float momentOfInertia;
 

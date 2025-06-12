@@ -10,7 +10,7 @@ public:
     {  
         return collider;  
     }
-    bool Collides(AABB* aabb);
+    //bool Collides(AABB* aabb);
 
 private:
 	float minX, minY, maxX, maxY;
