@@ -79,7 +79,7 @@ void Renderer::RenderScene(Camera& camera)
 		RenderCircle(obj, camera);
 	}
 
-	RenderSkybox(skybox, camera);
+	//RenderSkybox(skybox, camera);
 }
 
 void Renderer::AddScene(RenderableObject* object)

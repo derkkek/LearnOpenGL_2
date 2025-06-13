@@ -51,7 +51,6 @@ void PhysicsEngine::StepWorld(float deltatime)
 		body->UpdatePositionFromGlobalCentroid();
 
 
-
 		body->globalInverseInertiaTensor = body->orientation * body->localInertiaTensor * body->inverseOrientation;
 
 		if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 20.0f)

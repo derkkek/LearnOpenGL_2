@@ -36,7 +36,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 10.0f, 10.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -44,9 +44,10 @@ bool firstMouse = true;
 // timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
+static std::random_device rd;
+static std::mt19937 gen(rd());
 float GetRandomNumber(float min, float max, bool isInteger) {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
+
 
     if (isInteger) {
         // Properly cast to int and ensure correct bounds
@@ -132,7 +133,7 @@ int main()
 
     }
 
-    renderer->AddSkybox(new Skybox());
+    //renderer->AddSkybox(new Skybox());
 
     renderer->SetupMeshes();
 
