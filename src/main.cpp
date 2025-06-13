@@ -83,6 +83,7 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(0); // or 1 for VSync
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
@@ -137,6 +138,9 @@ int main()
 
     renderer->SetupMeshes();
 
+    int frameCount = 0;
+    double elapsedTime = 0.0;
+    auto lastTime = std::chrono::high_resolution_clock::now();
 
     while (!glfwWindowShouldClose(window))
     {
@@ -155,6 +159,17 @@ int main()
 
 
         renderer->RenderScene(camera);
+
+        static double lastTime = glfwGetTime();
+
+        frameCount++;
+        if (currentFrame - lastTime >= 1.0) {
+            double fps = frameCount / (currentFrame - lastTime);
+            std::string title = "FPS: " + std::to_string((int)fps);
+            glfwSetWindowTitle(window, title.c_str());
+            frameCount = 0;
+            lastTime = currentFrame;
+        }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
