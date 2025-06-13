@@ -15,11 +15,51 @@ Rigidbody::Rigidbody(glm::vec3 position, float area, float radius)
 Rigidbody::~Rigidbody()
 {
 }
+
+
 bool Rigidbody::CheckCollision(Rigidbody* rb)
 {
-    float distance = glm::distance(this->globalCentroid, rb->globalCentroid);
+    float distanceX = (rb->globalCentroid.x - this->globalCentroid.x);
+    float distanceY = (rb->globalCentroid.y - this->globalCentroid.y);
+    float distance = distanceX * distanceX + distanceY * distanceY;
+       //glm::distance(this->globalCentroid, rb->globalCentroid);
     float totalRadius = this->radius + rb->radius;
-    return distance <= totalRadius;
+
+    return distance <= totalRadius * totalRadius;
+}
+
+Collision Rigidbody::ResolveCollision(Rigidbody* rb)
+{
+    Collision collision;
+    float distanceX = (rb->globalCentroid.x - this->globalCentroid.x);
+    float distanceY = (rb->globalCentroid.y - this->globalCentroid.y);
+    float distance = distanceX * distanceX + distanceY * distanceY;
+
+    collision.normal = rb->globalCentroid - this->globalCentroid;
+
+    glm::vec3 unitNormal = collision.normal / (glm::sqrt(collision.normal.x * collision.normal.x + collision.normal.y * collision.normal.y));
+
+    glm::vec3 unitTangent = glm::vec3(-unitNormal.y, unitNormal.x, 0.0f);
+
+    float v1n = glm::dot(unitNormal, this->linearVelocity);
+    float v1t = glm::dot(unitTangent, this->linearVelocity);
+
+    float v2n = glm::dot(unitNormal, rb->linearVelocity);
+    float v2t = glm::dot(unitTangent, rb->linearVelocity);
+
+    float v1n_tilda = (v1n * (this->mass - rb->mass) + 2.0f * rb->mass * v2n) / (this->mass + rb->mass);
+    float v2n_tilda = (v2n * (rb->mass - this->mass) + 2.0f * this->mass * v1n) / (this->mass + rb->mass);
+
+    glm::vec3 V1 = unitNormal * v1n_tilda;
+    glm::vec3 V1_tilda = unitTangent * v1t;
+
+    glm::vec3 V2 = unitNormal * v2n_tilda;
+    glm::vec3 V2_tilda = unitTangent * v2t;
+
+    collision.finalV1 = V1 + V1_tilda;
+    collision.finalV2 = V2 + V2_tilda;
+
+    return collision;
 }
 
 void Rigidbody::UpdateGlobalCentroidFromPosition()

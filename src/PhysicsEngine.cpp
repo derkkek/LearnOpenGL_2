@@ -17,11 +17,12 @@ void PhysicsEngine::StepWorld(float deltatime)
 
 			if (currentBody != body)
 			{
-				bool coll = currentBody->CheckCollision(body);
-				std::cout << "Collision:" << coll << "\n\n";
-				if (coll)
+
+				if (currentBody->CheckCollision(body))
 				{
-					currentBody->linearVelocity = -currentBody->linearVelocity;
+					Collision collision = currentBody->ResolveCollision(body);
+					currentBody->linearVelocity = collision.finalV1;
+					body->linearVelocity = collision.finalV2;
 				}
 
 			}

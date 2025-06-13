@@ -8,6 +8,11 @@
 //#include "Collider.h"
 #include <vector>
 #include "CircleCollider.h"
+struct Collision {
+	glm::vec3 normal;
+	glm::vec3 finalV1;
+	glm::vec3 finalV2;
+};
 
 class Rigidbody
 {
@@ -33,6 +38,8 @@ public:
 	float radius;
 
 	bool CheckCollision(Rigidbody* rb);
+
+	Collision ResolveCollision(Rigidbody* rb);
 
 
 	//std::vector<Collider> colliders;
