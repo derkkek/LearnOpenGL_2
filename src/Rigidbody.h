@@ -38,7 +38,6 @@ public:
 	float radius;
 
 	bool CheckCollision(Rigidbody* rb);
-
 	Collision ResolveCollision(Rigidbody* rb);
 
 

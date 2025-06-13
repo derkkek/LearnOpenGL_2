@@ -125,7 +125,7 @@ int main()
         //renderer->AddScene(circle2);
 
         Rigidbody* circleCast = dynamic_cast<Rigidbody*>(circle);
-        circleCast->ApplyForce(glm::vec3(GetRandomNumber(-10.0f, 10.0f, false) * circleCast->mass, GetRandomNumber(-10.0f, 10.0f, false) * circleCast->mass, 0.0f), circleCast->globalCentroid);
+        circleCast->ApplyForce(glm::vec3(GetRandomNumber(-5.0f, 5.0f, false) * circleCast->mass, GetRandomNumber(-5.0f, 5.0f, false) * circleCast->mass, 0.0f), circleCast->globalCentroid);
         //Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
 
         physicsEngine->AddRigidBody(circleCast);

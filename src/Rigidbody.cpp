@@ -25,16 +25,12 @@ bool Rigidbody::CheckCollision(Rigidbody* rb)
        //glm::distance(this->globalCentroid, rb->globalCentroid);
     float totalRadius = this->radius + rb->radius;
 
-    return distance < totalRadius * totalRadius;
+    return distance <= totalRadius * totalRadius;
 }
 
 Collision Rigidbody::ResolveCollision(Rigidbody* rb)
 {
     Collision collision;
-    float distanceX = (rb->globalCentroid.x - this->globalCentroid.x);
-    float distanceY = (rb->globalCentroid.y - this->globalCentroid.y);
-    float distance = distanceX * distanceX + distanceY * distanceY;
-
 
     collision.normal = rb->globalCentroid - this->globalCentroid;
 
@@ -59,6 +55,23 @@ Collision Rigidbody::ResolveCollision(Rigidbody* rb)
 
     collision.finalV1 = V1 + V1_tilda;
     collision.finalV2 = V2 + V2_tilda;
+
+    // Assume: A and B are pointers to Rigidbody, and collision.normal is normalized and points from A to B
+    float penetration = (this->radius + rb->radius) - glm::length(rb->globalCentroid - this->globalCentroid);
+
+    if (penetration > 0.0f) 
+    {
+        float totalInvMass = this->inverseMass + rb->inverseMass;
+        // Avoid division by zero
+        if (totalInvMass == 0.0f) return collision;
+
+        // Move each object away from the other by their share of the overlap
+        glm::vec3 correction = (penetration / totalInvMass) * 0.8f * unitNormal; // 0.8f is a bias to avoid oscillation
+        this->globalCentroid -= correction * this->inverseMass;
+        rb->globalCentroid += correction * rb->inverseMass;
+        this->UpdatePositionFromGlobalCentroid();
+        rb->UpdatePositionFromGlobalCentroid();
+    }
 
     return collision;
 }
