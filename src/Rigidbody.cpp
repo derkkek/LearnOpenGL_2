@@ -21,11 +21,11 @@ bool Rigidbody::CheckCollision(Rigidbody* rb)
 {
     float distanceX = (rb->globalCentroid.x - this->globalCentroid.x);
     float distanceY = (rb->globalCentroid.y - this->globalCentroid.y);
-    float distance = glm::sqrt(distanceX * distanceX + distanceY * distanceY);
+    float distance = distanceX * distanceX + distanceY * distanceY;
        //glm::distance(this->globalCentroid, rb->globalCentroid);
     float totalRadius = this->radius + rb->radius;
 
-    return distance <= totalRadius * totalRadius;
+    return distance < totalRadius * totalRadius;
 }
 
 Collision Rigidbody::ResolveCollision(Rigidbody* rb)
