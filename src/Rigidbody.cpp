@@ -6,7 +6,7 @@ Rigidbody::Rigidbody(glm::vec3 position, float area, float radius)
 	:position(position), radius(radius), localCentroid(0.0f), globalCentroid(position), forceAccumulator(0.0f),
     torqueAccumulator(0.0f), localInertiaTensor(glm::mat3(1.0f)), 
     localInverseInertiaTensor(glm::mat3(1.0f)), globalInverseInertiaTensor(glm::mat3(1.0f)), 
-    linearVelocity(0.0f), angularVelocity(1.0f)/*it shouldn't be 1. debugging purposes.*/, inverseMass(1.0f), mass(1.0f), orientation(glm::mat3(1.0f))
+    linearVelocity(0.0f), angularVelocity(1.0f)/*it shouldn't be 1. debugging purposes.*/, inverseMass(1.0f), mass(radius * 8.0f), orientation(glm::mat3(1.0f))
     
 {
 
