@@ -1,4 +1,5 @@
 #include "Circle.h"
+#include <random>
 
 Circle::Circle(float radius, int vCount, glm::vec3 position, const std::string &texture_path)
 	: RenderableObject(texture_path), vCount(vCount), momentOfInertia(0.25f * mass * radius * radius)
@@ -36,7 +37,8 @@ const glm::mat4 Circle::GetModel()
 //    return angularAcc;
 //}
 
-void Circle::BuildCircle() 
+
+void Circle::BuildCircle()
 {
     float angle = 360.0f / vCount;
     mesh.vertices.clear();

@@ -43,7 +43,10 @@ void Renderer::RenderCircle(RenderableObject* object, Camera& camera)
 	circleShader.SetMatrix4("model", model);
 	glBindTexture(GL_TEXTURE_2D, object->GetTexId());
 	glBindVertexArray(object->GetVao());
+
 	MeshData meshdata = object->SendMeshData();
+	circleShader.SetVector3f("color", meshdata.color);
+
 	glDrawElements(GL_TRIANGLES, object->SendMeshData().indices.size(), GL_UNSIGNED_INT, 0); // asd
 
 	glBindVertexArray(0);

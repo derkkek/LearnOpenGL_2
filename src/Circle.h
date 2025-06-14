@@ -15,6 +15,7 @@ public:
 	
 	const glm::mat4 GetModel() override;
 	
+	glm::vec3 color;
 	//float CalcMomentOfInertia() override;
 	//float CalcTorque() override;
 	//float CalcAngularAcc() override;

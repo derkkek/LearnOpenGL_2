@@ -19,7 +19,6 @@ public:
 	void SetupBuffer();
 	void AssignTexture(const std::string &path);
 	MeshData SendMeshData();
-
 protected:
 
 	unsigned int VAO, VBO, EBO;

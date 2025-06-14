@@ -23,6 +23,10 @@ public:
 	MeshData() = default;
 	~MeshData() = default;
 	const int GetVertexCount() const;
+	void SetColor();
+
+
+	glm::vec3 color;
 
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;

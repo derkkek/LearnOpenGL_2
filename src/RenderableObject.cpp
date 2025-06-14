@@ -2,10 +2,12 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
 #include "TextureLoader.h"
+#include <random>
 
 RenderableObject::RenderableObject(const std::string& texture_path)
 {
-    AssignTexture(texture_path.c_str());
+    mesh.SetColor();
+    //AssignTexture(texture_path.c_str());
 }
 
 unsigned int RenderableObject::GetVao()
@@ -55,3 +57,4 @@ MeshData RenderableObject::SendMeshData()
 {
     return this->mesh;
 }
+
