@@ -54,7 +54,7 @@ void PhysicsEngine::StepWorld(float deltatime)
 
 		body->globalInverseInertiaTensor = body->orientation * body->localInertiaTensor * body->inverseOrientation;
 
-		if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 20.0f)
+		if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 50.0f)
 		{
 			//body->position = glm::vec3(body->position.x, 0.0f, body->position.z);
 			body->linearVelocity = glm::vec3(body->linearVelocity.x, -body->linearVelocity.y, body->linearVelocity.z);
@@ -63,7 +63,7 @@ void PhysicsEngine::StepWorld(float deltatime)
 			collisions++;
 		}
 
-		if (body->globalCentroid.x < -15.0f || body->globalCentroid.x > 15.0f)
+		if (body->globalCentroid.x < -50.0f || body->globalCentroid.x > 50.0f)
 		{
 			//body->position = glm::vec3(body->position.x, 0.0f, body->position.z);
 			body->linearVelocity = glm::vec3(-body->linearVelocity.x, body->linearVelocity.y, body->linearVelocity.z);

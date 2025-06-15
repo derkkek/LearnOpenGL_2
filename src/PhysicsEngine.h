@@ -1,5 +1,6 @@
 #pragma once
 #include "Rigidbody.h"
+#include "Broad.h"
 #include <vector>
 class PhysicsEngine
 {
@@ -9,9 +10,10 @@ public:
 
 	void StepWorld(float deltatime);
 	void AddRigidBody(Rigidbody* rigidbody);
-	const int MaxUnits = 300;
+	const int MaxUnits = 500;
 	int collisions = 0;
-private:
 	std::vector<Rigidbody*> rigidbodies;
+
+private:
 
 };
