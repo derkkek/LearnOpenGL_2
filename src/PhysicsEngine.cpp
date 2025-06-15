@@ -23,6 +23,7 @@ void PhysicsEngine::StepWorld(float deltatime)
 					Collision collision = currentBody->ResolveCollision(body);
 					currentBody->linearVelocity = collision.finalV1;
 					body->linearVelocity = collision.finalV2;
+					collisions++;
 				}
 
 			}
@@ -59,6 +60,7 @@ void PhysicsEngine::StepWorld(float deltatime)
 			body->linearVelocity = glm::vec3(body->linearVelocity.x, -body->linearVelocity.y, body->linearVelocity.z);
 			body->globalCentroid += body->linearVelocity * deltatime;
 			body->UpdatePositionFromGlobalCentroid();
+			collisions++;
 		}
 
 		if (body->globalCentroid.x < -15.0f || body->globalCentroid.x > 15.0f)
@@ -67,6 +69,7 @@ void PhysicsEngine::StepWorld(float deltatime)
 			body->linearVelocity = glm::vec3(-body->linearVelocity.x, body->linearVelocity.y, body->linearVelocity.z);
 			body->globalCentroid += body->linearVelocity * deltatime;
 			body->UpdatePositionFromGlobalCentroid();
+			collisions++;
 		}
 		// zero out accumulated force and torque
 		body->forceAccumulator = glm::vec3(0.0f);

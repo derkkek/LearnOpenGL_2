@@ -141,7 +141,6 @@ int main()
     int frameCount = 0;
     double elapsedTime = 0.0;
     auto lastTime = std::chrono::high_resolution_clock::now();
-
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -163,13 +162,14 @@ int main()
         static double lastTime = glfwGetTime();
 
         frameCount++;
-        if (currentFrame - lastTime >= 1.0) {
+        if (currentFrame - lastTime >= 0.2) {
             double fps = frameCount / (currentFrame - lastTime);
-            std::string title = "FPS: " + std::to_string((int)fps);
+            std::string title = "FPS: " + std::to_string((int)fps) + " COLLISIONS: " + std::to_string((int)physicsEngine->collisions);
             glfwSetWindowTitle(window, title.c_str());
             frameCount = 0;
             lastTime = currentFrame;
         }
+        physicsEngine->collisions = 0;
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
