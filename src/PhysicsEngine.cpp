@@ -9,37 +9,34 @@ PhysicsEngine::~PhysicsEngine()
 
 void PhysicsEngine::StepWorld(float deltatime)
 {
-    // Broadphase: get potential collision pairs
-    std::vector<PotentialContact> potentialContacts = Broadphase();
 
-    // Narrow phase: resolve only potential pairs
-    for (const PotentialContact& pc : potentialContacts) {
-        Rigidbody* bodyA = pc.body[0];
-        Rigidbody* bodyB = pc.body[1];
-        if (bodyA && bodyB && bodyA != bodyB && bodyA->CheckCollision(bodyB)) {
-            Collision collision = bodyA->ResolveCollision(bodyB);
-            bodyA->linearVelocity = collision.finalV1;
-            bodyB->linearVelocity = collision.finalV2;
-            collisions++;
+    for (size_t i = 0; i < rigidbodies.size(); ++i) {
+        for (size_t j = i + 1; j < rigidbodies.size(); ++j) {
+            // Check collision between rigidbodies[i] and rigidbodies[j]
+            if (rigidbodies[i]->CheckCollision(rigidbodies[j])) {
+                Collision collision = rigidbodies[i]->ResolveCollision(rigidbodies[j]);
+                rigidbodies[i]->linearVelocity = collision.finalV1;
+                rigidbodies[j]->linearVelocity = collision.finalV2;
+            }
         }
     }
 
     for (Rigidbody* body : rigidbodies)
     {
         // Integrate velocities
-        body->linearVelocity += body->inverseMass * (body->forceAccumulator * deltatime);
-        body->angularVelocity += body->globalInverseInertiaTensor * (body->torqueAccumulator * deltatime);
+        
+        //body->linearVelocity += body->inverseMass * (body->forceAccumulator * deltatime);
 
         // Integrate position
         body->globalCentroid += body->linearVelocity * deltatime;
 
         // Wall bounce logic (combine x and y checks)
         bool bounced = false;
-        if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 500.0f) {
+        if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 1000.0f) {
             body->linearVelocity.y = -body->linearVelocity.y;
             bounced = true;
         }
-        if (body->globalCentroid.x < -500.0f || body->globalCentroid.x > 500.0f) {
+        if (body->globalCentroid.x < -1000.0f || body->globalCentroid.x > 1000.0f) {
             body->linearVelocity.x = -body->linearVelocity.x;
             bounced = true;
         }
@@ -49,25 +46,14 @@ void PhysicsEngine::StepWorld(float deltatime)
         }
 
         // Update physical properties
-        body->UpdateOrientation();
         body->UpdatePositionFromGlobalCentroid();
-        body->globalInverseInertiaTensor = body->orientation * body->localInertiaTensor * body->inverseOrientation;
 
-        // Zero out accumulated force and torque
-        body->forceAccumulator = glm::vec3(0.0f);
-        body->torqueAccumulator = glm::vec3(0.0f);
     }
 }
 
 void PhysicsEngine::AddRigidBody(Rigidbody* rigidbody)
 {
     this->rigidbodies.push_back(rigidbody);
-    BoundingSphere sphere(rigidbody->globalCentroid, rigidbody->radius);
-    if (!bvhRoot) {
-        bvhRoot = new BVHNode<BoundingSphere>(nullptr, sphere, rigidbody);
-    } else {
-        bvhRoot->insert(rigidbody, sphere);
-    }
 }
 
 // Returns a vector of potential collision pairs (broadphase)

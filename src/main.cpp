@@ -116,21 +116,22 @@ int main()
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
         // X: Random between -5 and 5
-        float posX = GetRandomNumber(-500.0f, 500.0f, false);
+        float posX = GetRandomNumber(-1000.0f, 1000.0f, false);
 
         // Y: Random between 0 and 10 (adjust based on your needs)
-        float posY = GetRandomNumber(0.0f, 500.0f, false);
+        float posY = GetRandomNumber(0.0f, 1000.0f, false);
 
-        RenderableObject* circle = new Circle(GetRandomNumber(0.1f, 0.5f, false), 128, glm::vec3(posX, posY, 0.0f));
+        RenderableObject* circle = new Circle(GetRandomNumber(2.0f, 5.0f, false), 128, glm::vec3(posX, posY, 0.0f));
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
 
         renderer->AddScene(circle);
         //renderer->AddScene(circle2);
 
         Rigidbody* circleCast = dynamic_cast<Rigidbody*>(circle);
-        circleCast->ApplyForce(glm::vec3(GetRandomNumber(-15.0f, 15.0f, false) * circleCast->mass, GetRandomNumber(-15.0f, 15.0f, false) * circleCast->mass, 0.0f), circleCast->globalCentroid);
+        //circleCast->ApplyForce(glm::vec3(GetRandomNumber(-5.0f, 5.0f, false) * circleCast->mass, GetRandomNumber(-5.0f, 5.0f, false) * circleCast->mass, 0.0f), circleCast->globalCentroid);
         //Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
-
+        circleCast->linearVelocity.x = GetRandomNumber(-30.0f, 30.0f, false);
+        circleCast->linearVelocity.y = GetRandomNumber(-30.0f, 30.0f, false);
         physicsEngine->AddRigidBody(circleCast);
         //physicsEngine->AddRigidBody(circle2_cast->rigidbody);
 
