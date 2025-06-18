@@ -6,7 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
- 
+
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
@@ -36,7 +36,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 10.0f, 10.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 250.0f, 500.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -62,6 +62,8 @@ float GetRandomNumber(float min, float max, bool isInteger) {
 }
 int main()
 {
+    auto start = std::chrono::high_resolution_clock::now();
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -114,12 +116,12 @@ int main()
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
         // X: Random between -5 and 5
-        float posX = GetRandomNumber(-40.0f, 40.0f, false);
+        float posX = GetRandomNumber(-500.0f, 500.0f, false);
 
         // Y: Random between 0 and 10 (adjust based on your needs)
-        float posY = GetRandomNumber(0.0f, 40.0f, false);
+        float posY = GetRandomNumber(0.0f, 500.0f, false);
 
-        RenderableObject* circle = new Circle(GetRandomNumber(0.1f, 2.0f, false), 128, glm::vec3(posX, posY, 0.0f));
+        RenderableObject* circle = new Circle(GetRandomNumber(0.1f, 0.5f, false), 128, glm::vec3(posX, posY, 0.0f));
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
 
         renderer->AddScene(circle);
@@ -140,7 +142,6 @@ int main()
 
     int frameCount = 0;
     double elapsedTime = 0.0;
-    auto lastTime = std::chrono::high_resolution_clock::now();
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -164,7 +165,8 @@ int main()
         frameCount++;
         if (currentFrame - lastTime >= 0.2) {
             double fps = frameCount / (currentFrame - lastTime);
-            std::string title = "FPS: " + std::to_string((int)fps) + " COLLISIONS: " + std::to_string((int)physicsEngine->collisions);
+            float msPerFrame = 1000.0f / (fps > 0 ? fps : 1); // or use deltaTime * 1000.0f for last frame
+            std::string title = "FPS: " + std::to_string((int)fps) + " | MS: " + std::to_string(msPerFrame);
             glfwSetWindowTitle(window, title.c_str());
             frameCount = 0;
             lastTime = currentFrame;

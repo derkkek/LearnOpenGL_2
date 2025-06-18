@@ -158,6 +158,11 @@
         void insert(Rigidbody* body, const BoundingVolumeClass& volume);
 
         /**
+         * Updates the bounding volume of this node and recalculates the hierarchy.
+         */
+        void updateBoundingVolume(const BoundingSphere& newVolume);
+
+        /**
          * Deltes this node, removing it first from the hierarchy, along
          * with its associated
          * rigid body and child nodes. This method deletes the node
@@ -252,6 +257,13 @@
     }
 
     template<class BoundingVolumeClass>
+    void BVHNode<BoundingVolumeClass>::updateBoundingVolume(const BoundingSphere& newVolume)
+    {
+        this->volume = newVolume;
+        if (parent) parent->recalculateBoundingVolume();
+    }
+
+    template<class BoundingVolumeClass>
     BVHNode<BoundingVolumeClass>::~BVHNode()
     {
         // If we don't have a parent, then we ignore the sibling
@@ -316,15 +328,17 @@
         PotentialContact* contacts, unsigned limit
     ) const
     {
-        // Early out if we don't have the room for contacts, or
-        // if we're a leaf node.
-        if (isLeaf() || limit == 0) return 0;
-
-        // Get the potential contacts of one of our children with
-        // the other
-        return children[0]->getPotentialContactsWith(
-            children[1], contacts, limit
-        );
+        if (limit == 0 || isLeaf()) return 0;
+        unsigned count = 0;
+        // Recursively check all pairs between the two children
+        count += children[0]->getPotentialContactsWith(children[1], contacts, limit);
+        if (limit > count) {
+            count += children[0]->getPotentialContacts(contacts + count, limit - count);
+        }
+        if (limit > count) {
+            count += children[1]->getPotentialContacts(contacts + count, limit - count);
+        }
+        return count;
     }
 
     template<class BoundingVolumeClass>
@@ -334,56 +348,38 @@
         unsigned limit
     ) const
     {
-        // Early out if we don't overlap or if we have no room
-        // to report contacts
-        if (!overlaps(other) || limit == 0) return 0;
-
-        // If we're both at leaf nodes, then we have a potential contact
-        if (isLeaf() && other->isLeaf())
-        {
+        if (limit == 0 || !overlaps(other)) return 0;
+        // If both are leaves, add the pair
+        if (isLeaf() && other->isLeaf()) {
             contacts->body[0] = body;
             contacts->body[1] = other->body;
             return 1;
         }
-
-        // Determine which node to descend into. If either is
-        // a leaf, then we descend the other. If both are branches,
-        // then we use the one with the largest size.
-        if (other->isLeaf() ||
-            (!isLeaf() && volume.getSize() >= other->volume.getSize()))
-        {
-            // Recurse into ourself
-            unsigned count = children[0]->getPotentialContactsWith(
-                other, contacts, limit
-            );
-
-            // Check we have enough slots to do the other side too
+        unsigned count = 0;
+        // If one is a leaf, descend into the other
+        if (isLeaf() && !other->isLeaf()) {
+            count += getPotentialContactsWith(other->children[0], contacts, limit);
             if (limit > count) {
-                return count + children[1]->getPotentialContactsWith(
-                    other, contacts + count, limit - count
-                );
+                count += getPotentialContactsWith(other->children[1], contacts + count, limit - count);
             }
-            else {
-                return count;
+        } else if (!isLeaf() && other->isLeaf()) {
+            count += children[0]->getPotentialContactsWith(other, contacts, limit);
+            if (limit > count) {
+                count += children[1]->getPotentialContactsWith(other, contacts + count, limit - count);
+            }
+        } else if (!isLeaf() && !other->isLeaf()) {
+            count += children[0]->getPotentialContactsWith(other->children[0], contacts, limit);
+            if (limit > count) {
+                count += children[0]->getPotentialContactsWith(other->children[1], contacts + count, limit - count);
+            }
+            if (limit > count) {
+                count += children[1]->getPotentialContactsWith(other->children[0], contacts + count, limit - count);
+            }
+            if (limit > count) {
+                count += children[1]->getPotentialContactsWith(other->children[1], contacts + count, limit - count);
             }
         }
-        else
-        {
-            // Recurse into the other node
-            unsigned count = getPotentialContactsWith(
-                other->children[0], contacts, limit
-            );
-
-            // Check we have enough slots to do the other side too
-            if (limit > count) {
-                return count + getPotentialContactsWith(
-                    other->children[1], contacts + count, limit - count
-                );
-            }
-            else {
-                return count;
-            }
-        }
+        return count;
     }
 
 
