@@ -8,6 +8,7 @@
 //#include "Collider.h"
 #include <vector>
 #include "CircleCollider.h"
+
 struct Collision {
 	glm::vec3 normal;
 	glm::vec3 finalV1;
@@ -16,6 +17,9 @@ struct Collision {
 
 class Rigidbody
 {
+	friend class UniformGrid;
+	
+
 public:
 	float mass;
 	float inverseMass;
@@ -37,12 +41,14 @@ public:
 	
 	float radius;
 
+	UniformGrid* grid;
+
 	bool CheckCollision(Rigidbody* rb);
 	Collision ResolveCollision(Rigidbody* rb);
 
 
 	//std::vector<Collider> colliders;
-	Rigidbody(glm::vec3 position, float area, float radius);
+	Rigidbody(glm::vec3 position, float area, float radius, UniformGrid* grid);
 	~Rigidbody();
 	void UpdateGlobalCentroidFromPosition();
 	void UpdatePositionFromGlobalCentroid();

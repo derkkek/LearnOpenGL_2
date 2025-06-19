@@ -1236,6 +1236,9 @@
     <ClInclude Include="src\Broad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\UniformGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="vendor\libs\glfw3.lib" />
@@ -1317,6 +1320,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Broad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UniformGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

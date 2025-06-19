@@ -19,6 +19,7 @@
 #include "Square.h"
 #include "Circle.h"
 #include "PhysicsEngine.h"
+#include "UniformGrid.h"
 
 #include "DirectionalLight.h"
 
@@ -32,8 +33,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_HEIGHT = 1080;
 
 // camera
 Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 250.0f, 500.0f));
@@ -112,16 +113,15 @@ int main()
     PhysicsEngine* physicsEngine = new PhysicsEngine();
     Renderer* renderer = new Renderer;
 
-
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
         // X: Random between -5 and 5
-        float posX = GetRandomNumber(-1000.0f, 1000.0f, false);
+        float posX = GetRandomNumber(0.0f, 2000.0f, false);
 
         // Y: Random between 0 and 10 (adjust based on your needs)
         float posY = GetRandomNumber(0.0f, 1000.0f, false);
 
-        RenderableObject* circle = new Circle(GetRandomNumber(2.0f, 5.0f, false), 128, glm::vec3(posX, posY, 0.0f));
+        RenderableObject* circle = new Circle(GetRandomNumber(1.0f, 5.0f, false), 128, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
 
         renderer->AddScene(circle);
@@ -134,8 +134,8 @@ int main()
         circleCast->linearVelocity.y = GetRandomNumber(-30.0f, 30.0f, false);
         physicsEngine->AddRigidBody(circleCast);
         //physicsEngine->AddRigidBody(circle2_cast->rigidbody);
-
     }
+    physicsEngine->grid->Print();
 
     //renderer->AddSkybox(new Skybox());
 
@@ -159,7 +159,7 @@ int main()
         physicsEngine->StepWorld(deltaTime);
 
 
-        renderer->RenderScene(camera);
+        renderer->RenderScene(camera);// NECK OF THE BOTTLE..........
 
         static double lastTime = glfwGetTime();
 
@@ -182,7 +182,6 @@ int main()
     glfwTerminate();
     delete renderer;
     delete physicsEngine;
-
     return 0;
 }
 

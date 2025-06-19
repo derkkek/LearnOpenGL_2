@@ -1,9 +1,9 @@
 #include "Circle.h"
 #include <random>
 
-Circle::Circle(float radius, int vCount, glm::vec3 position, const std::string &texture_path)
-	: RenderableObject(texture_path), vCount(vCount), momentOfInertia(0.25f * mass * radius * radius)
-    , Rigidbody(position, 3.14159f * radius * radius, radius)
+Circle::Circle(float radius, int vCount, glm::vec3 position, UniformGrid* grid, const std::string& texture_path)
+    : RenderableObject(texture_path), vCount(vCount), momentOfInertia(0.25f * mass * radius * radius)
+    , Rigidbody(position, 3.14159f * radius * radius, radius, grid)
 {
 	BuildCircle();
 }

@@ -169,6 +169,7 @@
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\TextureLoader.h" />
+    <ClInclude Include="src\UniformGrid.h" />
     <ClInclude Include="vendor\include\assimp\aabb.h" />
     <ClInclude Include="vendor\include\assimp\ai_assert.h" />
     <ClInclude Include="vendor\include\assimp\anim.h" />
@@ -574,6 +575,7 @@
     <ClCompile Include="src\SpriteRenderer.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
     <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\UniformGrid.cpp" />
     <ClCompile Include="vendor\include\glm\detail\glm.cpp" />
   </ItemGroup>
   <ItemGroup>

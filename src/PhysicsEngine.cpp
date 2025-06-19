@@ -2,24 +2,37 @@
 #include "iostream"
 #include "Broad.h" // for BVHNode, BoundingSphere, PotentialContact
 
+PhysicsEngine::PhysicsEngine()
+{
+   grid = new UniformGrid;
+}
+
 PhysicsEngine::~PhysicsEngine()
 {
-	//rigidbodies.clear();
+    delete grid;
 }
 
 void PhysicsEngine::StepWorld(float deltatime)
 {
 
-    for (size_t i = 0; i < rigidbodies.size(); ++i) {
-        for (size_t j = i + 1; j < rigidbodies.size(); ++j) {
-            // Check collision between rigidbodies[i] and rigidbodies[j]
-            if (rigidbodies[i]->CheckCollision(rigidbodies[j])) {
-                Collision collision = rigidbodies[i]->ResolveCollision(rigidbodies[j]);
-                rigidbodies[i]->linearVelocity = collision.finalV1;
-                rigidbodies[j]->linearVelocity = collision.finalV2;
-            }
+    for (int x = 0; x < grid->NUM_CELLS; x++)
+    {
+        for (int y = 0; y < grid->NUM_CELLS; y++)
+        {
+            HandleCollisions(grid->cells[x][y]);
         }
     }
+
+    //for (size_t i = 0; i < rigidbodies.size(); ++i) {
+    //    for (size_t j = i + 1; j < rigidbodies.size(); ++j) {
+    //        // Check collision between rigidbodies[i] and rigidbodies[j]
+    //        if (rigidbodies[i]->CheckCollision(rigidbodies[j])) {
+    //            Collision collision = rigidbodies[i]->ResolveCollision(rigidbodies[j]);
+    //            rigidbodies[i]->linearVelocity = collision.finalV1;
+    //            rigidbodies[j]->linearVelocity = collision.finalV2;
+    //        }
+    //    }
+    //}
 
     for (Rigidbody* body : rigidbodies)
     {
@@ -36,7 +49,7 @@ void PhysicsEngine::StepWorld(float deltatime)
             body->linearVelocity.y = -body->linearVelocity.y;
             bounced = true;
         }
-        if (body->globalCentroid.x < -1000.0f || body->globalCentroid.x > 1000.0f) {
+        if (body->globalCentroid.x < 0.0f|| body->globalCentroid.x > 2000.0f) {
             body->linearVelocity.x = -body->linearVelocity.x;
             bounced = true;
         }
@@ -47,13 +60,29 @@ void PhysicsEngine::StepWorld(float deltatime)
 
         // Update physical properties
         body->UpdatePositionFromGlobalCentroid();
-
     }
 }
 
 void PhysicsEngine::AddRigidBody(Rigidbody* rigidbody)
 {
     this->rigidbodies.push_back(rigidbody);
+}
+
+void PhysicsEngine::HandleCollisions(std::vector<Rigidbody*> bodies)
+{
+    for (size_t i = 0; i < bodies.size(); ++i) 
+    {
+        for (size_t j = i + 1; j < bodies.size(); ++j)
+        {
+            // Check collision between rigidbodies[i] and rigidbodies[j]
+            if (bodies[i]->CheckCollision(bodies[j]))
+            {
+                Collision collision = bodies[i]->ResolveCollision(bodies[j]);
+                bodies[i]->linearVelocity = collision.finalV1;
+                bodies[j]->linearVelocity = collision.finalV2;
+            }
+        }
+    }
 }
 
 // Returns a vector of potential collision pairs (broadphase)
@@ -90,4 +119,23 @@ std::vector<PotentialContact> PhysicsEngine::Broadphase() {
     }
 
     return potentialContacts;
+}
+
+void PhysicsEngine::GridPartition()
+{
+    std::vector<Rigidbody*> grid[100][100];
+    for (size_t i = 0; i < rigidbodies.size(); ++i) 
+    {
+        Rigidbody* body = rigidbodies.at(i);
+
+        for (size_t j = 0; j < rigidbodies.size(); ++j)
+        {
+            if (body->globalCentroid.x <= 1.0f)
+            {
+                grid[0][j].push_back(body);
+
+            }
+        }
+    }
+
 }
