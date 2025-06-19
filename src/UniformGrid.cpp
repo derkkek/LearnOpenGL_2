@@ -33,3 +33,28 @@ void UniformGrid::Print()
         }
     }
 }
+
+void UniformGrid::Move(Rigidbody* body, float oldX, float oldY, float newX, float newY)
+{
+    int oldCellX = (int)(oldX / UniformGrid::CELL_SIZE);
+    int oldCellY = (int)(oldY / UniformGrid::CELL_SIZE);
+
+    int cellX = (int)(newX / UniformGrid::CELL_SIZE);
+    int cellY = (int)(newY / UniformGrid::CELL_SIZE);
+
+    if (oldCellX == cellX && oldCellY == cellY) return;
+
+    // Remove from old cell, add to new cell
+    auto& oldCell = cells[oldCellX][oldCellY];
+    auto it = std::find(oldCell.begin(), oldCell.end(), body);
+
+    if (it != oldCell.end())
+    {
+        oldCell.erase(it);
+    }
+
+    body->globalCentroid.x = newX;
+    body->globalCentroid.y = newY;
+
+    add(body);
+}

@@ -23,22 +23,10 @@ void PhysicsEngine::StepWorld(float deltatime)
         }
     }
 
-    //for (size_t i = 0; i < rigidbodies.size(); ++i) {
-    //    for (size_t j = i + 1; j < rigidbodies.size(); ++j) {
-    //        // Check collision between rigidbodies[i] and rigidbodies[j]
-    //        if (rigidbodies[i]->CheckCollision(rigidbodies[j])) {
-    //            Collision collision = rigidbodies[i]->ResolveCollision(rigidbodies[j]);
-    //            rigidbodies[i]->linearVelocity = collision.finalV1;
-    //            rigidbodies[j]->linearVelocity = collision.finalV2;
-    //        }
-    //    }
-    //}
-
     for (Rigidbody* body : rigidbodies)
     {
-        // Integrate velocities
-        
-        //body->linearVelocity += body->inverseMass * (body->forceAccumulator * deltatime);
+        // Store old position
+        glm::vec3 oldCentroid = body->globalCentroid;
 
         // Integrate position
         body->globalCentroid += body->linearVelocity * deltatime;
@@ -60,6 +48,9 @@ void PhysicsEngine::StepWorld(float deltatime)
 
         // Update physical properties
         body->UpdatePositionFromGlobalCentroid();
+
+        // Move in grid: pass old and new positions
+        grid->Move(body, oldCentroid.x, oldCentroid.y, body->globalCentroid.x, body->globalCentroid.y);
     }
 }
 
@@ -80,6 +71,8 @@ void PhysicsEngine::HandleCollisions(std::vector<Rigidbody*> bodies)
                 Collision collision = bodies[i]->ResolveCollision(bodies[j]);
                 bodies[i]->linearVelocity = collision.finalV1;
                 bodies[j]->linearVelocity = collision.finalV2;
+                std::cout << "collision" << "\n";
+
             }
         }
     }

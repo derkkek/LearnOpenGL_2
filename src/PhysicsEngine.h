@@ -11,7 +11,7 @@ public:
 
 	void StepWorld(float deltatime);
 	void AddRigidBody(Rigidbody* rigidbody);
-	const int MaxUnits = 900;
+	const int MaxUnits = 1000;
 	int collisions = 0;
 	std::vector<Rigidbody*> rigidbodies;
 	UniformGrid* grid;
