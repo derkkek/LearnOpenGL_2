@@ -121,7 +121,7 @@ int main()
         // Y: Random between 0 and 10 (adjust based on your needs)
         float posY = GetRandomNumber(0.0f, 1000.0f, false);
 
-        RenderableObject* circle = new Circle(GetRandomNumber(1.0f, 5.0f, false), 128, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
+        RenderableObject* circle = new Circle(1.0f, 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
 
         renderer->AddScene(circle);
@@ -140,6 +140,8 @@ int main()
     //renderer->AddSkybox(new Skybox());
 
     renderer->SetupMeshes();
+    renderer->SetupInstancing();
+    
 
     int frameCount = 0;
     double elapsedTime = 0.0;
@@ -158,6 +160,8 @@ int main()
 
         physicsEngine->StepWorld(deltaTime);
 
+        renderer->UpdateInstanceMatrices();
+        renderer->UpdateInstanceBuffer();
 
         renderer->RenderScene(camera);// NECK OF THE BOTTLE..........
 

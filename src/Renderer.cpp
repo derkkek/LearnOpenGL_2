@@ -15,6 +15,20 @@ void Renderer::SetupMeshes()
 	glActiveTexture(GL_TEXTURE0);
 }
 
+void Renderer::UpdateInstanceMatrices()
+{
+    for (size_t i = 0; i < sceneObjects.size(); i++)
+    {
+        modelMatrices[i] = sceneObjects[i]->GetModel();
+    }
+}
+
+void Renderer::UpdateInstanceBuffer()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+    glBufferData(GL_ARRAY_BUFFER, sceneObjects.size() * sizeof(glm::mat4), &modelMatrices[0], GL_DYNAMIC_DRAW);
+}
+
 /*Renders Cube not variety of objects!!!*/
 void Renderer::RenderCube(RenderableObject* object, Camera& camera)
 {
@@ -34,6 +48,9 @@ void Renderer::RenderCube(RenderableObject* object, Camera& camera)
 
 void Renderer::RenderCircle(RenderableObject* object, Camera& camera)
 {
+	glBindVertexArray(object->GetVao());
+
+
 	ShaderStable circleShader = ResourceManager::GetShader("textured_cubes");
 
 	object->GetModel();
@@ -42,12 +59,12 @@ void Renderer::RenderCircle(RenderableObject* object, Camera& camera)
 
 	circleShader.SetMatrix4("model", model);
 	glBindTexture(GL_TEXTURE_2D, object->GetTexId());
-	glBindVertexArray(object->GetVao());
 
 	MeshData meshdata = object->SendMeshData();
-	circleShader.SetVector3f("color", meshdata.color);
+	
+	//circleShader.SetVector3f("color", meshdata.color);
 
-	glDrawElements(GL_TRIANGLES, object->SendMeshData().indices.size(), GL_UNSIGNED_INT, 0); // asd
+	glDrawElementsInstanced(GL_TRIANGLES, meshdata.indices.size(), GL_UNSIGNED_INT, 0, 1000);
 
 	glBindVertexArray(0);
 
@@ -73,16 +90,51 @@ void Renderer::RenderSkybox(RenderableObject* skybox, Camera& camera)
 	glDepthFunc(GL_LESS); // set depth function back to default
 }
 
+void Renderer::SetupInstancing()
+{
+    modelMatrices = new glm::mat4[sceneObjects.size()];
+    glGenBuffers(1, &instanceVBO);
+
+    if (sceneObjects.empty())
+        return;
+
+    RenderableObject* templateObj = sceneObjects[0];
+    glBindVertexArray(templateObj->GetVao());
+    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+
+    std::size_t vec4Size = sizeof(glm::vec4);
+    for (unsigned int i = 0; i < 4; i++) {
+        glEnableVertexAttribArray(3 + i);
+        glVertexAttribPointer(3 + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(i * vec4Size));
+        glVertexAttribDivisor(3 + i, 1);
+    }
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
 void Renderer::RenderScene(Camera& camera)
 {
-	ForwardCubeCommonConfig(camera);
+    ForwardCubeCommonConfig(camera);
 
-	for (RenderableObject* obj : sceneObjects)
-	{
-		RenderCircle(obj, camera);
-	}
+    // Assume all objects share the same mesh/VAO/texture
+    //if (sceneObjects.empty())
+    //    return;
 
-	//RenderSkybox(skybox, camera);
+    // Use the first object as the "template" for VAO, texture, mesh, etc.
+    RenderableObject* templateObj = sceneObjects[0];
+    MeshData meshdata = templateObj->SendMeshData();
+
+    //ShaderStable circleShader = ResourceManager::GetShader("textured_cubes");
+    //circleShader.Use();
+
+    glBindTexture(GL_TEXTURE_2D, templateObj->GetTexId());
+    glBindVertexArray(templateObj->GetVao());
+
+    // Draw all instances in one call
+    glDrawElementsInstanced(GL_TRIANGLES, meshdata.indices.size(), GL_UNSIGNED_INT, 0, sceneObjects.size());
+
+    //glBindVertexArray(0);
 }
 
 void Renderer::AddScene(RenderableObject* object)

@@ -16,13 +16,21 @@ public:
     RenderableObject* skybox;
     ShaderStable shader;
 
+    unsigned int instanceVBO;
+    glm::mat4* modelMatrices;
+
     Renderer();
     ~Renderer();
     void SetupMeshes();
+    void UpdateInstanceMatrices();
+    void UpdateInstanceBuffer();
+
     // Render a single object using the provided shader.
     void RenderCube(RenderableObject* object, Camera& camera);
     void RenderCircle(RenderableObject* object, Camera& camera);
     void RenderSkybox(RenderableObject* skybox, Camera& camera);
+
+    void SetupInstancing();
 
     // Optionally, render a list of objects.
     void RenderScene(Camera& camera);
