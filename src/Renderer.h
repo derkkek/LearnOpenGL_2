@@ -18,6 +18,8 @@ public:
 
     unsigned int instanceVBO;
     glm::mat4* modelMatrices;
+    RenderableObject* instanceObject;
+    MeshData instanceMesh;
 
     Renderer();
     ~Renderer();

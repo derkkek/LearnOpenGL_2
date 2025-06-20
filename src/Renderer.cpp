@@ -7,6 +7,7 @@ void Renderer::SetupMeshes()
 
 	ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
 	
+	shader = cubeShader;
 	for (RenderableObject* obj : sceneObjects)
 	{
 		obj->SetupBuffer();
@@ -109,32 +110,21 @@ void Renderer::SetupInstancing()
         glVertexAttribDivisor(3 + i, 1);
     }
 
+	// Use the first object as the "template" for VAO, texture, mesh, etc.
+	instanceObject = sceneObjects[0];
+	instanceMesh = instanceObject->SendMeshData();
+	glBindVertexArray(instanceObject->GetVao()); // since we need only one VAO bind it and keep the state.
+	shader.Use();
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    //glBindVertexArray(0); 
 }
 
 void Renderer::RenderScene(Camera& camera)
 {
     ForwardCubeCommonConfig(camera);
 
-    // Assume all objects share the same mesh/VAO/texture
-    //if (sceneObjects.empty())
-    //    return;
+    glDrawElementsInstanced(GL_TRIANGLES, instanceMesh.indices.size(), GL_UNSIGNED_INT, 0, sceneObjects.size());
 
-    // Use the first object as the "template" for VAO, texture, mesh, etc.
-    RenderableObject* templateObj = sceneObjects[0];
-    MeshData meshdata = templateObj->SendMeshData();
-
-    //ShaderStable circleShader = ResourceManager::GetShader("textured_cubes");
-    //circleShader.Use();
-
-    glBindTexture(GL_TEXTURE_2D, templateObj->GetTexId());
-    glBindVertexArray(templateObj->GetVao());
-
-    // Draw all instances in one call
-    glDrawElementsInstanced(GL_TRIANGLES, meshdata.indices.size(), GL_UNSIGNED_INT, 0, sceneObjects.size());
-
-    //glBindVertexArray(0);
 }
 
 void Renderer::AddScene(RenderableObject* object)
@@ -149,11 +139,11 @@ void Renderer::AddSkybox(RenderableObject* skybox)
 
 void Renderer::ForwardCubeCommonConfig(Camera& camera)
 {
-	ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
-	cubeShader.Use();
-	cubeShader.SetMatrix4("view", camera.GetViewMatrix());
-	cubeShader.SetMatrix4("projection", camera.GetProjectionMatrix());
-	cubeShader.SetVector3f("viewPos", camera.Position);
+	//ShaderStable cubeShader = ResourceManager::GetShader("textured_cubes");
+	//shader.Use();
+	shader.SetMatrix4("view", camera.GetViewMatrix());
+	shader.SetMatrix4("projection", camera.GetProjectionMatrix());
+	shader.SetVector3f("viewPos", camera.Position);
 }
 
 Renderer::Renderer()
