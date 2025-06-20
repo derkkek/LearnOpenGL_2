@@ -1,19 +1,20 @@
 #pragma once
 #include "Rigidbody.h"
 #include <vector>
+#include <unordered_set>
 
 class UniformGrid
 {
 public:
 	UniformGrid();
-	~UniformGrid()=default;
+	~UniformGrid();
 	void add(Rigidbody* body);
 	void Print();
 	void Move(Rigidbody* body, float oldX, float oldY, float newX, float newY);
-	static const int NUM_CELLS = 10;
-	static const int CELL_SIZE = 200;
+	static const int NUM_CELLS = 20;
+	static const int CELL_SIZE = 250;
 
-	std::vector<Rigidbody*> cells[NUM_CELLS][NUM_CELLS];
+	std::unordered_set <Rigidbody*> *cells[NUM_CELLS][NUM_CELLS];
 private:
 
 };

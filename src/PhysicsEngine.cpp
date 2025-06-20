@@ -12,46 +12,39 @@ PhysicsEngine::~PhysicsEngine()
     delete grid;
 }
 
-void PhysicsEngine::StepWorld(float deltatime)
-{
+void PhysicsEngine::StepWorld(float deltatime)  
+{  
+    for (int x = 0; x < grid->NUM_CELLS; x++)  
+    {  
+        for (int y = 0; y < grid->NUM_CELLS; y++)  
+        {  
+            // Dereference the pointer to pass the actual unordered_set to HandleCollisions  
+            HandleCollisions(*(grid->cells[x][y]));  
+        }  
+    }  
 
-    for (int x = 0; x < grid->NUM_CELLS; x++)
-    {
-        for (int y = 0; y < grid->NUM_CELLS; y++)
-        {
-            HandleCollisions(grid->cells[x][y]);
-        }
-    }
+    for (Rigidbody* body : rigidbodies)  
+    {  
+        glm::vec3 oldCentroid = body->globalCentroid;  
+        body->globalCentroid += body->linearVelocity * deltatime;  
 
-    for (Rigidbody* body : rigidbodies)
-    {
-        // Store old position
-        glm::vec3 oldCentroid = body->globalCentroid;
+        bool bounced = false;  
+        if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 5000.0f) {  
+            body->linearVelocity.y = -body->linearVelocity.y;  
+            bounced = true;  
+        }  
+        if (body->globalCentroid.x < 0.0f || body->globalCentroid.x > 5000.0f) {  
+            body->linearVelocity.x = -body->linearVelocity.x;  
+            bounced = true;  
+        }  
+        if (bounced) {  
+            body->globalCentroid += body->linearVelocity * deltatime;  
+            collisions++;  
+        }  
 
-        // Integrate position
-        body->globalCentroid += body->linearVelocity * deltatime;
-
-        // Wall bounce logic (combine x and y checks)
-        bool bounced = false;
-        if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 1000.0f) {
-            body->linearVelocity.y = -body->linearVelocity.y;
-            bounced = true;
-        }
-        if (body->globalCentroid.x < 0.0f|| body->globalCentroid.x > 2000.0f) {
-            body->linearVelocity.x = -body->linearVelocity.x;
-            bounced = true;
-        }
-        if (bounced) {
-            body->globalCentroid += body->linearVelocity * deltatime;
-            collisions++;
-        }
-
-        // Update physical properties
-        body->UpdatePositionFromGlobalCentroid();
-
-        // Move in grid: pass old and new positions
-        grid->Move(body, oldCentroid.x, oldCentroid.y, body->globalCentroid.x, body->globalCentroid.y);
-    }
+        body->UpdatePositionFromGlobalCentroid();  
+        grid->Move(body, oldCentroid.x, oldCentroid.y, body->globalCentroid.x, body->globalCentroid.y);  
+    }  
 }
 
 void PhysicsEngine::AddRigidBody(Rigidbody* rigidbody)
@@ -59,23 +52,24 @@ void PhysicsEngine::AddRigidBody(Rigidbody* rigidbody)
     this->rigidbodies.push_back(rigidbody);
 }
 
-void PhysicsEngine::HandleCollisions(std::vector<Rigidbody*> bodies)
-{
-    for (size_t i = 0; i < bodies.size(); ++i) 
-    {
-        for (size_t j = i + 1; j < bodies.size(); ++j)
-        {
-            // Check collision between rigidbodies[i] and rigidbodies[j]
-            if (bodies[i]->CheckCollision(bodies[j]))
-            {
-                Collision collision = bodies[i]->ResolveCollision(bodies[j]);
-                bodies[i]->linearVelocity = collision.finalV1;
-                bodies[j]->linearVelocity = collision.finalV2;
-                std::cout << "collision" << "\n";
+void PhysicsEngine::HandleCollisions(std::unordered_set<Rigidbody*> bodies)  
+{  
+    std::vector<Rigidbody*> bodyVector(bodies.begin(), bodies.end()); // Convert unordered_set to vector  
 
-            }
-        }
-    }
+    for (size_t i = 0; i < bodyVector.size(); ++i)  
+    {  
+        for (size_t j = i + 1; j < bodyVector.size(); ++j)  
+        {  
+            // Check collision between bodyVector[i] and bodyVector[j]  
+            if (bodyVector[i]->CheckCollision(bodyVector[j]))  
+            {  
+                Collision collision = bodyVector[i]->ResolveCollision(bodyVector[j]);  
+                bodyVector[i]->linearVelocity = collision.finalV1;  
+                bodyVector[j]->linearVelocity = collision.finalV2;  
+                std::cout << "collision" << "\n";  
+            }  
+        }  
+    }  
 }
 
 // Returns a vector of potential collision pairs (broadphase)

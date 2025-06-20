@@ -11,11 +11,11 @@ public:
 
 	void StepWorld(float deltatime);
 	void AddRigidBody(Rigidbody* rigidbody);
-	const int MaxUnits = 1000;
+	const int MaxUnits = 5000;
 	int collisions = 0;
 	std::vector<Rigidbody*> rigidbodies;
 	UniformGrid* grid;
-	void HandleCollisions(std::vector<Rigidbody*> bodies);
+	void HandleCollisions(std::unordered_set <Rigidbody*> bodies);
 
 private:
 	std::vector<PotentialContact> Broadphase();

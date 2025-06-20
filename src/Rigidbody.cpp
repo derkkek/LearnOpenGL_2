@@ -16,6 +16,7 @@ Rigidbody::Rigidbody(glm::vec3 position, float area, float radius, UniformGrid* 
 
 Rigidbody::~Rigidbody()
 {
+
 }
 
 

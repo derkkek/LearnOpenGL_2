@@ -116,10 +116,10 @@ int main()
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
         // X: Random between -5 and 5
-        float posX = GetRandomNumber(0.0f, 2000.0f, false);
+        float posX = GetRandomNumber(0.0f, 5000.0f, false);
 
         // Y: Random between 0 and 10 (adjust based on your needs)
-        float posY = GetRandomNumber(0.0f, 1000.0f, false);
+        float posY = GetRandomNumber(0.0f, 5000.0f, false);
 
         RenderableObject* circle = new Circle(1.0f, 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
