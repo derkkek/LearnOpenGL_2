@@ -64,6 +64,7 @@ public:
   
 	void ApplyForce(const glm::vec3& f, const glm::vec3& at);
 	glm::mat3 RotationMatrix(const glm::vec3& axis, float angle);
+	glm::mat4 getModel() const;
 private:
 	void SIEulerIntegration(float dt);
 };

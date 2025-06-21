@@ -9,9 +9,9 @@ public:
 	PhysicsEngine();
 	~PhysicsEngine();
 
-	void StepWorld(float deltatime);
+	void StepWorld(float deltatime, glm::mat4* modelMatrices);
 	void AddRigidBody(Rigidbody* rigidbody);
-	const int MaxUnits = 5000;
+	const int MaxUnits = 10000;
 	int collisions = 0;
 	std::vector<Rigidbody*> rigidbodies;
 	UniformGrid* grid;

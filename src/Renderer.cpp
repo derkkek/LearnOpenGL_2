@@ -122,6 +122,7 @@ void Renderer::SetupInstancing()
 void Renderer::RenderScene(Camera& camera)
 {
     ForwardCubeCommonConfig(camera);
+	UpdateInstanceBuffer();
 
     glDrawElementsInstanced(GL_TRIANGLES, instanceMesh.indices.size(), GL_UNSIGNED_INT, 0, sceneObjects.size());
 

@@ -37,7 +37,7 @@ const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(0.0f, 250.0f, 500.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(700.0f, 700.0f, 500.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -158,12 +158,9 @@ int main()
         processInput(window);
 
 
-        physicsEngine->StepWorld(deltaTime);
+        physicsEngine->StepWorld(deltaTime, renderer->modelMatrices);
 
-        renderer->UpdateInstanceMatrices();
-        renderer->UpdateInstanceBuffer();
-
-        renderer->RenderScene(camera);// NECK OF THE BOTTLE..........
+        renderer->RenderScene(camera);
 
         static double lastTime = glfwGetTime();
 

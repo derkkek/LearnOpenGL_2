@@ -12,7 +12,7 @@ PhysicsEngine::~PhysicsEngine()
     delete grid;
 }
 
-void PhysicsEngine::StepWorld(float deltatime)  
+void PhysicsEngine::StepWorld(float deltatime, glm::mat4* modelMatrices)
 {  
     for (int x = 0; x < grid->NUM_CELLS; x++)  
     {  
@@ -23,8 +23,9 @@ void PhysicsEngine::StepWorld(float deltatime)
         }  
     }  
 
-    for (Rigidbody* body : rigidbodies)  
+    for (size_t i = 0; i < rigidbodies.size(); i++ )  
     {  
+        Rigidbody* body = rigidbodies.at(i);
         glm::vec3 oldCentroid = body->globalCentroid;  
         body->globalCentroid += body->linearVelocity * deltatime;  
 
@@ -43,7 +44,8 @@ void PhysicsEngine::StepWorld(float deltatime)
         }  
 
         body->UpdatePositionFromGlobalCentroid();  
-        grid->Move(body, oldCentroid.x, oldCentroid.y, body->globalCentroid.x, body->globalCentroid.y);  
+        grid->Move(body, oldCentroid.x, oldCentroid.y, body->globalCentroid.x, body->globalCentroid.y);
+        modelMatrices[i] = body->getModel(); // it's here cuz of optimization... im currently in oop rocksolid hell...
     }  
 }
 
