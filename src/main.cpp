@@ -37,7 +37,7 @@ const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(700.0f, 700.0f, 500.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(5000.0f, 5000.0f, 2500.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -116,12 +116,12 @@ int main()
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
         // X: Random between -5 and 5
-        float posX = GetRandomNumber(0.0f, 5000.0f, false);
+        float posX = GetRandomNumber(0.0f, 10000.0f, false);
 
         // Y: Random between 0 and 10 (adjust based on your needs)
-        float posY = GetRandomNumber(0.0f, 5000.0f, false);
+        float posY = GetRandomNumber(0.0f, 10000.0f, false);
 
-        RenderableObject* circle = new Circle(1.0f, 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
+        RenderableObject* circle = new Circle(GetRandomNumber(3.0f, 10.0f, false), 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
 
         renderer->AddScene(circle);
@@ -130,18 +130,22 @@ int main()
         Rigidbody* circleCast = dynamic_cast<Rigidbody*>(circle);
         //circleCast->ApplyForce(glm::vec3(GetRandomNumber(-5.0f, 5.0f, false) * circleCast->mass, GetRandomNumber(-5.0f, 5.0f, false) * circleCast->mass, 0.0f), circleCast->globalCentroid);
         //Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
-        circleCast->linearVelocity.x = GetRandomNumber(-30.0f, 30.0f, false);
-        circleCast->linearVelocity.y = GetRandomNumber(-30.0f, 30.0f, false);
+        circleCast->linearVelocity.x = GetRandomNumber(-50.0f, 50.0f, false);
+        circleCast->linearVelocity.y = GetRandomNumber(-50.0f, 50.0f, false);
         physicsEngine->AddRigidBody(circleCast);
         //physicsEngine->AddRigidBody(circle2_cast->rigidbody);
     }
     physicsEngine->grid->Print();
-
-    //renderer->AddSkybox(new Skybox());
-
-    renderer->SetupMeshes();
-    renderer->SetupInstancing();
     
+    //renderer->AddSkybox(new Skybox());
+    //renderer->SetupInstancing();
+    RenderableObject* instance = new Circle(1.0f, 16.0f, glm::vec3(0.0f), physicsEngine->grid);
+    instance->SetupBuffer();
+    renderer->SetupMeshes();
+    renderer->SetupInstancing(instance);
+
+
+
 
     int frameCount = 0;
     double elapsedTime = 0.0;
@@ -159,7 +163,6 @@ int main()
 
 
         physicsEngine->StepWorld(deltaTime, renderer->modelMatrices);
-
         renderer->RenderScene(camera);
 
         static double lastTime = glfwGetTime();
@@ -168,7 +171,7 @@ int main()
         if (currentFrame - lastTime >= 0.2) {
             double fps = frameCount / (currentFrame - lastTime);
             float msPerFrame = 1000.0f / (fps > 0 ? fps : 1); // or use deltaTime * 1000.0f for last frame
-            std::string title = "FPS: " + std::to_string((int)fps) + " | MS: " + std::to_string(msPerFrame);
+            std::string title = "FPS: " + std::to_string((int)fps) + " | MS: " + std::to_string(msPerFrame) + "BODYCOUNT: " + std::to_string(physicsEngine->rigidbodies.size());
             glfwSetWindowTitle(window, title.c_str());
             frameCount = 0;
             lastTime = currentFrame;

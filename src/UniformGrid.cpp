@@ -60,15 +60,17 @@ void UniformGrid::Move(Rigidbody* body, float oldX, float oldY, float newX, floa
     // Bounds check
     if (oldCellX < 0 || oldCellX >= NUM_CELLS || oldCellY < 0 || oldCellY >= NUM_CELLS ||
         cellX < 0 || cellX >= NUM_CELLS || cellY < 0 || cellY >= NUM_CELLS)
+    {
         return;
 
-    if (oldCellX == cellX && oldCellY == cellY) return;
+    }
 
+    if (oldCellX == cellX && oldCellY == cellY) return;
     // Remove from old cell, add to new cell
     cells[oldCellX][oldCellY]->erase(body);
 
-    body->globalCentroid.x = newX;
-    body->globalCentroid.y = newY;
+    //body->globalCentroid.x = newX;
+    //body->globalCentroid.y = newY;
 
     add(body);
 }

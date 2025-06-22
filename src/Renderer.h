@@ -32,7 +32,7 @@ public:
     void RenderCircle(RenderableObject* object, Camera& camera);
     void RenderSkybox(RenderableObject* skybox, Camera& camera);
 
-    void SetupInstancing();
+    void SetupInstancing(RenderableObject* instance);
 
     // Optionally, render a list of objects.
     void RenderScene(Camera& camera);

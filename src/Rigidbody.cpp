@@ -184,6 +184,7 @@ void Rigidbody::SIEulerIntegration(float dt)
 glm::mat4 Rigidbody::getModel() const {
     glm::mat4 model = glm::mat4(1.0f); // Identity matrix
     model = glm::translate(model, globalCentroid); // Apply translation
+    model = glm::scale(model, glm::vec3(radius, radius, 0));
     //model *= glm::mat4(orientation); // Apply rotation
     return model;
 }

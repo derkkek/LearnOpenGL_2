@@ -30,11 +30,11 @@ void PhysicsEngine::StepWorld(float deltatime, glm::mat4* modelMatrices)
         body->globalCentroid += body->linearVelocity * deltatime;  
 
         bool bounced = false;  
-        if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 5000.0f) {  
+        if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 10000.0f) {  
             body->linearVelocity.y = -body->linearVelocity.y;  
             bounced = true;  
         }  
-        if (body->globalCentroid.x < 0.0f || body->globalCentroid.x > 5000.0f) {  
+        if (body->globalCentroid.x < 0.0f || body->globalCentroid.x > 10000.0f) {  
             body->linearVelocity.x = -body->linearVelocity.x;  
             bounced = true;  
         }  
@@ -68,7 +68,6 @@ void PhysicsEngine::HandleCollisions(std::unordered_set<Rigidbody*> bodies)
                 Collision collision = bodyVector[i]->ResolveCollision(bodyVector[j]);  
                 bodyVector[i]->linearVelocity = collision.finalV1;  
                 bodyVector[j]->linearVelocity = collision.finalV2;  
-                std::cout << "collision" << "\n";  
             }  
         }  
     }  

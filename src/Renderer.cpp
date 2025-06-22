@@ -27,7 +27,7 @@ void Renderer::UpdateInstanceMatrices()
 void Renderer::UpdateInstanceBuffer()
 {
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, sceneObjects.size() * sizeof(glm::mat4), &modelMatrices[0], GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sceneObjects.size() * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
 }
 
 /*Renders Cube not variety of objects!!!*/
@@ -91,7 +91,7 @@ void Renderer::RenderSkybox(RenderableObject* skybox, Camera& camera)
 	glDepthFunc(GL_LESS); // set depth function back to default
 }
 
-void Renderer::SetupInstancing()
+void Renderer::SetupInstancing(RenderableObject* instance)
 {
     modelMatrices = new glm::mat4[sceneObjects.size()];
     glGenBuffers(1, &instanceVBO);
@@ -99,8 +99,8 @@ void Renderer::SetupInstancing()
     if (sceneObjects.empty())
         return;
 
-    RenderableObject* templateObj = sceneObjects[0];
-    glBindVertexArray(templateObj->GetVao());
+	instanceObject = instance; //sceneObjects[0];
+	glBindVertexArray(instanceObject->GetVao());// since we need only one VAO bind it and keep the state.
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 
     std::size_t vec4Size = sizeof(glm::vec4);
@@ -111,11 +111,11 @@ void Renderer::SetupInstancing()
     }
 
 	// Use the first object as the "template" for VAO, texture, mesh, etc.
-	instanceObject = sceneObjects[0];
+	//instanceObject = sceneObjects[0];
 	instanceMesh = instanceObject->SendMeshData();
-	glBindVertexArray(instanceObject->GetVao()); // since we need only one VAO bind it and keep the state.
+	//glBindVertexArray(instanceObject->GetVao()); 
 	shader.Use();
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
     //glBindVertexArray(0); 
 }
 
@@ -123,7 +123,7 @@ void Renderer::RenderScene(Camera& camera)
 {
     ForwardCubeCommonConfig(camera);
 	UpdateInstanceBuffer();
-
+	//glBindVertexArray(instanceObject->GetVao());
     glDrawElementsInstanced(GL_TRIANGLES, instanceMesh.indices.size(), GL_UNSIGNED_INT, 0, sceneObjects.size());
 
 }
