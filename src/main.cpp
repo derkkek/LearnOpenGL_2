@@ -37,7 +37,7 @@ const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(5000.0f, 5000.0f, 2500.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(25000.0f, 25000.0f, 10000.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -116,10 +116,10 @@ int main()
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
         // X: Random between -5 and 5
-        float posX = GetRandomNumber(0.0f, 10000.0f, false);
+        float posX = GetRandomNumber(0.0f, 50000.0f, false);
 
         // Y: Random between 0 and 10 (adjust based on your needs)
-        float posY = GetRandomNumber(0.0f, 10000.0f, false);
+        float posY = GetRandomNumber(0.0f, 50000.0f, false);
 
         RenderableObject* circle = new Circle(GetRandomNumber(3.0f, 10.0f, false), 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
         //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));

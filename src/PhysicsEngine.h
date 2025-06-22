@@ -11,7 +11,7 @@ public:
 
 	void StepWorld(float deltatime, glm::mat4* modelMatrices);
 	void AddRigidBody(Rigidbody* rigidbody);
-	const int MaxUnits = 50000;
+	const int MaxUnits = 150000;
 	int collisions = 0;
 	std::vector<Rigidbody*> rigidbodies;
 	UniformGrid* grid;

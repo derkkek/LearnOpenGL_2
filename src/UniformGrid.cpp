@@ -31,11 +31,8 @@ UniformGrid::UniformGrid()
 
 void UniformGrid::add(Rigidbody* body)
 {
-    // Determine which grid cell it's in.
-    int cellX = (int)(body->globalCentroid.x / UniformGrid::CELL_SIZE);
-    int cellY = (int)(body->globalCentroid.y / UniformGrid::CELL_SIZE);
-
-    // Add to the front of list for the cell it's in.
+    int cellX = static_cast<int>(body->globalCentroid.x / UniformGrid::CELL_SIZE);
+    int cellY = static_cast<int>(body->globalCentroid.y / UniformGrid::CELL_SIZE);
     cells[cellX][cellY]->emplace(body);
 }
 
@@ -62,7 +59,6 @@ void UniformGrid::Move(Rigidbody* body, float oldX, float oldY, float newX, floa
         cellX < 0 || cellX >= NUM_CELLS || cellY < 0 || cellY >= NUM_CELLS)
     {
         return;
-
     }
 
     if (oldCellX == cellX && oldCellY == cellY) return;

@@ -1796,6 +1796,7 @@
     <None Include="resource\levels\one.lvl" />
     <None Include="resource\levels\three.lvl" />
     <None Include="resource\levels\two.lvl" />
+    <None Include="glsl resource\shaders\6.1.cubemaps.f" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\textures\container.jpg">
