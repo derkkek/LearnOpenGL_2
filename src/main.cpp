@@ -107,44 +107,33 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
 
-
-    
-
     PhysicsEngine* physicsEngine = new PhysicsEngine();
     Renderer* renderer = new Renderer;
 
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
-        // X: Random between -5 and 5
         float posX = GetRandomNumber(0.0f, 50000.0f, false);
 
-        // Y: Random between 0 and 10 (adjust based on your needs)
         float posY = GetRandomNumber(0.0f, 50000.0f, false);
 
         RenderableObject* circle = new Circle(GetRandomNumber(3.0f, 15.0f, false), 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
-        //RenderableObject* circle2 = new Circle(0.5f, 128, glm::vec3(3.0f, 5.0f, 0.0f));
 
         renderer->AddScene(circle);
-        //renderer->AddScene(circle2);
 
         Rigidbody* circleCast = dynamic_cast<Rigidbody*>(circle);
-        //circleCast->ApplyForce(glm::vec3(GetRandomNumber(-5.0f, 5.0f, false) * circleCast->mass, GetRandomNumber(-5.0f, 5.0f, false) * circleCast->mass, 0.0f), circleCast->globalCentroid);
-        //Circle* circle2_cast = dynamic_cast<Circle*>(circle2);
+
         circleCast->linearVelocity.x = GetRandomNumber(-100.0f, 100.0f, false);
         circleCast->linearVelocity.y = GetRandomNumber(-100.0f, 100.0f, false);
+
         physicsEngine->AddRigidBody(circleCast);
-        //physicsEngine->AddRigidBody(circle2_cast->rigidbody);
+
     }
     physicsEngine->grid->Print();
     
-    //renderer->AddSkybox(new Skybox());
-    //renderer->SetupInstancing();
     RenderableObject* instance = new Circle(1.0f, 16.0f, glm::vec3(0.0f), physicsEngine->grid);
     instance->SetupBuffer();
     renderer->SetupMeshes();
     renderer->SetupInstancing(instance);
-
-
 
 
     int frameCount = 0;
@@ -170,7 +159,7 @@ int main()
         frameCount++;
         if (currentFrame - lastTime >= 0.2) {
             double fps = frameCount / (currentFrame - lastTime);
-            float msPerFrame = 1000.0f / (fps > 0 ? fps : 1); // or use deltaTime * 1000.0f for last frame
+            float msPerFrame = 1000.0f / (fps > 0 ? fps : 1);
             std::string title = "FPS: " + std::to_string((int)fps) + " | MS: " + std::to_string(msPerFrame) + " | PARTICLES: " + std::to_string(physicsEngine->rigidbodies.size());
             glfwSetWindowTitle(window, title.c_str());
             frameCount = 0;
@@ -178,8 +167,6 @@ int main()
         }
         physicsEngine->collisions = 0;
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

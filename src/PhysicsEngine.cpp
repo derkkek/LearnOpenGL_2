@@ -17,8 +17,10 @@ void PhysicsEngine::StepWorld(float deltatime, glm::mat4* modelMatrices)
 {  
     // Parallel collision handling
     std::vector<std::future<void>> futures;
-    for (int x = 0; x < grid->NUM_CELLS; x++) {
-        for (int y = 0; y < grid->NUM_CELLS; y++) {
+    for (int x = 0; x < grid->NUM_CELLS; x++) 
+    {
+        for (int y = 0; y < grid->NUM_CELLS; y++) 
+        {
             futures.push_back(std::async(std::launch::async, [this, x, y]() {
                 HandleCollisions(*(grid->cells[x][y]));
                 }));
@@ -66,7 +68,6 @@ void PhysicsEngine::HandleCollisions(std::unordered_set<Rigidbody*> bodies)
     {  
         for (size_t j = i + 1; j < bodyVector.size(); ++j)  
         {  
-            // Check collision between bodyVector[i] and bodyVector[j]  
             if (bodyVector[i]->CheckCollision(bodyVector[j]))  
             {  
                 Collision collision = bodyVector[i]->ResolveCollision(bodyVector[j]); 
@@ -77,18 +78,21 @@ void PhysicsEngine::HandleCollisions(std::unordered_set<Rigidbody*> bodies)
     }  
 }
 
-// Returns a vector of potential collision pairs (broadphase)
-std::vector<PotentialContact> PhysicsEngine::Broadphase() {
+
+std::vector<PotentialContact> PhysicsEngine::Broadphase() 
+{
     std::vector<PotentialContact> potentialContacts;
 
     // Build the BVH
     BVHNode<BoundingSphere>* root = nullptr;
-    for (Rigidbody* rb : rigidbodies) {
-        // Add a larger padding factor to the radius (e.g. 2.0f)
+    for (Rigidbody* rb : rigidbodies) 
+    {
+
         float paddedRadius = rb->radius;
         BoundingSphere sphere(rb->globalCentroid, paddedRadius);
         
-        if (!root) {
+        if (!root) 
+        {
             root = new BVHNode<BoundingSphere>(nullptr, sphere, rb);
         } else {
             root->insert(rb, sphere);
@@ -96,16 +100,14 @@ std::vector<PotentialContact> PhysicsEngine::Broadphase() {
     }
 
     // Collect potential contacts
-    if (root) {
+    if (root) 
+    {
         // Estimate a reasonable upper bound for the number of contacts
         size_t maxContacts = 10;//rigidbodies.size() * (rigidbodies.size() - 1) / 2;
         potentialContacts.resize(maxContacts);
 
         unsigned found = root->getPotentialContacts(potentialContacts.data(), static_cast<unsigned>(maxContacts));
         potentialContacts.resize(found);
-
-        // Debug output for number of potential contacts
-        std::cout << "Broadphase found " << found << " potential contacts." << std::endl;
 
         delete root;
     }
