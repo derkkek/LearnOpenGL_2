@@ -41,11 +41,11 @@ Collision Rigidbody::ResolveCollision(Rigidbody* rb)
 
     glm::vec3 unitTangent = glm::vec3(-unitNormal.y, unitNormal.x, 0.0f);
 
-    float v1n = glm::dot(unitNormal, this->linearVelocity);
-    float v1t = glm::dot(unitTangent, this->linearVelocity);
+    float v1n = unitNormal.x * this->linearVelocity.x + unitNormal.y * this->linearVelocity.y; //glm::dot(unitNormal, this->linearVelocity);
+    float v1t = unitTangent.x * this->linearVelocity.x + unitTangent.y * this->linearVelocity.y;//glm::dot(unitTangent, this->linearVelocity);
 
-    float v2n = glm::dot(unitNormal, rb->linearVelocity);
-    float v2t = glm::dot(unitTangent, rb->linearVelocity);
+    float v2n = unitNormal.x * rb->linearVelocity.x + unitNormal.y * rb->linearVelocity.y; //glm::dot(unitNormal, rb->linearVelocity);
+    float v2t = unitTangent.x * rb->linearVelocity.x + unitTangent.y * rb->linearVelocity.y;//glm::dot(unitTangent, rb->linearVelocity);
 
     float v1n_tilda = (v1n * (this->mass - rb->mass) + 2.0f * rb->mass * v2n) / (this->mass + rb->mass);
     float v2n_tilda = (v2n * (rb->mass - this->mass) + 2.0f * this->mass * v1n) / (this->mass + rb->mass);
@@ -65,11 +65,8 @@ Collision Rigidbody::ResolveCollision(Rigidbody* rb)
     if (penetration > 0.0f) 
     {
         float totalInvMass = this->inverseMass + rb->inverseMass;
-        // Avoid division by zero
-        if (totalInvMass == 0.0f) return collision;
 
-        // Move each object away from the other by their share of the overlap
-        glm::vec3 correction = (penetration / totalInvMass) * 0.8f * unitNormal; // 0.8f is a bias to avoid oscillation
+        glm::vec3 correction = (penetration / totalInvMass) * 0.5f * unitNormal; // 0.5f is a bias to avoid oscillation
         this->globalCentroid -= correction * this->inverseMass;
         rb->globalCentroid += correction * rb->inverseMass;
         this->UpdatePositionFromGlobalCentroid();
