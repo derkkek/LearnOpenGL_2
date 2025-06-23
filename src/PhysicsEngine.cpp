@@ -66,9 +66,9 @@ void PhysicsEngine::HandleCollisions(std::unordered_set<Rigidbody*> bodies)
 
     for (size_t i = 0; i < bodyVector.size(); ++i)  
     {  
-        for (size_t j = i + 1; j < bodyVector.size(); ++j)  
+        for (size_t j = i + 1; j < bodyVector.size(); ++j )  
         {  
-            if (bodyVector[i]->CheckCollision(bodyVector[j]))  
+            if (bodyVector[i]->CheckCollision(bodyVector[j]))
             {  
                 Collision collision = bodyVector[i]->ResolveCollision(bodyVector[j]); 
                 bodyVector[i]->linearVelocity = collision.finalV1;  
