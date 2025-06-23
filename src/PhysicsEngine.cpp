@@ -31,22 +31,20 @@ void PhysicsEngine::StepWorld(float deltatime, glm::mat4* modelMatrices)
     for (size_t i = 0; i < rigidbodies.size(); i++ )  
     {  
         Rigidbody* body = rigidbodies.at(i);
-        glm::vec3 oldCentroid = body->globalCentroid;  
-        body->globalCentroid += body->linearVelocity * deltatime;  
+        glm::vec3 oldCentroid = body->globalCentroid; 
+        body->globalCentroid += body->linearVelocity * deltatime;
 
-        bool bounced = false;  
-        if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 50000.0f) {  
+        if (body->globalCentroid.y < 0.0f || body->globalCentroid.y > 50000.0f) 
+        {  
             body->linearVelocity.y = -body->linearVelocity.y;  
-            bounced = true;  
+            body->globalCentroid += body->linearVelocity * deltatime;
         }  
-        if (body->globalCentroid.x < 0.0f || body->globalCentroid.x > 50000.0f) {  
-            body->linearVelocity.x = -body->linearVelocity.x;  
-            bounced = true;  
+        if (body->globalCentroid.x < 0.0f || body->globalCentroid.x > 50000.0f) 
+        {  
+            body->linearVelocity.x = -body->linearVelocity.x;
+            body->globalCentroid += body->linearVelocity * deltatime;
         }  
-        if (bounced) {  
-            body->globalCentroid += body->linearVelocity * deltatime;  
-            collisions++;  
-        }  
+
 
         
         body->UpdatePositionFromGlobalCentroid();  
@@ -66,9 +64,9 @@ void PhysicsEngine::HandleCollisions(std::unordered_set<Rigidbody*> bodies)
 
     for (size_t i = 0; i < bodyVector.size(); ++i)  
     {  
-        for (size_t j = i + 1; j < bodyVector.size(); ++j )  
+        for (size_t j = i + 1; j < bodyVector.size(); ++j)  
         {  
-            if (bodyVector[i]->CheckCollision(bodyVector[j]))
+            if (bodyVector[i]->CheckCollision(bodyVector[j]))  
             {  
                 Collision collision = bodyVector[i]->ResolveCollision(bodyVector[j]); 
                 bodyVector[i]->linearVelocity = collision.finalV1;  

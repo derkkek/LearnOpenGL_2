@@ -37,7 +37,7 @@ const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(25000.0f, 25000.0f, 50000.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(25000.0f, 25000.0f, 5000.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -122,8 +122,8 @@ int main()
 
         Rigidbody* circleCast = dynamic_cast<Rigidbody*>(circle);
 
-        circleCast->linearVelocity.x = GetRandomNumber(-100.0f, 100.0f, false);
-        circleCast->linearVelocity.y = GetRandomNumber(-100.0f, 100.0f, false);
+        circleCast->linearVelocity.x = GetRandomNumber(-200.0f, 200.0f, false);
+        circleCast->linearVelocity.y = GetRandomNumber(-200.0f, 200.0f, false);
 
         physicsEngine->AddRigidBody(circleCast);
 
@@ -157,7 +157,7 @@ int main()
         static double lastTime = glfwGetTime();
 
         frameCount++;
-        if (currentFrame - lastTime >= 0.2) {
+        if (currentFrame - lastTime >= 1.0) {
             double fps = frameCount / (currentFrame - lastTime);
             float msPerFrame = 1000.0f / (fps > 0 ? fps : 1);
             std::string title = "FPS: " + std::to_string((int)fps) + " | MS: " + std::to_string(msPerFrame) + " | PARTICLES: " + std::to_string(physicsEngine->rigidbodies.size());
