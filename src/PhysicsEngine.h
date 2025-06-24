@@ -18,8 +18,7 @@ public:
 	void HandleCollisions(std::unordered_set <Rigidbody*> bodies);
 
 private:
-	std::vector<PotentialContact> Broadphase();
-	void GridPartition();
-	BVHNode<BoundingSphere>* bvhRoot = nullptr;
+
+	//BVHNode<BoundingSphere>* bvhRoot = nullptr;
 
 };

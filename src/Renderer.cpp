@@ -77,7 +77,7 @@ void Renderer::RenderSkybox(RenderableObject* skybox, Camera& camera)
 	skyboxShader.Use();
 	skyboxShader.SetInteger("skybox", 0);
 
-	//// draw skybox as last
+	//// draw skybox at last
 	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 	glm::mat4 manipulatedView = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
 	skyboxShader.SetMatrix4("view", manipulatedView);
@@ -99,7 +99,7 @@ void Renderer::SetupInstancing(RenderableObject* instance)
     if (sceneObjects.empty())
         return;
 
-	instanceObject = instance; //sceneObjects[0];
+	instanceObject = instance;
 	glBindVertexArray(instanceObject->GetVao());// since we need only one VAO bind it and keep the state.
     glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 
@@ -110,10 +110,9 @@ void Renderer::SetupInstancing(RenderableObject* instance)
         glVertexAttribDivisor(3 + i, 1);
     }
 
-	// Use the first object as the "template" for VAO, texture, mesh, etc.
-	//instanceObject = sceneObjects[0];
+
 	instanceMesh = instanceObject->SendMeshData();
-	//glBindVertexArray(instanceObject->GetVao()); 
+
 	shader.Use();
     //glBindBuffer(GL_ARRAY_BUFFER, 0);
     //glBindVertexArray(0); 
