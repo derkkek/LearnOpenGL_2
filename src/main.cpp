@@ -112,9 +112,9 @@ int main()
 
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
-        float posX = GetRandomNumber(0.0f, 50000.0f, false);
+        float posX = GetRandomNumber(1000.0f, 49000.0f, false);
 
-        float posY = GetRandomNumber(0.0f, 50000.0f, false);
+        float posY = GetRandomNumber(1000.0f, 49000.0f, false);
 
         RenderableObject* circle = new Circle(GetRandomNumber(3.0f, 15.0f, false), 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
 
@@ -128,13 +128,11 @@ int main()
         physicsEngine->AddRigidBody(circleCast);
 
     }
-    physicsEngine->grid->Print();
     
     RenderableObject* instance = new Circle(1.0f, 16.0f, glm::vec3(0.0f), physicsEngine->grid);
     instance->SetupBuffer();
     renderer->SetupMeshes();
     renderer->SetupInstancing(instance);
-
 
     int frameCount = 0;
     double elapsedTime = 0.0;
