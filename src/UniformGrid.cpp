@@ -68,5 +68,6 @@ void UniformGrid::Move(Rigidbody* body, float oldX, float oldY, float newX, floa
     //body->globalCentroid.x = newX;
     //body->globalCentroid.y = newY;
 
-    add(body);
+    //add(body);
+    cells[cellX][cellY]->emplace(body);
 }

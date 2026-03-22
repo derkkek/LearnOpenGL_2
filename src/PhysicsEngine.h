@@ -11,11 +11,12 @@ public:
 
 	void StepWorld(float deltatime, glm::mat4* modelMatrices);
 	void AddRigidBody(Rigidbody* rigidbody);
-	const int MaxUnits = 200000;
+	const int MaxUnits = 25000;
+	float bound;
 	int collisions = 0;
 	std::vector<Rigidbody*> rigidbodies;
 	UniformGrid* grid;
-	void HandleCollisions(std::unordered_set <Rigidbody*> bodies);
+	void HandleCollisions(int cellX, int cellY);
 
 private:
 

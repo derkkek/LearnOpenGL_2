@@ -37,7 +37,7 @@ const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
 
 // camera
-Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(25000.0f, 25000.0f, 2500.0f));
+Camera camera(float(SCR_WIDTH) / (float)(SCR_HEIGHT), glm::vec3(500.0f, 500.0f, 250.0f));
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -112,18 +112,18 @@ int main()
 
     for (int i = 0; i < physicsEngine->MaxUnits; i++)
     {
-        float posX = GetRandomNumber(1000.0f, 49000.0f, false);
+        float posX = GetRandomNumber(0.0f, physicsEngine->bound, false);
 
-        float posY = GetRandomNumber(1000.0f, 49000.0f, false);
+        float posY = GetRandomNumber(0.0f, physicsEngine->bound, false);
 
-        RenderableObject* circle = new Circle(GetRandomNumber(3.0f, 15.0f, false), 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
+        RenderableObject* circle = new Circle(GetRandomNumber(50.0f, 75.0f, false), 16, glm::vec3(posX, posY, 0.0f), physicsEngine->grid);
 
         renderer->AddScene(circle);
 
         Rigidbody* circleCast = dynamic_cast<Rigidbody*>(circle);
-
-        circleCast->linearVelocity.x = GetRandomNumber(-200.0f, 200.0f, false);
-        circleCast->linearVelocity.y = GetRandomNumber(-200.0f, 200.0f, false);
+        float range = 300.0f;
+        circleCast->linearVelocity.x = GetRandomNumber(-range, range, false);
+        circleCast->linearVelocity.y = GetRandomNumber(-range, range, false);
 
         physicsEngine->AddRigidBody(circleCast);
 

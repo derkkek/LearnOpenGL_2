@@ -8,7 +8,7 @@
 //#include "Collider.h"
 #include <vector>
 #include "CircleCollider.h"
-
+#include <mutex>
 struct Collision {
 	glm::vec3 normal;
 	glm::vec3 finalV1;
@@ -45,7 +45,7 @@ public:
 
 	bool CheckCollision(Rigidbody* rb);
 	Collision ResolveCollision(Rigidbody* rb);
-
+	std::mutex mtx;
 
 	//std::vector<Collider> colliders;
 	Rigidbody(glm::vec3 position, float area, float radius, UniformGrid* grid);
